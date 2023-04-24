@@ -1,43 +1,16 @@
-version: '3'
+version: '3.3'
 
 services:
-  site:
-    image: wordpress
+  wordpress:
+    image: dorivaldovalentim/dorivaldovalentim:latest
     container_name: dorivaldovalentim
     ports:
       - ${APP_PORT}:80
     environment:
-      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_HOST: ${DB_HOST}
       WORDPRESS_DB_USER: ${DB_USERNAME}
       WORDPRESS_DB_PASSWORD: ${DB_PASSWORD}
       WORDPRESS_DB_NAME: ${DB_DATABASE}
-    restart: always
-    depends_on:
-      - db
-    network_mode: bridge
-    
-  db:
-    container_name: dorivaldovalentim-database
-    image: mysql
-    ports:
-      - ${DB_PORT}:3306
-    environment:
-      MYSQL_ROOT_HOST: '%'
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_USER: ${DB_USERNAME}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_RANDOM_ROOT_PASSWORD: 'root'
-    # volumes:
-    #   - './data:/var/lib/mysql'
-    network_mode: bridge
-    restart: always
-  
-  phpmyadmin:
-    container_name: dorivaldovalentim-phpmyadmin
-    image: phpmyadmin
-    ports:
-      - ${PMA_PORT}:80
-    links:
-      - db
-    network_mode: bridge
+    volumes:
+      - ./themes/dorivaldovalentim:/var/www/html/wp-content/themes/dorivaldovalentim
     restart: always
