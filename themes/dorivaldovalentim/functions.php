@@ -13,5 +13,7 @@ if (!function_exists('dorivaldovalentim_setup')):
     {
         
     }
-
 endif;
+
+
+add_action( 'after_setup_theme', 'dorivaldovalentim_setup' );
