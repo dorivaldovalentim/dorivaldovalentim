@@ -15,5 +15,10 @@ if (!function_exists('dorivaldovalentim_setup')):
     }
 endif;
 
-
 add_action( 'after_setup_theme', 'dorivaldovalentim_setup' );
+
+function add_theme_scripts() {
+    wp_enqueue_script( 'style', get_template_directory_uri() );
+}
+
+add_action( 'wp_enqueue_scripts', 'add_theme_scripts');
