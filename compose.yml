@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  front:
+    container_name: dorivaldovalentimcopy
+    build: .
+    networks:
+      - nginx-proxy-manager
+    restart: always
+
+networks:
+  nginx-proxy-manager:
+    external: true
