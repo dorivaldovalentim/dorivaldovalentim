@@ -6,6 +6,8 @@ services:
     build:
       context: ./docker/8.3
       dockerfile: Dockerfile
+    ports:
+      - 8000:8000
     networks:
       - nginx-proxy-manager
     restart: always
