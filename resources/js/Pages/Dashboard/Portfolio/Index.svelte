@@ -13,5 +13,5 @@
         </div>
     </svelte:fragment>
 
-    <svelte:fragment slot="body">Home</svelte:fragment>
+    <svelte:fragment slot="body">Portfólio</svelte:fragment>
 </Layout>
