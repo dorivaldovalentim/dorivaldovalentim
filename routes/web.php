@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboard\PortfolioController;
+use App\Http\Controllers\Dashboard\SkillController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -11,6 +12,7 @@ Route::get('/', function () {
 
 Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function () {
     Route::inertia('/', 'Dashboard/Index')->name('dashboard');
+    Route::resource('skill', SkillController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::resource('portfolio', PortfolioController::class);
 });
 
