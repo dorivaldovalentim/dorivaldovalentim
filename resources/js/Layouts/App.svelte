@@ -138,7 +138,10 @@
             <div class="navbar">
                 <div class="container-xl">
                     <ul class="navbar-nav">
-                        <li class:active={route().current('dashboard')} class="nav-item">
+                        <li
+                            class:active={route().current("dashboard")}
+                            class="nav-item"
+                        >
                             <Link href={route("dashboard")} class="nav-link">
                                 <span
                                     class="nav-link-icon d-md-none d-lg-inline-block"
@@ -176,36 +179,43 @@
                             </Link>
                         </li>
 
-                        <li class:active={route().current('skill.index')} class="nav-item">
+                        <li
+                            class:active={route().current("skill.index")}
+                            class="nav-item"
+                        >
                             <Link href={route("skill.index")} class="nav-link">
                                 <span
                                     class="nav-link-icon d-md-none d-lg-inline-block"
                                     ><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        class="icon"
                                         width="24"
                                         height="24"
                                         viewBox="0 0 24 24"
-                                        stroke-width="2"
-                                        stroke="currentColor"
                                         fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
-                                    >
-                                        <path
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-brain"
+                                        ><path
                                             stroke="none"
                                             d="M0 0h24v24H0z"
                                             fill="none"
-                                        />
-                                        <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                        <path
-                                            d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"
-                                        />
-                                        <path
-                                            d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"
-                                        />
-                                    </svg>
+                                        /><path
+                                            d="M15.5 13a3.5 3.5 0 0 0 -3.5 3.5v1a3.5 3.5 0 0 0 7 0v-1.8"
+                                        /><path
+                                            d="M8.5 13a3.5 3.5 0 0 1 3.5 3.5v1a3.5 3.5 0 0 1 -7 0v-1.8"
+                                        /><path
+                                            d="M17.5 16a3.5 3.5 0 0 0 0 -7h-.5"
+                                        /><path
+                                            d="M19 9.3v-2.8a3.5 3.5 0 0 0 -7 0"
+                                        /><path
+                                            d="M6.5 16a3.5 3.5 0 0 1 0 -7h.5"
+                                        /><path
+                                            d="M5 9.3v-2.8a3.5 3.5 0 0 1 7 0v10"
+                                        /></svg
+                                    >
                                 </span>
 
                                 <span class="nav-link-title">
@@ -214,36 +224,48 @@
                             </Link>
                         </li>
 
-                        <li class:active={route().current('technology.index')} class="nav-item">
-                            <Link href={route("technology.index")} class="nav-link">
+                        <li
+                            class:active={route().current("technology.index")}
+                            class="nav-item"
+                        >
+                            <Link
+                                href={route("technology.index")}
+                                class="nav-link"
+                            >
                                 <span
                                     class="nav-link-icon d-md-none d-lg-inline-block"
                                     ><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        class="icon"
                                         width="24"
                                         height="24"
                                         viewBox="0 0 24 24"
-                                        stroke-width="2"
-                                        stroke="currentColor"
                                         fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
-                                    >
-                                        <path
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-manual-gearbox"
+                                        ><path
                                             stroke="none"
                                             d="M0 0h24v24H0z"
                                             fill="none"
-                                        />
-                                        <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                        <path
-                                            d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"
-                                        />
-                                        <path
-                                            d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"
-                                        />
-                                    </svg>
+                                        /><path
+                                            d="M5 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"
+                                        /><path
+                                            d="M12 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"
+                                        /><path
+                                            d="M19 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"
+                                        /><path
+                                            d="M5 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"
+                                        /><path
+                                            d="M12 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"
+                                        /><path d="M5 8l0 8" /><path
+                                            d="M12 8l0 8"
+                                        /><path
+                                            d="M19 8v2a2 2 0 0 1 -2 2h-12"
+                                        /></svg
+                                    >
                                 </span>
 
                                 <span class="nav-link-title">
@@ -252,40 +274,96 @@
                             </Link>
                         </li>
 
-                        <li class:active={route().current('portfolio.index')} class="nav-item">
-                            <Link href={route("portfolio.index")} class="nav-link">
+                        <li
+                            class:active={route().current("portfolio.index")}
+                            class="nav-item"
+                        >
+                            <Link
+                                href={route("portfolio.index")}
+                                class="nav-link"
+                            >
                                 <span
                                     class="nav-link-icon d-md-none d-lg-inline-block"
                                     ><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        class="icon"
                                         width="24"
                                         height="24"
                                         viewBox="0 0 24 24"
-                                        stroke-width="2"
-                                        stroke="currentColor"
                                         fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
-                                    >
-                                        <path
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-packages"
+                                        ><path
                                             stroke="none"
                                             d="M0 0h24v24H0z"
                                             fill="none"
-                                        />
-                                        <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-                                        <path
-                                            d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"
-                                        />
-                                        <path
-                                            d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"
-                                        />
-                                    </svg>
+                                        /><path
+                                            d="M7 16.5l-5 -3l5 -3l5 3v5.5l-5 3z"
+                                        /><path d="M2 13.5v5.5l5 3" /><path
+                                            d="M7 16.545l5 -3.03"
+                                        /><path
+                                            d="M17 16.5l-5 -3l5 -3l5 3v5.5l-5 3z"
+                                        /><path d="M12 19l5 3" /><path
+                                            d="M17 16.5l5 -3"
+                                        /><path
+                                            d="M12 13.5v-5.5l-5 -3l5 -3l5 3v5.5"
+                                        /><path d="M7 5.03v5.455" /><path
+                                            d="M12 8l5 -3"
+                                        /></svg
+                                    >
+                                </span>
+
+                                <span class="nav-link-title"> Portfólio </span>
+                            </Link>
+                        </li>
+
+                        <li
+                            class:active={route().current(
+                                "social_network.index",
+                            )}
+                            class="nav-item"
+                        >
+                            <Link
+                                href={route("social_network.index")}
+                                class="nav-link"
+                            >
+                                <span
+                                    class="nav-link-icon d-md-none d-lg-inline-block"
+                                    ><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="icon icon-tabler icons-tabler-outline icon-tabler-social"
+                                        ><path
+                                            stroke="none"
+                                            d="M0 0h24v24H0z"
+                                            fill="none"
+                                        /><path
+                                            d="M12 5m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"
+                                        /><path
+                                            d="M5 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"
+                                        /><path
+                                            d="M19 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"
+                                        /><path
+                                            d="M12 14m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"
+                                        /><path d="M12 7l0 4" /><path
+                                            d="M6.7 17.8l2.8 -2"
+                                        /><path d="M17.3 17.8l-2.8 -2" /></svg
+                                    >
                                 </span>
 
                                 <span class="nav-link-title">
-                                    Portfólio
+                                    Redes Sociais
                                 </span>
                             </Link>
                         </li>
