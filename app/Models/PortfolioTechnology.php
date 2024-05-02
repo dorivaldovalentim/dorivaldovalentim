@@ -13,10 +13,4 @@ class PortfolioTechnology extends Model
     use HasUuids;
 
     protected $guarded = [];
-
-    public function portfolio()
-    {
-        return $this->belongsToMany(Portfolio::class);
-    }
-    
 }
