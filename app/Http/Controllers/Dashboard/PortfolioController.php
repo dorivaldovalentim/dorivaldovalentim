@@ -3,6 +3,13 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
+use App\Models\Portfolio;
+use App\Models\PortfolioClient;
+use App\Models\PortfolioSkill;
+use App\Models\PortfolioTechnology;
+use App\Models\Skill;
+use App\Models\Technology;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,7 +20,9 @@ class PortfolioController extends Controller
      */
     public function index()
     {
-        return Inertia::render("Dashboard/Portfolio/Index");
+        return Inertia::render("Dashboard/Portfolio/Index", [
+            "portfolios" => Portfolio::get(),
+        ]);
     }
 
     /**
@@ -21,7 +30,11 @@ class PortfolioController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render("Dashboard/Portfolio/Create", [
+            "clients" => Client::orderBy('name')->get(),
+            "skills" => Skill::orderBy('skill')->get(),
+            "technologies" => Technology::orderBy('technology')->get(),
+        ]);
     }
 
     /**
@@ -29,7 +42,55 @@ class PortfolioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'excerpt' => 'required|string',
+            'description' => 'required|string',
+            'clients' => 'required|array',
+            'clients.*' => 'exists:clients,id',
+            'skills' => 'required|array',
+            'skills.*' => 'exists:skills,id',
+            'technologies' => 'required|array',
+            'technologies.*' => 'exists:technologies,id',
+            // Add validation rules for file uploads if needed
+        ]);
+
+        // Create a new Portfolio instance with the validated data
+        $portfolio = Portfolio::create($validatedData);
+
+        // Attach clients, skills, and technologies to the portfolio if they exist
+        if ($request->has('clients')) {
+            foreach ($validatedData['clients'] as $clientId) {
+                PortfolioClient::create([
+                    'portfolio_id' => $portfolio->id,
+                    'client_id' => $clientId,
+                ]);
+            }
+        }
+
+        if ($request->has('skills')) {
+            foreach ($validatedData['skills'] as $skillId) {
+                PortfolioSkill::create([
+                    'portfolio_id' => $portfolio->id,
+                    'skill_id' => $skillId,
+                ]);
+            }
+        }
+
+        if ($request->has('technologies')) {
+            foreach ($validatedData['technologies'] as $techId) {
+                PortfolioTechnology::create([
+                    'portfolio_id' => $portfolio->id,
+                    'technology_id' => $techId,
+                ]);
+            }
+        }
+
+        // Handle file uploads if needed
+
+        // Redirect or return a response as needed
+        return to_route('portfolio.index');
     }
 
     /**
