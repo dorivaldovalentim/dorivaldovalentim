@@ -21,7 +21,7 @@ class PortfolioController extends Controller
     public function index()
     {
         return Inertia::render("Dashboard/Portfolio/Index", [
-            "portfolios" => Portfolio::get(),
+            "portfolios" => Portfolio::with('clients', 'skills', 'technologies')->get(),
         ]);
     }
 
