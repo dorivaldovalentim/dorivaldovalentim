@@ -2,6 +2,12 @@
     import Layout from "@/Layouts/App.svelte";
     import { useForm } from "@inertiajs/svelte";
     import InputError from "@/Components/InputError.svelte";
+    import { onMount } from "svelte";
+    import TomSelect from "tom-select/dist/js/tom-select.complete";
+    import "tom-select/dist/css/tom-select.bootstrap4.min.css";
+    import Editor from "@tinymce/tinymce-svelte";
+
+    const API_KEY = import.meta.env.VITE_TINYMCE_API_KEY;
 
     export let clients = [];
     export let skills = [];
@@ -11,23 +17,35 @@
     let selectedSkills = null;
     let selectedTechnologies = null;
 
+    let value;
+
     let form = useForm({
         name: null,
         excerpt: null,
-        description: null,
         file_id: null,
         clients: [],
         skills: [],
         technologies: [],
     });
 
-    const store = () => {
-        console.log($form.clients);
-        $form.post(route("portfolio.store"), {
-            onSuccess: () => {
-                // reset();
-            },
+    onMount(() => {
+        document.querySelectorAll("#theme-select").forEach((el) => {
+            new TomSelect(el, {});
         });
+    });
+
+    const store = () => {
+        console.log($form.skills, selectedClients);
+        $form
+            .transform((data) => ({
+                ...data,
+                description: value,
+            }))
+            .post(route("portfolio.store"), {
+                onSuccess: () => {
+                    // reset();
+                },
+            });
     };
 
     const reset = () => {
@@ -115,6 +133,7 @@
                             class="form-control"
                             placeholder="Nome"
                         />
+
                         {#if $form.errors.name}
                             <InputError message={$form.errors.name} />
                         {/if}
@@ -122,43 +141,30 @@
 
                     <div class="mb-3">
                         <label for="excerpt" class="form-label">Resumo</label>
-                        <input
+                        <textarea
                             bind:value={$form.excerpt}
                             type="text"
                             id="excerpt"
                             class:is-invalid={$form.errors.excerpt}
                             class="form-control"
                             placeholder="Resumo"
-                        />
+                            rows="5"
+                        ></textarea>
+
                         {#if $form.errors.excerpt}
                             <InputError message={$form.errors.excerpt} />
                         {/if}
                     </div>
+                </div>
 
-                    <div class="mb-3">
-                        <label for="description" class="form-label"
-                            >Descrição</label
-                        >
-                        <textarea
-                            bind:value={$form.description}
-                            id="description"
-                            class:is-invalid={$form.errors.description}
-                            class="form-control"
-                            placeholder="Descrição"
-                            rows="4"
-                        ></textarea>
-                        {#if $form.errors.description}
-                            <InputError message={$form.errors.description} />
-                        {/if}
-                    </div>
-
+                <div class="col-md-6">
                     <!-- Additional fields for relationships -->
                     <div class="mb-3">
                         <label for="clients" class="form-label">Clientes</label>
                         <select
                             type="text"
-                            bind:value={selectedClients}
-                            on:change={() => ($form.clients.push(selectedClients))}
+                            on:change={(value) =>
+                                ($form.clients = console.log(value.target.value))}
                             class:is-invalid={$form.errors.clients}
                             placeholder="Clientes"
                             class="form-select"
@@ -171,6 +177,7 @@
                                 </option>
                             {/each}
                         </select>
+
                         {#if $form.errors.clients}
                             <InputError message={$form.errors.clients} />
                         {/if}
@@ -183,7 +190,8 @@
                         <select
                             type="text"
                             bind:value={selectedSkills}
-                            on:change={() => ($form.skills.push(selectedSkills))}
+                            on:change={(value) =>
+                                ($form.skills = value.target.TomSelect.items)}
                             class:is-invalid={$form.errors.skills}
                             placeholder="Habilidades"
                             class="form-select"
@@ -201,6 +209,7 @@
                             <InputError message={$form.errors.skills} />
                         {/if}
                     </div>
+
                     <div class="mb-3">
                         <label for="technologies" class="form-label"
                             >Tecnologias</label
@@ -208,8 +217,8 @@
                         <select
                             type="text"
                             bind:value={selectedTechnologies}
-                            on:change={() =>
-                                ($form.technologies.push(selectedTechnologies))}
+                            on:change={(value) =>
+                                ($form.technologies = value.target.TomSelect.items)}
                             class:is-invalid={$form.errors.technologies}
                             placeholder="Tecnologias"
                             class="form-select"
@@ -228,10 +237,17 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
-                    <div class="card">
+                <div class="col-12">
+                    <div class="mb-3">
+                        <Editor apiKey={API_KEY} bind:value language="pt_PT" />
+                        {#if $form.errors.description}
+                            <InputError message={$form.errors.description} />
+                        {/if}
+                    </div>
+
+                    <div class="card mb-3">
                         <div class="card-body">
-                            <h3 class="card-title">Multiple File Upload</h3>
+                            <h3 class="card-title">Imagem</h3>
                             <form
                                 class="dropzone dz-clickable"
                                 id="dropzone"
@@ -241,7 +257,7 @@
                             >
                                 <div class="dz-default dz-message">
                                     <button class="dz-button" type="button"
-                                        >Drop files here to upload</button
+                                        >Arraste ou clique para fazer o upload</button
                                     >
                                 </div>
                             </form>

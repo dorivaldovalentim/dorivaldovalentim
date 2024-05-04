@@ -367,6 +367,13 @@
   dependencies:
     mini-svg-data-uri "^1.2.3"
 
+"@tinymce/tinymce-svelte@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@tinymce/tinymce-svelte/-/tinymce-svelte-2.0.2.tgz#9a20efa88e6b9275d75cf028480dd67a6415a317"
+  integrity sha512-XFum8sIJdizn38vkZtkCRyi8T4p2B3V+tWWnI5G/KELkkVsLRxC3TKIs6jgmbZq3RfyqNxqUaxsudkk+G/up/g==
+  dependencies:
+    rollup-plugin-execute "^1.1.1"
+
 "@types/estree@*", "@types/estree@1.0.5", "@types/estree@^1.0.0", "@types/estree@^1.0.1":
   version "1.0.5"
   resolved "https://registry.npmjs.org/@types/estree/-/estree-1.0.5.tgz"
@@ -1301,6 +1308,11 @@ reusify@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
+
+rollup-plugin-execute@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-execute/-/rollup-plugin-execute-1.1.1.tgz#ee7bcb293e48bc599232b66b66473763e3cb8965"
+  integrity sha512-isCNR/VrwlEfWJMwsnmt5TBRod8dW1IjVRxcXCBrxDmVTeA1IXjzeLSS3inFBmRD7KDPlo38KSb2mh5v5BoWgA==
 
 rollup@^4.13.0:
   version "4.16.4"
