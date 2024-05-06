@@ -1,5 +1,5 @@
 <script>
-    import Layout from "@/Layouts/App.svelte";
+    import Layout from "@/Layouts/Dashboard.svelte";
 </script>
 
 <Layout title="Dashboard">
