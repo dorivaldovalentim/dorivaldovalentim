@@ -1,4 +1,4 @@
-FROM php:8.1.0-apache
+FROM php:8.2.9-apache
 
 # Enable Apache modules
 RUN a2enmod rewrite
@@ -25,7 +25,7 @@ RUN apt-get update && apt-get install -y \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install dependencies with Composer
-RUN composer install --prefer-dist --optimize-autoloader --no-interaction --ignore-platform-reqs
+RUN composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist --ignore-platform-reqs
 
 RUN a2enmod rewrite
 
