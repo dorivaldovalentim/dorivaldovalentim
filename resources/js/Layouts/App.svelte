@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-    <title>{title}</title>
+    <title>{title} « Dorivaldo Valentim</title>
 </svelte:head>
 
 <main>
