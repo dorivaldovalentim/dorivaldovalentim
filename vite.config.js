@@ -1,4 +1,4 @@
-import { svelte } from '@sveltejs/vite-plugin-svelte'
+import { svelte, vitePreprocess } from '@sveltejs/vite-plugin-svelte'
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
@@ -13,6 +13,7 @@ export default defineConfig({
             compilerOptions: {
                 hydratable: true,
             },
+            preprocess: [vitePreprocess()]
         }),
     ],
 });
