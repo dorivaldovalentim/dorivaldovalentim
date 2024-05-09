@@ -1,6 +1,11 @@
 <script setup>
     import { page } from "@inertiajs/svelte";
     import { Link, router } from "@inertiajs/svelte";
+    import "@tabler/core/dist/css/tabler.min.css";
+    import "@tabler/core/dist/css/tabler-vendors.min.css";
+    import "@tabler/core/dist/css/demo.min.css";
+    import "@tabler/core/dist/js/tabler.min";
+    import "@tabler/core/dist/js/demo-theme";
 
     export let title;
 

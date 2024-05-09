@@ -10,17 +10,19 @@
 </svelte:head>
 
 <main>
-    <div class="row">
-        <div class="col-12 col-md-3">
-            <Aside></Aside>
-        </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <Aside></Aside>
+            </div>
 
-        <div class="col-12 col-md-8">
-            <slot></slot>
-        </div>
+            <div class="col">
+                <slot></slot>
+            </div>
 
-        <div class="col-12 col-md-1">
-            <Menu></Menu>
+            <div class="col">
+                <Menu></Menu>
+            </div>
         </div>
     </div>
 </main>
