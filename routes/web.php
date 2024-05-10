@@ -7,7 +7,6 @@ use App\Http\Controllers\Dashboard\SocialNetworkController;
 use App\Http\Controllers\Dashboard\TechnologyController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::inertia('/', 'Welcome')->name('home');
 Route::inertia('/history', 'History')->name('history');

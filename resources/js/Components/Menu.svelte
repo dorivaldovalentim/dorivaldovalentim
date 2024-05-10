@@ -1,5 +1,5 @@
 <script>
-    import { Link, router } from "@inertiajs/svelte";
+    import { Link } from "@inertiajs/svelte";
 
     let data = [
         {
@@ -36,7 +36,7 @@
             {#each data as item}
                 <li
                     class:active={route().current(item.active)}
-                    class="nav-item"
+                    class="nav-item fs-3"
                 >
                     <Link href={route(item.link)} class="nav-link">
                         {item.label}
@@ -49,12 +49,16 @@
 
 <style lang="scss">
     header {
-        right: 10px;
+        left: calc(100% - 200px);
         min-width: 200px;
         width: 200px;
 
         .navbar {
             justify-content: center;
+        }
+
+        .active {
+            font-weight: bold;
         }
     }
 </style>

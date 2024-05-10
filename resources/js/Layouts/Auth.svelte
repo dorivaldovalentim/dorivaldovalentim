@@ -10,7 +10,7 @@
 </script>
 
 <svelte:head>
-    <title>{title}</title>
+    <title>{title} « Auth « Dorivaldo Valentim</title>
 </svelte:head>
 
 <div class="page page-center">

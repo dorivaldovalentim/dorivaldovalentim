@@ -16,7 +16,7 @@
 </script>
 
 <svelte:head>
-    <title>{title}</title>
+    <title>{title} « Dashboard « Dorivaldo Valentim</title>
 </svelte:head>
 
 <div class="page">
