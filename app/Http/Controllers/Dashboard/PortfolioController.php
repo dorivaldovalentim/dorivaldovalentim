@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Models\File;
 use App\Models\Portfolio;
 use App\Models\PortfolioClient;
 use App\Models\PortfolioSkill;
@@ -21,7 +22,7 @@ class PortfolioController extends Controller
     public function index()
     {
         return Inertia::render("Dashboard/Portfolio/Index", [
-            "portfolios" => Portfolio::with('clients', 'skills', 'technologies')->get(),
+            "portfolios" => Portfolio::with('clients', 'skills', 'technologies', 'cover')->get(),
         ]);
     }
 
@@ -53,7 +54,18 @@ class PortfolioController extends Controller
             'skills.*' => 'exists:skills,id',
             'technologies' => 'required|array',
             'technologies.*' => 'exists:technologies,id',
-            // Add validation rules for file uploads if needed
+            'file' => 'required|image|mimes:jpeg,png|max:2048',
+        ]);
+
+        // Process file upload
+        $file = $request->file('file');
+        $filePath = $file->store('portfolio', 'public');
+
+        // Create a new File instance for the uploaded image
+        $uploadedFile = File::create([
+            'name' => $file->getClientOriginalName(),
+            'path' => $filePath,
+            'type' => $file->getMimeType(),
         ]);
 
         // Create a new Portfolio instance with the validated data
@@ -87,7 +99,9 @@ class PortfolioController extends Controller
             }
         }
 
-        // Handle file uploads if needed
+        // Associate the uploaded file with the portfolio using polymorphic relationship
+        $portfolio->cover()->associate($uploadedFile);
+        $portfolio->save();
 
         // Redirect or return a response as needed
         return to_route('portfolio.index');

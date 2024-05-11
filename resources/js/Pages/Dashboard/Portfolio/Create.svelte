@@ -6,6 +6,9 @@
     import TomSelect from "tom-select/dist/js/tom-select.complete";
     import "tom-select/dist/css/tom-select.bootstrap4.min.css";
     import Editor from "@tinymce/tinymce-svelte";
+    import Dropzone from "dropzone";
+    import "dropzone/dist/basic.css";
+    import "dropzone/dist/dropzone.css";
 
     const API_KEY = import.meta.env.VITE_TINYMCE_API_KEY;
 
@@ -13,6 +16,7 @@
     export let skills = [];
     export let technologies = [];
 
+    let dropzone;
     let value;
 
     let selects = [
@@ -24,10 +28,10 @@
     let form = useForm({
         name: null,
         excerpt: null,
-        file_id: null,
         clients: [],
         skills: [],
         technologies: [],
+        file: [],
     });
 
     onMount(() => {
@@ -46,27 +50,21 @@
         dropzone = new Dropzone("#dropzone", {
             uploadMultiple: false,
             maxFiles: 1,
-            addRemoveLinks: true
+            addRemoveLinks: true,
         });
+
+        dropzone.on("addedfile", (file) => {
+            $form.file = file;
         });
     });
 
     const store = () => {
-        console.log(selects);
         $form
             .transform((data) => ({
                 ...data,
                 description: value,
             }))
-            .post(route("portfolio.store"), {
-                onSuccess: () => {
-                    // reset();
-                },
-            });
-    };
-
-    const reset = () => {
-        $form.reset();
+            .post(route("portfolio.store"));
     };
 </script>
 
@@ -251,6 +249,7 @@
                 <div class="col-12">
                     <div class="mb-3">
                         <Editor apiKey={API_KEY} bind:value language="pt_PT" />
+
                         {#if $form.errors.description}
                             <InputError message={$form.errors.description} />
                         {/if}
@@ -259,19 +258,21 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <h3 class="card-title">Imagem</h3>
-                            <form
-                                class="dropzone dz-clickable"
-                                id="dropzone"
+                            <div
                                 action="./"
-                                autocomplete="off"
-                                novalidate=""
+                                id="dropzone"
+                                class="dropzone dz-clickable"
                             >
                                 <div class="dz-default dz-message">
                                     <button class="dz-button" type="button"
                                         >Arraste ou clique para fazer o upload</button
                                     >
                                 </div>
-                            </form>
+                            </div>
+
+                            {#if $form.errors.file}
+                                <InputError message={$form.errors.file} />
+                            {/if}
                         </div>
                     </div>
                 </div>

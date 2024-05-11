@@ -243,7 +243,7 @@
                                             >
                                                 <div
                                                     class="avatar avatar-md"
-                                                    style:background-image={`url(${portfolio.image_id})`}
+                                                    style:background-image={`url(/storage/${portfolio?.cover?.path})`}
                                                 ></div>
                                             </Link>
                                         </div>
