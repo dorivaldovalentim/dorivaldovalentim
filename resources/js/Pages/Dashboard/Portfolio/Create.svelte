@@ -13,11 +13,13 @@
     export let skills = [];
     export let technologies = [];
 
-    let selectedClients = null;
-    let selectedSkills = null;
-    let selectedTechnologies = null;
-
     let value;
+
+    let selects = [
+        { id: "clients", items: [] },
+        { id: "skills", items: [] },
+        { id: "technologies", items: [] },
+    ];
 
     let form = useForm({
         name: null,
@@ -29,13 +31,28 @@
     });
 
     onMount(() => {
-        document.querySelectorAll("#theme-select").forEach((el) => {
-            new TomSelect(el, {});
+        selects.forEach((item) => {
+            let el = document.querySelector(`#${item.id}-select`);
+
+            let selectItem = new TomSelect(el, {
+                plugins: ["drag_drop", "remove_button"],
+            });
+
+            selectItem.on("change", (value) => {
+                $form[item.id] = value;
+            });
+        });
+
+        dropzone = new Dropzone("#dropzone", {
+            uploadMultiple: false,
+            maxFiles: 1,
+            addRemoveLinks: true
+        });
         });
     });
 
     const store = () => {
-        console.log($form.skills, selectedClients);
+        console.log(selects);
         $form
             .transform((data) => ({
                 ...data,
@@ -163,12 +180,10 @@
                         <label for="clients" class="form-label">Clientes</label>
                         <select
                             type="text"
-                            on:change={(value) =>
-                                ($form.clients = console.log(value.target.value))}
                             class:is-invalid={$form.errors.clients}
                             placeholder="Clientes"
                             class="form-select"
-                            id="theme-select"
+                            id="clients-select"
                             multiple="multiple"
                         >
                             {#each clients as client}
@@ -189,13 +204,10 @@
                         >
                         <select
                             type="text"
-                            bind:value={selectedSkills}
-                            on:change={(value) =>
-                                ($form.skills = value.target.TomSelect.items)}
                             class:is-invalid={$form.errors.skills}
                             placeholder="Habilidades"
                             class="form-select"
-                            id="theme-select"
+                            id="skills-select"
                             multiple="multiple"
                         >
                             {#each skills as skill}
@@ -214,15 +226,13 @@
                         <label for="technologies" class="form-label"
                             >Tecnologias</label
                         >
+
                         <select
                             type="text"
-                            bind:value={selectedTechnologies}
-                            on:change={(value) =>
-                                ($form.technologies = value.target.TomSelect.items)}
                             class:is-invalid={$form.errors.technologies}
                             placeholder="Tecnologias"
                             class="form-select"
-                            id="theme-select"
+                            id="technologies-select"
                             multiple="multiple"
                         >
                             {#each technologies as technology}
@@ -231,6 +241,7 @@
                                 </option>
                             {/each}
                         </select>
+
                         {#if $form.errors.technologies}
                             <InputError message={$form.errors.technologies} />
                         {/if}
