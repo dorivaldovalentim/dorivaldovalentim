@@ -3,14 +3,14 @@
 </script>
 
 <aside class="fixed-top card py-3">
-    <div class="card-body d-flex">
-        <div class="d-flex flex-column justify-content-between">
+    <div class="card-body">
+        <div class="d-flex flex-column justify-content-between h-100">
             <div class="text-center">
                 <div
                     class="img-container border rounded-circle border-light border-3 overflow-hidden w-50 mx-auto mb-2"
                 >
                     <img
-                        src="https://via.placeholder.com/100"
+                        src={$page.props.profile.image ?? "/avatar.jpg"}
                         alt="Foto de Perfil"
                         class="w-100"
                     />
@@ -18,7 +18,9 @@
 
                 <h1 class="name fw-bold fs-2">{$page.props.profile.name}</h1>
 
-                <h2 class="fs-3">Fullstack Developer</h2>
+                <h2 class="fs-3">
+                    {$page.props.profile.title ?? "Fullstack Developer"}
+                </h2>
 
                 <div class="d-flex flex-wrap justify-content-center gap-2">
                     {#each $page.props.social_networks || [] as item}
@@ -36,11 +38,9 @@
 
                 <h2>Resumo</h2>
 
-                <p>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Consequuntur placeat, asperiores maiores numquam incidunt
-                    temporibus tempore nemo odit. Qui, impedit?
-                </p>
+                <div>
+                    {@html $page.props.profile.excerpt ?? "Sem descrição"}
+                </div>
             </div>
 
             <div class="text-center">
@@ -72,6 +72,6 @@
     .social-button {
         width: 40px;
         height: 40px;
-        filter: invert(1) brightness(1)
+        filter: invert(1) brightness(1);
     }
 </style>
