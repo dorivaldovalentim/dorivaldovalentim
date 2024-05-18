@@ -237,7 +237,7 @@
                                         <div class="card-body">
                                             <Link
                                                 href={route(
-                                                    "portfolio.show",
+                                                    "portfolio.edit",
                                                     portfolio.id,
                                                 )}
                                             >
@@ -256,7 +256,7 @@
                                                     <h3 class="mb-0">
                                                         <Link
                                                             href={route(
-                                                                "portfolio.show",
+                                                                "portfolio.edit",
                                                                 portfolio.id,
                                                             )}
                                                         >

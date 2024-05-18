@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         // Seed clients
         Client::create(['name' => 'API Soluções', 'site' => 'https://apisolucoes.com']);
         Client::create(['name' => 'Digital Factory', 'site' => 'https://digitalfactory.com']);
-        Client::create(['name' => 'Zap', 'site' => 'https://zap.com']);
+        Client::create(['name' => 'ZAP', 'site' => 'https://zap.com']);
 
         // Generate and seed additional technologies
         $additionalTechnologies = ['HTML', 'CSS', 'JavaScript', 'PHP', 'Python', 'Ruby', 'Java', 'React', 'Vue.js', 'Angular', 'Node.js', 'SQL'];
