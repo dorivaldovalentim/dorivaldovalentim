@@ -39,7 +39,7 @@
             >
                 <Link href={route("dashboard")}>
                     <img
-                        src="@/public/logo.svg"
+                        src="/logo.svg"
                         width="110"
                         height="32"
                         alt="Tabler"
