@@ -20,6 +20,10 @@
         "@inertiajs/svelte": "^1.0.16",
         "@sveltejs/vite-plugin-svelte": "^3.1.0",
         "@tabler/core": "^1.0.0-beta20",
+        "@tinymce/tinymce-svelte": "^2.0.2",
+        "dropzone": "^6.0.0-beta.2",
+        "tom-select": "^2.3.1",
+        "sass": "^1.77.0",
         "svelte": "^4.2.15"
     }
 }

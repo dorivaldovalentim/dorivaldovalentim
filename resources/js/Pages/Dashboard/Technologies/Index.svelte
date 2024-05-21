@@ -1,5 +1,5 @@
 <script>
-    import Layout from "@/Layouts/App.svelte";
+    import Layout from "@/Layouts/Dashboard.svelte";
     import { useForm } from "@inertiajs/svelte";
     import { onMount } from "svelte";
     import Modal from "@/Components/Modal.svelte";

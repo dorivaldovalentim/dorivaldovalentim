@@ -35,6 +35,8 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'profile' => \App\Models\User::get()->first(),
+            'social_networks' => \App\Models\SocialNetwork::orderBy('name')->get(),
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),

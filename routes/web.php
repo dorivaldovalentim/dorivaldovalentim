@@ -1,17 +1,18 @@
 <?php
 
 use App\Http\Controllers\Dashboard\ClientController;
-use App\Http\Controllers\Dashboard\SkillController;
-use App\Http\Controllers\Dashboard\TechnologyController;
 use App\Http\Controllers\Dashboard\PortfolioController;
+use App\Http\Controllers\Dashboard\SkillController;
 use App\Http\Controllers\Dashboard\SocialNetworkController;
+use App\Http\Controllers\Dashboard\TechnologyController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome');
-})->name('home');
+Route::inertia('/', 'Welcome')->name('home');
+Route::inertia('/history', 'History')->name('history');
+Route::inertia('/skills', 'Skills')->name('skills');
+Route::inertia('/portfolio', 'Portfolio')->name('portfolio');
+Route::inertia('/contacts', 'Contacts')->name('contacts');
 
 Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function () {
     Route::inertia('/', 'Dashboard/Index')->name('dashboard');

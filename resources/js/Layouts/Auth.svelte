@@ -1,11 +1,16 @@
 <script setup>
     import { Link } from "@inertiajs/svelte";
+    import "@tabler/core/dist/css/tabler.min.css";
+    import "@tabler/core/dist/css/tabler-vendors.min.css";
+    import "@tabler/core/dist/css/demo.min.css";
+    import "@tabler/core/dist/js/tabler.min";
+    import "@tabler/core/dist/js/demo-theme";
 
     export let title;
 </script>
 
 <svelte:head>
-    <title>{title}</title>
+    <title>{title} « Auth « Dorivaldo Valentim</title>
 </svelte:head>
 
 <div class="page page-center">
