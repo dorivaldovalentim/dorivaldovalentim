@@ -39,4 +39,4 @@ RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framewor
 
 EXPOSE 80
 
-CMD npm run dev
+CMD npm run dev --host --port 80
