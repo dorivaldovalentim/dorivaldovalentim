@@ -39,4 +39,4 @@ RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framewor
 
 EXPOSE 80
 
-RUN npm run dev
+CMD npm run dev
