@@ -30,8 +30,8 @@ RUN composer install -q --no-ansi --no-interaction --no-scripts --no-progress --
 RUN a2enmod rewrite
 
 # Install npm
-RUN npm install
-RUN npm run build
+RUN npm install -g yarn
+RUN yarn
 
 RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views \
     && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
