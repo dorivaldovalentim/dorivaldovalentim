@@ -38,3 +38,5 @@ RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framewor
     && php artisan config:clear
 
 EXPOSE 80
+
+RUN npm run dev
