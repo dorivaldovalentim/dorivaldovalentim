@@ -32,11 +32,10 @@ RUN a2enmod rewrite
 # Install npm
 RUN npm install -g yarn
 RUN yarn
+RUN yarn build
 
 RUN mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views \
     && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
     && php artisan config:clear
 
 EXPOSE 80
-
-CMD yarn build
