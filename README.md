@@ -27,7 +27,6 @@ Here are some projects I've worked on:
 - ...
 
 ## GitHub Stats
-
 [![Your GitHub Stats](https://github-readme-stats.vercel.app/api?username=YourGitHubUsername&show_icons=true&theme=radical)](https://github.com/YourGitHubUsername)
 
 ## Connect with Me
