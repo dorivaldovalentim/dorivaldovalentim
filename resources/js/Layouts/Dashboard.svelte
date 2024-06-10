@@ -1,10 +1,5 @@
 <script setup>
     import { Link, router, page } from "@inertiajs/svelte";
-    import "@tabler/core/dist/css/tabler.min.css";
-    import "@tabler/core/dist/css/tabler-vendors.min.css";
-    import "@tabler/core/dist/css/demo.min.css";
-    import "@tabler/core/dist/js/tabler.min";
-    import "@tabler/core/dist/js/demo-theme";
 
     export let title;
 
@@ -39,7 +34,7 @@
             >
                 <Link href={route("dashboard")}>
                     <img
-                        src="@/public/logo.svg"
+                        src="/logo.svg"
                         width="110"
                         height="32"
                         alt="Tabler"
