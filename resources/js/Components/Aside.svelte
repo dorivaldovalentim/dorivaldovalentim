@@ -44,7 +44,9 @@
             </div>
 
             <div class="text-center">
-                <Link class="btn btn-outline-light w-75 rounded-pill"
+                <Link
+                    href={route("contacts")}
+                    class="btn btn-outline-light w-75 rounded-pill"
                     >Contactar</Link
                 >
             </div>
