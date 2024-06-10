@@ -12,8 +12,8 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contacts = Contact::orderBy('name')->get();
-        
+        $contacts = Contact::orderByDesc('created_at')->get();
+
         return inertia('Dashboard/Contacts/Index', [
             "contacts" => $contacts,
         ]);
@@ -24,7 +24,8 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
-        //
+        $contact->seen = 1;
+        $contact->save();
     }
 
     /**

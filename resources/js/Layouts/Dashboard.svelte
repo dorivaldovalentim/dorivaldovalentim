@@ -405,9 +405,7 @@
                         </li>
 
                         <li
-                            class:active={route().current(
-                                "contact.index",
-                            )}
+                            class:active={route().current("contact.index")}
                             class="nav-item"
                         >
                             <Link
@@ -447,7 +445,16 @@
                                     </svg>
                                 </span>
 
-                                <span class="nav-link-title"> Contactos </span>
+                                <span class="nav-link-title">
+                                    Contactos
+                                    {#if $page.props.unseen_contacts_count}
+                                        <span
+                                            class="badge bg-red text-red-fg badge-notification badge-pill"
+                                        >
+                                            {$page.props.unseen_contacts_count}
+                                        </span>
+                                    {/if}
+                                </span>
                             </Link>
                         </li>
                     </ul>

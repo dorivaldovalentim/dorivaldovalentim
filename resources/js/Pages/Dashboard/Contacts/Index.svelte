@@ -2,7 +2,7 @@
     import Layout from "@/Layouts/Dashboard.svelte";
     import { onMount } from "svelte";
     import Modal from "@/Components/Modal.svelte";
-    import { useForm } from "@inertiajs/svelte";
+    import { useForm, router } from "@inertiajs/svelte";
     import Editor from "@tinymce/tinymce-svelte";
 
     const API_KEY = import.meta.env.VITE_TINYMCE_API_KEY;
@@ -26,8 +26,12 @@
         });
     });
 
-    const edit = (contact) => {
-        fill(contact);
+    const show = (contact) => {
+        router.get(route("contact.show", contact.id), {
+            onSuccess: () => {
+                fill(contact);
+            },
+        });
     };
 
     const destroy = (id) => {
@@ -71,11 +75,15 @@
             {#each contacts as contact}
                 <div class="col-12 col-md-6 col-lg-4">
                     <button
-                        on:click={edit(contact)}
+                        on:click={show(contact)}
                         data-bs-toggle="modal"
                         data-bs-target="#modal-theme"
                         class="card card-link card-link-rotate w-100"
-                    >
+                        ><div
+                            class="card-status-top"
+                            class:bg-success={contact.seen}
+                            class:bg-danger={!contact.seen}
+                        ></div>
                         <div class="card-body d-flex justify-content-between">
                             <p class="mb-0">{contact.name}</p>
                         </div>
