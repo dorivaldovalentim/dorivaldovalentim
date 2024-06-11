@@ -36,4 +36,3 @@ Here are some projects I've worked on:
 - [Website/Blog](Your Website/Blog URL)
 
 Feel free to explore my repositories and reach out to collaborate or discuss ideas! 😊
-
