@@ -12,5 +12,10 @@ jobs:
     steps:
       - name: Trigger Jenkins Job
         run: |
-          curl -X POST "http://${{ secrets.JENKINS_SERVER_URL }}/job/${{ secrets.JENKINS_JOB_NAME }}/build?token=${{ secrets.JENKINS_JOB_TOKEN }}" \
-          --user "${{ secrets.JENKINS_USERNAME }}:${{ secrets.JENKINS_TOKEN }}"
+          status_code=$(curl -s -o /dev/null -w "%{http_code}" -X POST "${{ secrets.JENKINS_SERVER_URL }}/job/${{ secrets.JENKINS_JOB_NAME }}/build?token=${{ secrets.JENKINS_JOB_TOKEN }}" \
+          --user "${{ secrets.JENKINS_USERNAME }}:${{ secrets.JENKINS_TOKEN }}")
+          echo "HTTP Status Code: $status_code"
+          if [ "$status_code" -ne 201 ]; then
+            echo "Error: Received HTTP status code $status_code"
+            exit 1
+          fi
