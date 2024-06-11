@@ -1,0 +1,16 @@
+name: Trigger Jenkins Job
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  trigger-jenkins:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Jenkins Job
+        run: |
+          curl -X POST "http://${{ secrets.JENKINS_SERVER_URL }}/job/${{ secrets.JENKINS_JOB_NAME }}/build?token=${{ secrets.JENKINS_JOB_TOKEN }}" \
+          --user "${{ secrets.JENKINS_USERNAME }}:${{ secrets.JENKINS_TOKEN }}"
