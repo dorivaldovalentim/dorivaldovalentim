@@ -1,4 +1,5 @@
 <script setup>
+    import Mouse from "@/Components/Mouse.svelte";
     import { Link, router, page } from "@inertiajs/svelte";
 
     export let title;
@@ -12,6 +13,9 @@
 <svelte:head>
     <title>{title} « Dashboard « Dorivaldo Valentim</title>
 </svelte:head>
+
+
+<Mouse></Mouse>
 
 <div class="page">
     <!-- Navbar -->
