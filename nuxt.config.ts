@@ -1,5 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  app: {
+    head: {
+      title: "Dorivaldo Valentim",
+      meta: [
+        { charset: "utf-8" },
+        { name: "author", content: "Dorivaldo Valentim" },
+      ],
+    },
+  },
+  css: [
+    '~/assets/scss/main.scss'
+  ],
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   modules: ['@nuxtjs/strapi', '@nuxtjs/i18n'],
