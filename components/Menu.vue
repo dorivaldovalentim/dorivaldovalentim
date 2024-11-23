@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import type { IMenuItem } from "~/types/IMenuItem";
-const localePath = useLocalePath();
+const { t, locale, locales } = useI18n();
+const switchLocalePath = useSwitchLocalePath();
 
 const data: IMenuItem[] = [
-  { label: "Página Inicial", link: localePath("index") },
-  { label: "Sobre", link: localePath("about") },
-  { label: "Portfolio", link: localePath("portfolio") },
-  { label: "Contactos", link: localePath("contacts") },
+  { label: "pages.home", link: "index" },
+  { label: "pages.about", link: "about" },
+  { label: "pages.portfolio", link: "portfolio" },
+  { label: "pages.contacts", link: "contacts" },
 ];
 </script>
 
@@ -14,7 +15,13 @@ const data: IMenuItem[] = [
   <div>
     <ul>
       <li v-for="(item, index) in data" :key="index">
-        <a :href="item.link">{{ item.label }}</a>
+        <NuxtLinkLocale :to="item.link">{{ t(item.label) }}</NuxtLinkLocale>
+      </li>
+    </ul>
+
+    <ul>
+      <li v-for="(item, index) in locales" :key="index">
+        <NuxtLink :to="switchLocalePath(item.code)">{{ item.name }}</NuxtLink>
       </li>
     </ul>
   </div>
