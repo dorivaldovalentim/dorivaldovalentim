@@ -6,6 +6,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     app: {
+      appName: process.env.APP_NAME,
       strapi: {
         token: process.env.STRAPI_API_TOKEN
       }
@@ -13,12 +14,12 @@ export default defineNuxtConfig({
   },
 
   i18n: {
-    defaultLocale: 'pt',
+    defaultLocale: 'pt-AO',
     langDir: "lang",
     strategy: 'prefix_except_default',
     customRoutes: 'page',
     locales: [
-      { code: 'pt', name: 'Português', file: 'pt.ts' },
+      { code: 'pt-AO', name: 'Português', file: 'pt.ts' },
       { code: 'en', name: 'Inglês', file: 'en.ts' }
     ],
     compilation: {

@@ -1,4 +1,4 @@
-export default interface ISocialNetwork {
+export interface ISocialNetwork {
 	/**
 	 * Name of social network
 	 */
