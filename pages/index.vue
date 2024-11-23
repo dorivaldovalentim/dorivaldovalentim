@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import type { ISocialNetwork } from "~/types/ISocialNetwork";
-
-const { find } = useStrapi();
 const { t } = useI18n();
 const { app } = useRuntimeConfig();
 
@@ -18,8 +15,6 @@ defineI18nRoute({
     en: "/",
   },
 });
-
-const { data } = await find<ISocialNetwork>("social-networks");
 </script>
 
 <template>
