@@ -8,7 +8,6 @@ const { data } = await find<ISocialNetwork>("social-networks");
 
 <template>
   <div>
-    <NuxtRouteAnnouncer />
-    <NuxtWelcome />
+    Index
   </div>
 </template>
