@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  APP_NAME: dota-webapp
+  APP_NAME: dorivaldovalentim-webapp
   IMAGE_NAME: ${{ github.repository }}  # owner/repo
   ENVIRONMENT: prd
 
