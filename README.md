@@ -1,38 +1,75 @@
-# Hello, I'm [Dorivaldo Sílvio Pinto Valentim](https://dorivaldovalentim.ao) 👋
+# Nuxt Minimal Starter
 
-I'm a passionate developer from Angola, specializing in web development. Welcome to my GitHub profile!
+Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-## About Me
+## Setup
 
-- 🔭 I’m currently working on [Digital Factory](https://www.digitalfactory.co.ao/)
-- 🌱 I’m currently learning InertiaJS + Laravel
-- 📫 How to reach me: dorivaldovalentim@gmail.com
-- 😄 Pronouns: [Your Pronouns]
-- ⚡ Fun fact: [Fun Fact About Yourself]
+Make sure to install dependencies:
 
-## Skills
+```bash
+# npm
+npm install
 
-- Programming Languages: [List of Languages]
-- Frontend Development: [List of Technologies/Frameworks]
-- Backend Development: [List of Technologies/Frameworks]
-- Database Management: [List of Databases]
-- Other Skills: [Any other relevant skills]
+# pnpm
+pnpm install
 
-## Projects
+# yarn
+yarn install
 
-Here are some projects I've worked on:
+# bun
+bun install
+```
 
-- [Project Name](Link to Project): Brief description of the project.
-- [Project Name](Link to Project): Brief description of the project.
-- ...
+## Development Server
 
-## GitHub Stats
-[![Your GitHub Stats](https://github-readme-stats.vercel.app/api?username=YourGitHubUsername&show_icons=true&theme=radical)](https://github.com/YourGitHubUsername)
+Start the development server on `http://localhost:3000`:
 
-## Connect with Me
+```bash
+# npm
+npm run dev
 
-- [LinkedIn](Your LinkedIn Profile URL)
-- [Twitter](Your Twitter Profile URL)
-- [Website/Blog](Your Website/Blog URL)
+# pnpm
+pnpm dev
 
-Feel free to explore my repositories and reach out to collaborate or discuss ideas! 😊
+# yarn
+yarn dev
+
+# bun
+bun run dev
+```
+
+## Production
+
+Build the application for production:
+
+```bash
+# npm
+npm run build
+
+# pnpm
+pnpm build
+
+# yarn
+yarn build
+
+# bun
+bun run build
+```
+
+Locally preview production build:
+
+```bash
+# npm
+npm run preview
+
+# pnpm
+pnpm preview
+
+# yarn
+yarn preview
+
+# bun
+bun run preview
+```
+
+Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
