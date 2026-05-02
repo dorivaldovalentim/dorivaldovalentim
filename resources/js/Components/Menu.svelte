@@ -21,12 +21,7 @@
             label: "Portfólio",
             link: "portfolio",
             active: "portfolio",
-        },
-        {
-            label: "Contactos",
-            link: "contacts",
-            active: "contacts",
-        },
+        }
     ];
 </script>
 

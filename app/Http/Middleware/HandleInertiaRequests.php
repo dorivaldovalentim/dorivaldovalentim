@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -36,6 +37,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'profile' => \App\Models\User::get()->first(),
+            'unseen_contacts_count' => Contact::whereSeen(false)->get()->count(),
             'social_networks' => \App\Models\SocialNetwork::orderBy('name')->get(),
             'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Dashboard\ContactController as DashboardContact;
 use App\Http\Controllers\Dashboard\ClientController;
 use App\Http\Controllers\Dashboard\PortfolioController;
 use App\Http\Controllers\Dashboard\SkillController;
@@ -12,7 +14,8 @@ Route::inertia('/', 'Welcome')->name('home');
 Route::inertia('/history', 'History')->name('history');
 Route::inertia('/skills', 'Skills')->name('skills');
 Route::inertia('/portfolio', 'Portfolio')->name('portfolio');
-Route::inertia('/contacts', 'Contacts')->name('contacts');
+Route::get('/contacts', [ContactController::class, 'create'])->name('contacts');
+Route::post('/contacts', [ContactController::class, 'store'])->name('contact.store');
 
 Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function () {
     Route::inertia('/', 'Dashboard/Index')->name('dashboard');
@@ -21,6 +24,7 @@ Route::prefix('/dashboard')->middleware(['auth', 'verified'])->group(function ()
     Route::resource('technology', TechnologyController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::resource('portfolio', PortfolioController::class);
     Route::resource('social_network', SocialNetworkController::class)->only(['index', 'store', 'update', 'destroy']);
+    Route::resource('contact', DashboardContact::class)->only(['index', 'show', 'destroy']);
 });
 
 Route::middleware('auth')->group(function () {

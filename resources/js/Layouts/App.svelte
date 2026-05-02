@@ -1,6 +1,7 @@
 <script>
     import Menu from "@/Components/Menu.svelte";
     import Aside from "@/Components/Aside.svelte";
+    import Mouse from "@/Components/Mouse.svelte";
 
     export let title;
 </script>
@@ -10,6 +11,8 @@
 </svelte:head>
 
 <main>
+    <Mouse></Mouse>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col">
