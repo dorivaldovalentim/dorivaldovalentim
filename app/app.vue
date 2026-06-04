@@ -18,7 +18,8 @@ useHead({
     <Header />
 
     <main id="inicio">
-      <HeroSection />
+      <Hero />
+      <About />
     </main>
 
     <Footer></Footer>
