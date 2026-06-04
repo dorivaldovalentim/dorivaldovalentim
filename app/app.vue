@@ -16,6 +16,11 @@ useHead({
   <div>
     <NuxtRouteAnnouncer />
     <Header />
+
+    <main id="inicio">
+      <HeroSection />
+    </main>
+
     <Footer></Footer>
   </div>
 </template>
