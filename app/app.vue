@@ -15,6 +15,7 @@ useHead({
 <template>
   <div>
     <NuxtRouteAnnouncer />
-    <AppHeader />
+    <Header />
+    <Footer></Footer>
   </div>
 </template>
