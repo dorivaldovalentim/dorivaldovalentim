@@ -1,0 +1,10 @@
+:root {
+  --portfolio-bg: #0f1726;
+  --portfolio-bg-soft: #172233;
+  --portfolio-card: #202b3a;
+  --portfolio-muted: #9aa4b2;
+  --portfolio-line: rgba(148, 163, 184, 0.14);
+  --portfolio-ink: #f8fafc;
+  --portfolio-accent: #6366f1;
+  --portfolio-accent-2: #8b5cf6;
+}

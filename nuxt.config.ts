@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: [
     'bootstrap/dist/css/bootstrap.min.css',
+    '~/assets/css/variables.css',
     '~/assets/css/main.css'
   ]
 })
