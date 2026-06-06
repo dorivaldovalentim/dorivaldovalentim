@@ -3,7 +3,6 @@ html {
 }
 
 body {
-  min-width: 320px;
   background: var(--portfolio-bg);
   color: var(--portfolio-ink);
   font-family:
@@ -35,4 +34,19 @@ p {
   --bs-btn-hover-bg: #2a3748;
   --bs-btn-hover-border-color: #2a3748;
   --bs-btn-hover-color: #ffffff;
+}
+
+.project-link:hover {
+  color: #818cf8;
+}
+
+.section-space {
+  padding-top: 7.5rem;
+  scroll-margin-top: 110px;
+}
+
+.section-heading {
+  margin: 0 0 3.75rem;
+  color: var(--portfolio-ink);
+  font-weight: 700;
 }
