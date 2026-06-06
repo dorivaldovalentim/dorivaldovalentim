@@ -20,6 +20,7 @@ useHead({
     <main id="inicio">
       <Hero />
       <About />
+      <Projects />
     </main>
 
     <Footer></Footer>

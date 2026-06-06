@@ -24,14 +24,7 @@ import { funFacts, profile } from '../data/portfolio'
 </template>
 
 <style scoped>
-.section-space {
-  padding-top: 7.5rem;
-  scroll-margin-top: 110px;
-}
-
-.fun-card,
-.project-card,
-.skill-card {
+.fun-card {
   border: 1px solid var(--portfolio-line);
   border-radius: 8px;
   background: var(--portfolio-card);

@@ -7,7 +7,7 @@ const currentYear = new Date().getFullYear()
 <template>
   <footer class="p-4">
     <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-md-between justify-content-center">
+      <div class="d-flex flex-wrap align-items-center justify-content-md-between justify-content-center text-md-start text-center gap-3">
         <p class="mb-0">© {{ currentYear }} {{ profile.fullname }}. Todos os direitos reservados.</p>
 
         <div class="social-links mt-md-0 mt-2" aria-label="Redes sociais">

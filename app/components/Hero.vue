@@ -44,22 +44,4 @@ import { profile } from '../data/portfolio'
   max-width: 760px;
   font-size: clamp(1.05rem, 2vw, 1.3rem);
 }
-
-.btn-brand {
-  --bs-btn-bg: var(--portfolio-accent);
-  --bs-btn-border-color: var(--portfolio-accent);
-  --bs-btn-color: #ffffff;
-  --bs-btn-hover-bg: #4f46e5;
-  --bs-btn-hover-border-color: #4f46e5;
-  --bs-btn-hover-color: #ffffff;
-}
-
-.btn-soft {
-  --bs-btn-bg: #1f2b3a;
-  --bs-btn-border-color: #1f2b3a;
-  --bs-btn-color: #ffffff;
-  --bs-btn-hover-bg: #2a3748;
-  --bs-btn-hover-border-color: #2a3748;
-  --bs-btn-hover-color: #ffffff;
-}
 </style>
