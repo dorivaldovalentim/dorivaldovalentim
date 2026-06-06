@@ -50,3 +50,31 @@ p {
   color: var(--portfolio-ink);
   font-weight: 700;
 }
+
+.social-block {
+  margin-top: 3.5rem;
+  text-align: center;
+}
+
+.social-block p {
+  color: var(--portfolio-muted);
+  font-size: 1.1rem;
+}
+
+@media (max-width: 767.98px) {
+  .section-space {
+    padding-top: 5rem;
+  }
+
+  .section-heading {
+    margin-bottom: 2.4rem;
+  }
+
+  .project-card {
+    min-height: auto;
+  }
+
+  .project-body {
+    min-height: 240px;
+  }
+}

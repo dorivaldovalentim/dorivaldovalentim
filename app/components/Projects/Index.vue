@@ -110,4 +110,9 @@ watch(selectedProject, (project) => {
   background: #39465a;
   color: #818cf8;
 }
+
+.project-link {
+  color: var(--portfolio-accent);
+  font-weight: 500;
+}
 </style>

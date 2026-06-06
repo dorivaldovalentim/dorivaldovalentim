@@ -21,6 +21,7 @@ useHead({
       <Hero />
       <About />
       <Projects />
+      <Contact />
     </main>
 
     <Footer></Footer>
