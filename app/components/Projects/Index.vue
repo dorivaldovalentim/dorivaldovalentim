@@ -1,6 +1,11 @@
 <script setup lang="ts">
+import { useProjects } from '~/composables/useProjects'
 import { ref, watch } from 'vue'
-import { projects, type Project } from '../../data/portfolio'
+import { type Project } from '../../data/portfolio'
+
+const { projects, loading, error, fetchProjects } = useProjects()
+
+await fetchProjects()
 
 var selectedProject = ref<Project | null>(null)
 

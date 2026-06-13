@@ -11,5 +11,13 @@ export default defineNuxtConfig({
     optimizeDeps: {
       include: ['bootstrap', '@popperjs/core']
     }
+  },
+  runtimeConfig: {
+    squidexClientId: `${process.env.NUXT_SQUIDEX_CLIENT_ID ?? ''}`,
+    squidexClientSecret: `${process.env.NUXT_SQUIDEX_CLIENT_SECRET ?? ''}`,
+    public: {
+      squidexUrl: `${process.env.NUXT_PUBLIC_SQUIDEX_URL ?? ''}`,
+      squidexApp: `${process.env.NUXT_PUBLIC_SQUIDEX_APP ?? ''}`
+    }
   }
 })
