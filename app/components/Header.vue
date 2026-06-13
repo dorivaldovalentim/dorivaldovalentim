@@ -5,20 +5,19 @@ const links = [
   { label: 'Início', href: '#inicio' },
   { label: 'Sobre', href: '#sobre' },
   { label: 'Projetos', href: '#projetos' },
-  { label: 'Habilidades', href: '#habilidades' },
   { label: 'Contacto', href: '#contacto' }
 ]
 </script>
 
 <template>
   <header class="sticky-top site-topbar">
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="#inicio">
           <span>{{ profile.fullname }}</span>
         </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        <button class="navbar-toggler border-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>

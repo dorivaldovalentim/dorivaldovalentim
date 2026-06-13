@@ -6,5 +6,10 @@ export default defineNuxtConfig({
     'bootstrap/dist/css/bootstrap.min.css',
     '~/assets/css/variables.css',
     '~/assets/css/main.css'
-  ]
+  ],
+  vite: {
+    optimizeDeps: {
+      include: ['bootstrap', '@popperjs/core']
+    }
+  }
 })
