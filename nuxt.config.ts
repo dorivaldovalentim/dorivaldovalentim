@@ -2,6 +2,16 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
+  css: [
+    'bootstrap/dist/css/bootstrap.min.css',
+    '~/assets/css/variables.css',
+    '~/assets/css/main.css'
+  ],
+  vite: {
+    optimizeDeps: {
+      include: ['bootstrap', '@popperjs/core']
+    }
+  },
   modules: ['nuxt-gtag'],
   runtimeConfig: {
     public: {

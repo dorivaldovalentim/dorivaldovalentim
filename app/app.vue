@@ -1,6 +1,29 @@
+<script setup lang="ts">
+import { profile } from './data/portfolio'
+
+useHead({
+  title: `${profile.name} - ${profile.role}`,
+  meta: [
+    {
+      name: 'description',
+      content: profile.intro
+    }
+  ]
+})
+</script>
+
 <template>
   <div>
     <NuxtRouteAnnouncer />
-    <NuxtWelcome />
+    <Header />
+
+    <main id="inicio">
+      <Hero />
+      <About />
+      <Projects />
+      <Contact />
+    </main>
+
+    <Footer></Footer>
   </div>
 </template>
