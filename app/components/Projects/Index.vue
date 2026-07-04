@@ -30,7 +30,7 @@ watch(selectedProject, (project) => {
     <h2 class="section-heading display-5 text-md-center">Projetos</h2>
 
     <div class="row g-4 g-xl-5">
-      <div v-for="project in projects" :key="project.title" class="col-12 col-md-6">
+      <div v-for="(project, index) in projects" :key="index" class="col-12 col-md-6">
         <article
           class="card project-card h-100 overflow-hidden border-0"
           role="button"
@@ -39,10 +39,10 @@ watch(selectedProject, (project) => {
           @keydown.enter.prevent="openProject(project)"
           @keydown.space.prevent="openProject(project)"
         >
-          <img :src="project.image" class="card-img-top project-card-img" :alt="project.title" />
+          <img :src="project.image" class="card-img-top project-card-img" :alt="project.name" />
 
         <div class="card-body project-body d-flex flex-column p-4">
-            <h3 class="card-title h4 fw-bold">{{ project.title }}</h3>
+            <h3 class="card-title h4 fw-bold">{{ project.name }}</h3>
             <p class="card-text">{{ project.summary }}</p>
 
             <div class="d-flex flex-wrap gap-2 mt-auto pt-4">

@@ -1,5 +1,5 @@
 export type Project = {
-  title: string
+  name: string
   summary: string
   date: string
   description: string
