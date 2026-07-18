@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { useProjects } from '~/composables/useProjects'
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { type Project } from '../../data/portfolio'
 
 const { projects, loading, error, fetchProjects } = useProjects()
 
-await fetchProjects()
+const selectedProject = ref<Project | null>(null)
 
-var selectedProject = ref<Project | null>(null)
+onMounted(async () => {
+  await fetchProjects()
+})
 
 const openProject = (project: Project) => {
   selectedProject.value = project
@@ -27,10 +29,15 @@ watch(selectedProject, (project) => {
 
 <template>
   <section id="projetos" class="container section-space">
-    <h2 class="section-heading display-5 text-md-center">Projetos</h2>
+    <div class="d-flex justify-content-between align-items-center mb-5">
+      <h2 class="section-heading display-5 text-md-center">Projetos</h2>
+      <NuxtLink to="/projetos" class="btn btn-brand fw-bold d-inline-flex align-items-center gap-2">
+        Ver Todos <span aria-hidden="true">→</span>
+      </NuxtLink>
+    </div>
 
     <div class="row g-4 g-xl-5">
-      <div v-for="(project, index) in projects" :key="index" class="col-12 col-md-6">
+      <div v-for="project in projects.slice(0, 2)" :key="project.id" class="col-12 col-md-6">
         <article
           class="card project-card h-100 overflow-hidden border-0"
           role="button"
@@ -39,15 +46,15 @@ watch(selectedProject, (project) => {
           @keydown.enter.prevent="openProject(project)"
           @keydown.space.prevent="openProject(project)"
         >
-          <img :src="project.image" class="card-img-top project-card-img" :alt="project.name" />
+          <img :src="project.coverImage" class="card-img-top project-card-img" :alt="project.title" />
 
-        <div class="card-body project-body d-flex flex-column p-4">
-            <h3 class="card-title h4 fw-bold">{{ project.name }}</h3>
+          <div class="card-body project-body d-flex flex-column p-4">
+            <h3 class="card-title h4 fw-bold">{{ project.title }}</h3>
             <p class="card-text">{{ project.summary }}</p>
 
             <div class="d-flex flex-wrap gap-2 mt-auto pt-4">
-              <span v-for="tag in project.tags" :key="tag" class="badge rounded-pill project-badge">
-                {{ tag }}
+              <span v-for="tech in project.technologies" :key="tech" class="badge rounded-pill project-badge">
+                {{ tech }}
               </span>
             </div>
 

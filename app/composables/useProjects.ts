@@ -1,3 +1,5 @@
+import { ref } from 'vue'
+
 export const useProjects = () => {
   const projects = ref([])
   const loading = ref(false)
