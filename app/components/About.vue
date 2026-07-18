@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { funFacts, profile } from '../data/portfolio'
+const profile = useProfile()
 </script>
 
 <template>
@@ -7,13 +7,13 @@ import { funFacts, profile } from '../data/portfolio'
     <div class="d-flex flex-wrap">
       <div class="col-12 col-md-6 pe-md-3">
         <h2 class="section-heading display-5 fw-bold mb-md-4">Sobre Mim</h2>
-        <div v-html="profile.bio"></div>
+        <div v-html="profile?.bio"></div>
       </div>
 
       <div class="fun-card col-12 col-md-6 py-5 px-4">
         <h3>Curiosidades Divertidas</h3>
         <ul>
-          <li v-for="fact in funFacts" :key="fact">
+          <li v-for="fact in profile?.funFacts ?? []" :key="fact">
             <span aria-hidden="true">✦</span>
             <p>{{ fact }}</p>
           </li>

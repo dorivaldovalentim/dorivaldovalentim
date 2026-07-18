@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { profile } from '../data/portfolio'
+const profile = useProfile()
 </script>
 
 <template>
   <section class="hero-section d-flex align-items-center justify-content-center">
     <div class="container text-center">
-      <img class="hero-avatar" :src="profile.avatar" :alt="`Foto de ${profile.name}`" />
+      <img v-if="profile?.avatar" class="hero-avatar" :src="profile.avatar" :alt="`Foto de ${profile.name}`" />
 
       <div class="d-flex flex-column align-items-center mt-4">
-        <h1 class="display-lg-3 fw-bold">{{ profile.headline }}</h1>
-        <p class="hero-role">{{ profile.role }}</p>
-        <p class="hero-intro">{{ profile.intro }}</p>
+        <h1 class="display-lg-3 fw-bold">{{ profile?.headline }}</h1>
+        <p class="hero-role">{{ profile?.role }}</p>
+        <p class="hero-intro">{{ profile?.intro }}</p>
       </div>
 
       <div class="d-flex flex-wrap justify-content-center gap-3">

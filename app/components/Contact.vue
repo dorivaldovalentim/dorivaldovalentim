@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { profile } from '../data/portfolio'
-
-const currentYear = new Date().getFullYear()
+const profile = useProfile()
 </script>
 
 <template>
@@ -12,7 +10,7 @@ const currentYear = new Date().getFullYear()
         Tem uma pergunta, uma proposta ou apenas quer dizer oi? Fique à vontade para me contatar.
       </p>
 
-      <form :action="`mailto:${profile.email}`" method="post" class="contact-form" enctype="text/plain">
+      <form :action="`mailto:${profile?.email}`" method="post" class="contact-form" enctype="text/plain">
         <div class="row">
           <div class="col-12 col-md-6 mb-3">
             <input type="text" name="nome" class="form-control" placeholder="Seu Nome" aria-label="Seu Nome" />
@@ -35,7 +33,7 @@ const currentYear = new Date().getFullYear()
       <div class="social-block">
         <p>Ou me encontre nas redes sociais:</p>
         <div class="d-flex flex-wrap gap-3 justify-content-center" aria-label="Redes sociais">
-          <a v-for="social in profile.socials" :key="social.label" :href="social.url">
+          <a v-for="social in profile?.socials ?? []" :key="social.label" :href="social.url">
             {{ social.label }}
           </a>
         </div>

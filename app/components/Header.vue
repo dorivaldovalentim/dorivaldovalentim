@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { profile } from '../data/portfolio'
+const profile = useProfile()
 
 const links = [
   { label: 'Início', href: '#inicio' },
   { label: 'Sobre', href: '#sobre' },
+  { label: 'Experiência', href: '#experiencia' },
+  { label: 'Skills', href: '#skills' },
   { label: 'Projetos', href: '#projetos' },
   { label: 'Contacto', href: '#contacto' }
 ]
@@ -14,7 +16,7 @@ const links = [
     <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="#inicio">
-          <span>{{ profile.fullname }}</span>
+          <span>{{ profile?.fullname }}</span>
         </a>
 
         <button class="navbar-toggler border-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
