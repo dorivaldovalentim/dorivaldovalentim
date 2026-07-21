@@ -9,10 +9,19 @@ const formatDate = (value?: string) => {
 
 <template>
   <section v-if="experiences && experiences.length > 0" id="experiencia" class="container section-space">
-    <h2 class="section-heading display-5 text-md-center mb-5">Experiência</h2>
+    <div class="d-flex justify-content-between align-items-center mb-5">
+      <h2 class="section-heading display-5 text-md-center">Experiência</h2>
+      <NuxtLink
+        v-if="experiences.length > 2"
+        to="/experiencia"
+        class="btn btn-brand fw-bold d-inline-flex align-items-center gap-2"
+      >
+        Ver Mais <span aria-hidden="true">→</span>
+      </NuxtLink>
+    </div>
 
     <ol class="timeline">
-      <li v-for="experience in experiences" :key="experience.id" class="timeline-item">
+      <li v-for="experience in experiences.slice(0, 2)" :key="experience.id" class="timeline-item">
         <div class="timeline-marker" aria-hidden="true"></div>
 
         <div class="timeline-card">

@@ -69,6 +69,8 @@ useHead({
 
 <template>
   <div>
+    <Header />
+
     <section class="container section-space">
       <div class="mb-5">
         <h1 class="display-4 fw-bold mb-3">Meus Projetos</h1>
@@ -143,6 +145,8 @@ useHead({
     </section>
 
     <ProjectsModal :project="selectedProject" @close-project="closeProject" />
+
+    <Footer />
   </div>
 </template>
 
