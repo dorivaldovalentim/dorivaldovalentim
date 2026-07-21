@@ -12,7 +12,6 @@ const formatDate = (value?: string) => {
     <div class="d-flex justify-content-between align-items-center mb-5">
       <h2 class="section-heading display-5 text-md-center">Experiência</h2>
       <NuxtLink
-        v-if="experiences.length > 2"
         to="/experiencia"
         class="btn btn-brand fw-bold d-inline-flex align-items-center gap-2"
       >
