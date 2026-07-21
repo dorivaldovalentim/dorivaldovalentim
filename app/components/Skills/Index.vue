@@ -31,10 +31,10 @@ const onIconError = (icon: string) => failedIcons.add(icon)
         :key="group.category"
         class="col-12 col-sm-6 col-lg-4"
       >
-        <div class="skill-card h-100 p-4" :style="{ animationDelay: `${index * 90}ms` }">
+        <div class="skill-card h-100 p-4 text-center" :style="{ animationDelay: `${index * 90}ms` }">
           <h3 class="h5 fw-bold mb-4 skill-category">{{ group.category }}</h3>
 
-          <div class="d-flex flex-wrap gap-2">
+          <div class="d-flex flex-wrap justify-content-center gap-2">
             <span
               v-for="skill in group.items"
               :key="skill.id"
