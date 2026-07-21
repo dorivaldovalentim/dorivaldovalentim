@@ -1,23 +1,35 @@
 <script setup lang="ts">
-const profile = useProfile()
+import { computed } from 'vue'
 
-const links = [
-  { label: 'Início', href: '#inicio' },
-  { label: 'Sobre', href: '#sobre' },
-  { label: 'Experiência', href: '#experiencia' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Projetos', href: '#projetos' },
-  { label: 'Contacto', href: '#contacto' }
+const profile = useProfile()
+const route = useRoute()
+
+const sections = [
+  { label: 'Início', anchor: 'inicio' },
+  { label: 'Sobre', anchor: 'sobre' },
+  { label: 'Experiência', anchor: 'experiencia' },
+  { label: 'Skills', anchor: 'skills' },
+  { label: 'Projetos', anchor: 'projetos' },
+  { label: 'Contacto', anchor: 'contacto' }
 ]
+
+const isHome = computed(() => route.path === '/')
+
+const links = computed(() =>
+  sections.map((section) => ({
+    label: section.label,
+    href: isHome.value ? `#${section.anchor}` : `/#${section.anchor}`
+  }))
+)
 </script>
 
 <template>
   <header class="sticky-top site-topbar">
     <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#inicio">
+        <NuxtLink class="navbar-brand" :to="isHome ? '#inicio' : '/#inicio'">
           <span>{{ profile?.fullname }}</span>
-        </a>
+        </NuxtLink>
 
         <button class="navbar-toggler border-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,8 +38,8 @@ const links = [
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-3">
-            <li v-for="link in links" :key="link.href" class="nav-item">
-              <a :href="link.href" class="nav-link">{{ link.label }}</a>
+            <li v-for="link in links" :key="link.label" class="nav-item">
+              <NuxtLink :to="link.href" class="nav-link">{{ link.label }}</NuxtLink>
             </li>
           </ul>
         </div>
