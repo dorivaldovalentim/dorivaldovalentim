@@ -1,7 +1,6 @@
 <script setup lang="ts">
 const profile = useProfile()
 const { t } = useLocale()
-const facts = computed(() => [t('fact1'), t('fact2'), t('fact3'), t('fact4')])
 </script>
 
 <template>
@@ -9,13 +8,13 @@ const facts = computed(() => [t('fact1'), t('fact2'), t('fact3'), t('fact4')])
     <div class="d-flex flex-wrap">
       <div class="col-12 col-md-6 pe-md-3">
         <h2 class="section-heading display-5 fw-bold mb-md-4">{{ t('about') }}</h2>
-        <div v-html="t('aboutBio')"></div>
+        <div v-html="profile?.bio"></div>
       </div>
 
       <div class="fun-card col-12 col-md-6 py-5 px-4">
         <h3>{{ t('funFacts') }}</h3>
         <ul>
-          <li v-for="fact in facts" :key="fact">
+          <li v-for="fact in profile?.funFacts ?? []" :key="fact">
             <span aria-hidden="true">✦</span>
             <p>{{ fact }}</p>
           </li>

@@ -3,10 +3,10 @@ const profile = useProfile()
 const { locale, t } = useLocale()
 
 useSeoMeta({
-  title: () => t('heroRole'),
-  description: () => t('heroIntro'),
-  ogTitle: () => `${profile.value?.fullname ?? 'Dorivaldo Valentim'} · ${t('heroRole')}`,
-  ogDescription: () => t('heroIntro'),
+  title: () => profile.value?.role ?? 'Dorivaldo Valentim',
+  description: () => profile.value?.intro ?? '',
+  ogTitle: () => `${profile.value?.fullname ?? 'Dorivaldo Valentim'} · ${profile.value?.role ?? ''}`,
+  ogDescription: () => profile.value?.intro ?? '',
   ogImage: () => profile.value?.avatar ?? '',
   twitterImage: () => profile.value?.avatar ?? ''
 })

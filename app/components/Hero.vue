@@ -9,9 +9,9 @@ const { t } = useLocale()
       <div class="row align-items-center g-5">
         <div class="col-12 col-lg-8">
           <p class="eyebrow mb-4">{{ t('heroEyebrow') }} · {{ profile?.location }}</p>
-          <h1>{{ t('heroHeadline') }}<span class="hero-dot">.</span></h1>
-          <p class="hero-role">{{ t('heroRole') }}</p>
-          <p class="hero-intro">{{ t('heroIntro') }}</p>
+          <h1>{{ profile?.headline }}<span class="hero-dot">.</span></h1>
+          <p class="hero-role">{{ profile?.role }}</p>
+          <p class="hero-intro">{{ profile?.intro }}</p>
           <div class="d-flex flex-wrap gap-3 mt-4">
             <a class="btn btn-brand btn-lg fw-bold" href="#projetos">{{ t('heroWork') }}</a>
             <NuxtLink class="btn btn-soft btn-lg fw-bold" to="/cv">{{ t('heroCv') }}</NuxtLink>

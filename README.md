@@ -26,4 +26,4 @@ Defina as mesmas variáveis do `.env` na plataforma de deploy. O projecto també
 
 Perfil, contactos, experiências, competências e projectos são geridos no Squidex. Experiências marcadas com `[EXEMPLO]` e links sociais genéricos são omitidos automaticamente do site público.
 
-A preferência de idioma é guardada durante um ano no navegador. A interface e o conteúdo principal têm traduções locais; os futuros conteúdos editoriais do Squidex usam o texto publicado até serem adicionados campos localizados no CMS.
+A preferência de idioma é guardada durante um ano no navegador. Os textos de interface têm traduções locais; perfil, biografia, curiosidades, experiências, competências e projectos são solicitados ao Squidex no idioma escolhido, com fallback para português.

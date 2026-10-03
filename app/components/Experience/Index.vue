@@ -9,7 +9,7 @@ const formatDate = (value?: string) => {
 </script>
 
 <template>
-  <section v-if="experiences && experiences.length > 0" id="experiencia" class="container section-space">
+  <section id="experiencia" class="container section-space">
     <div class="d-flex justify-content-between align-items-center mb-5">
       <h2 class="section-heading display-5 text-md-center">{{ t('experience') }}</h2>
       <NuxtLink
@@ -20,7 +20,7 @@ const formatDate = (value?: string) => {
       </NuxtLink>
     </div>
 
-    <ol class="timeline">
+    <ol v-if="experiences?.length" class="timeline">
       <li v-for="experience in experiences.slice(0, 2)" :key="experience.id" class="timeline-item">
         <div class="timeline-marker" aria-hidden="true"></div>
 
@@ -43,6 +43,9 @@ const formatDate = (value?: string) => {
         </div>
       </li>
     </ol>
+    <div v-else class="empty-state">
+      <p class="mb-0">{{ t('noneExperience') }}</p>
+    </div>
   </section>
 </template>
 

@@ -41,7 +41,7 @@ useSeoMeta({
             <div>
               <p class="cv-label">{{ t('cvLabel') }}</p>
               <h1>{{ profile?.fullname }}</h1>
-              <p class="cv-role">{{ t('heroRole') }}</p>
+              <p class="cv-role">{{ profile?.role }}</p>
             </div>
             <img v-if="profile?.avatar" :src="profile.avatar" :alt="`Foto de ${profile.name}`" />
           </header>
@@ -63,29 +63,20 @@ useSeoMeta({
             <div class="cv-main">
               <section>
                 <h2>{{ t('profile') }}</h2>
-                <p>{{ t('heroIntro') }}</p>
-                <div class="cv-bio" v-html="t('aboutBio')"></div>
+                <p>{{ profile?.intro }}</p>
+                <div class="cv-bio" v-html="profile?.bio"></div>
               </section>
 
-              <section v-if="experiences?.length">
+              <section>
                 <h2>{{ t('experience') }}</h2>
-                <article v-for="experience in experiences" :key="experience.id" class="cv-entry">
+                <article v-for="experience in experiences ?? []" :key="experience.id" class="cv-entry">
                   <div class="cv-entry-head">
                     <div><h3>{{ experience.role }}</h3><p>{{ experience.company }} · {{ experience.location }}</p></div>
                     <span>{{ formatDate(experience.startDate) }} — {{ formatDate(experience.endDate) }}</span>
                   </div>
                   <div v-html="experience.description"></div>
                 </article>
-              </section>
-
-              <section>
-                <h2>{{ t('professionalSkills') }}</h2>
-                <ul>
-                  <li>{{ t('cvSkill1') }}</li>
-                  <li>{{ t('cvSkill2') }}</li>
-                  <li>{{ t('cvSkill3') }}</li>
-                  <li>{{ t('cvSkill4') }}</li>
-                </ul>
+                <p v-if="!experiences?.length">{{ t('noneExperience') }}</p>
               </section>
             </div>
           </div>
