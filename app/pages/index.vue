@@ -1,14 +1,14 @@
 <script setup lang="ts">
 const profile = useProfile()
+const { locale, t } = useLocale()
 
-useHead({
-  title: () => (profile.value ? `${profile.value.name} - ${profile.value.role}` : 'Dorivaldo Valentim'),
-  meta: [
-    {
-      name: 'description',
-      content: () => profile.value?.intro ?? ''
-    }
-  ]
+useSeoMeta({
+  title: () => t('heroRole'),
+  description: () => t('heroIntro'),
+  ogTitle: () => `${profile.value?.fullname ?? 'Dorivaldo Valentim'} · ${t('heroRole')}`,
+  ogDescription: () => t('heroIntro'),
+  ogImage: () => profile.value?.avatar ?? '',
+  twitterImage: () => profile.value?.avatar ?? ''
 })
 </script>
 

@@ -1,21 +1,22 @@
 <script setup lang="ts">
 const experiences = useExperiences()
+const { locale, t } = useLocale()
 
 const formatDate = (value?: string) => {
-  if (!value) return 'Presente'
-  return new Date(value).toLocaleDateString('pt-PT', { year: 'numeric', month: 'long' })
+  if (!value) return t('present')
+  return new Date(value).toLocaleDateString(locale.value === 'pt' ? 'pt-PT' : 'en-US', { year: 'numeric', month: 'long' })
 }
 </script>
 
 <template>
   <section v-if="experiences && experiences.length > 0" id="experiencia" class="container section-space">
     <div class="d-flex justify-content-between align-items-center mb-5">
-      <h2 class="section-heading display-5 text-md-center">Experiência</h2>
+      <h2 class="section-heading display-5 text-md-center">{{ t('experience') }}</h2>
       <NuxtLink
         to="/experiencia"
         class="btn btn-brand fw-bold d-inline-flex align-items-center gap-2"
       >
-        Ver Mais <span aria-hidden="true">→</span>
+        {{ t('more') }} <span aria-hidden="true">→</span>
       </NuxtLink>
     </div>
 

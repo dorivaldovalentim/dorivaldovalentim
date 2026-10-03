@@ -4,6 +4,7 @@ import { ref, watch, computed, onMounted } from 'vue'
 import { type Project } from '~/data/portfolio'
 
 const { projects, loading, error, fetchProjects } = useProjects()
+const { locale, t } = useLocale()
 
 const selectedProject = ref<Project | null>(null)
 const searchQuery = ref('')
@@ -40,14 +41,14 @@ const closeProject = () => {
   selectedProject.value = null
 }
 
-const statusOptions = [
-  { value: 'all', label: 'Todos' },
-  { value: 'Planning', label: 'Planejamento' },
-  { value: 'In Progress', label: 'Em Progresso' },
-  { value: 'Completed', label: 'Completo' },
-  { value: 'Maintained', label: 'Mantido' },
-  { value: 'Archived', label: 'Arquivado' }
-]
+const statusOptions = computed(() => [
+  { value: 'all', label: t('all') },
+  { value: 'Planning', label: t('planning') },
+  { value: 'In Progress', label: t('inProgress') },
+  { value: 'Completed', label: t('completed') },
+  { value: 'Maintained', label: t('maintained') },
+  { value: 'Archived', label: t('archived') }
+])
 
 watch(selectedProject, (project) => {
   if (import.meta.client) {
@@ -56,14 +57,9 @@ watch(selectedProject, (project) => {
   }
 })
 
-useHead({
-  title: 'Projetos - Dorivaldo Valentim',
-  meta: [
-    {
-      name: 'description',
-      content: 'Confira todos os meus projetos de desenvolvimento web fullstack'
-    }
-  ]
+useSeoMeta({
+  title: () => t('projects'),
+  description: () => t('projectsLead')
 })
 </script>
 
@@ -73,8 +69,8 @@ useHead({
 
     <section class="container section-space">
       <div class="mb-5">
-        <h1 class="display-4 fw-bold mb-3">Meus Projetos</h1>
-        <p class="lead text-muted">Explore todos os projetos que desenvolvi ao longo da minha carreira como desenvolvedor web fullstack.</p>
+        <h1 class="display-4 fw-bold mb-3">{{ t('projectsTitle') }}</h1>
+        <p class="lead text-muted">{{ t('projectsLead') }}</p>
       </div>
 
       <!-- Filtros -->
@@ -84,15 +80,15 @@ useHead({
             v-model="searchQuery"
             type="text"
             class="form-control"
-            placeholder="Buscar projetos, tecnologias..."
-            aria-label="Buscar projetos"
+            :placeholder="t('searchProjects')"
+            :aria-label="t('searchProjects')"
           />
         </div>
         <div class="col-12 col-md-6">
           <select
             v-model="selectedStatus"
             class="form-select"
-            aria-label="Filtrar por status"
+            :aria-label="t('filterStatus')"
           >
             <option v-for="status in statusOptions" :key="status.value" :value="status.value">
               {{ status.label }}
@@ -132,7 +128,7 @@ useHead({
                 </span>
               </div>
 
-              <span class="project-link mt-3">Ver Detalhes <span aria-hidden="true">→</span></span>
+              <span class="project-link mt-3">{{ t('details') }} <span aria-hidden="true">→</span></span>
             </div>
           </article>
         </div>
@@ -140,7 +136,7 @@ useHead({
 
       <!-- Mensagem vazia -->
       <div v-else class="text-center py-5">
-        <p class="text-muted">Nenhum projeto encontrado com os critérios selecionados.</p>
+        <p class="text-muted">{{ t('noneProjects') }}</p>
       </div>
     </section>
 
