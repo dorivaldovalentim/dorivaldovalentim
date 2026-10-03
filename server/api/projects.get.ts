@@ -1,61 +1,24 @@
-export default defineEventHandler(async () => {
-  const data = await squidexGraphQL(`
-    query Fetch {
-      queryProjectsContents {
-        id
+export default defineEventHandler(async (event) => {
+  const locale = getQuery(event).locale === 'en' ? 'en' : 'pt'
+  const items = await squidexContents('projects')
 
-        flatData {
-          coverImage {
-            id
-            url
-          }
-
-          title
-          slug
-          summary
-          description {
-            text
-          }
-
-          technologies
-
-          status
-
-          startDate
-          endDate
-
-          client
-
-          websiteUrl
-          repositoryUrl
-          demoUrl
-
-          gallery {
-            id
-            url
-          }
-        }
-      }
-    }
-  `)
-
-  return data.queryProjectsContents
-    .filter((project: any) => Boolean(project.flatData.title))
-    .map((project: any) => ({
-      id: project.id,
-      title: project.flatData.title,
-      slug: project.flatData.slug,
-      summary: project.flatData.summary,
-      description: project.flatData.description?.text,
-      coverImage: project.flatData.coverImage?.[0]?.url,
-      gallery: project.flatData.gallery?.map((image: any) => image.url) ?? [],
-      technologies: project.flatData.technologies ?? [],
-      status: project.flatData.status,
-      startDate: project.flatData.startDate,
-      endDate: project.flatData.endDate,
-      client: project.flatData.client,
-      websiteUrl: project.flatData.websiteUrl,
-      repositoryUrl: project.flatData.repositoryUrl,
-      demoUrl: project.flatData.demoUrl
+  return items
+    .map((item: any) => ({
+      id: item.id,
+      title: localizedField(item.data, 'title', locale),
+      slug: localizedField(item.data, 'slug', locale),
+      summary: localizedField(item.data, 'summary', locale),
+      description: richTextText(localizedField(item.data, 'description', locale)),
+      coverImage: assetUrl(localizedField(item.data, 'coverImage', locale)?.[0]),
+      gallery: (localizedField(item.data, 'gallery', locale) ?? []).map((id: string) => assetUrl(id)),
+      technologies: localizedField(item.data, 'technologies', locale) ?? [],
+      status: localizedField(item.data, 'status', locale),
+      startDate: localizedField(item.data, 'startDate', locale),
+      endDate: localizedField(item.data, 'endDate', locale),
+      client: localizedField(item.data, 'client', locale),
+      websiteUrl: localizedField(item.data, 'websiteUrl', locale),
+      repositoryUrl: localizedField(item.data, 'repositoryUrl', locale),
+      demoUrl: localizedField(item.data, 'demoUrl', locale)
     }))
+    .filter((project: any) => Boolean(project.title))
 })
