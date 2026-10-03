@@ -128,7 +128,9 @@ useSeoMeta({
                 </span>
               </div>
 
-              <span class="project-link mt-3">{{ t('details') }} <span aria-hidden="true">→</span></span>
+              <NuxtLink class="project-link mt-3" :to="`/projetos/${project.slug}`" @click.stop>
+                {{ t('details') }} <span aria-hidden="true">→</span>
+              </NuxtLink>
             </div>
           </article>
         </div>

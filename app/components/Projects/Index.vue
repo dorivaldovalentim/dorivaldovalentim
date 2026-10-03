@@ -59,7 +59,9 @@ watch(selectedProject, (project) => {
               </span>
             </div>
 
-            <span class="project-link mt-4">{{ t('details') }} <span aria-hidden="true">→</span></span>
+            <NuxtLink class="project-link mt-4" :to="`/projetos/${project.slug}`" @click.stop>
+              {{ t('details') }} <span aria-hidden="true">→</span>
+            </NuxtLink>
           </div>
         </article>
       </div>

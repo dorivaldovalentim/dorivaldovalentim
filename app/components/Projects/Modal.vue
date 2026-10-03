@@ -120,6 +120,9 @@ onBeforeUnmount(() => {
 
               <a v-if="project.websiteUrl" :href="project.websiteUrl" class="project-link m-0">{{ t('website') }}</a>
             </div>
+            <div class="mt-4 pt-4 border-top modal-share">
+              <ProjectShare :title="project.title" :summary="project.summary" :slug="project.slug" />
+            </div>
           </div>
         </div>
       </div>
@@ -298,4 +301,5 @@ onBeforeUnmount(() => {
   opacity: 0.9;
   transform: translateY(-2px);
 }
+.modal-share { border-color: var(--portfolio-line) !important; }
 </style>
