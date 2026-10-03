@@ -10,6 +10,9 @@ const { t } = useLocale()
       <p class="text-md-center">
         {{ t('contactLead') }}
       </p>
+      <div v-if="profile?.phone" class="text-center mb-4">
+        <span class="contact-phone">{{ profile.phone }}</span>
+      </div>
 
       <form :action="`mailto:${profile?.email}`" method="post" class="contact-form" enctype="text/plain">
         <div class="row">
@@ -73,4 +76,6 @@ const { t } = useLocale()
 .contact-form ::placeholder {
   color: #a7b0bd;
 }
+
+.contact-phone { color: var(--portfolio-accent); font-weight: 700; }
 </style>

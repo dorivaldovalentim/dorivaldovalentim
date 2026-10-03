@@ -51,8 +51,17 @@ useSeoMeta({
               <section>
                 <h2>{{ t('contact') }}</h2>
                 <a :href="`mailto:${profile?.email}`">{{ profile?.email }}</a>
+                <p v-if="profile?.phone">{{ profile.phone }}</p>
                 <p>{{ profile?.location }}</p>
                 <a v-for="social in profile?.socials ?? []" :key="social.label" :href="social.url">{{ social.label }}</a>
+              </section>
+              <section v-if="profile?.education">
+                <h2>{{ locale === 'pt' ? 'Educação' : 'Education' }}</h2>
+                <p>{{ profile.education }}</p>
+              </section>
+              <section v-if="profile?.languages">
+                <h2>{{ locale === 'pt' ? 'Idiomas' : 'Languages' }}</h2>
+                <p>{{ profile.languages }}</p>
               </section>
               <section v-for="group in groupedSkills" :key="group.category">
                 <h2>{{ group.category }}</h2>
