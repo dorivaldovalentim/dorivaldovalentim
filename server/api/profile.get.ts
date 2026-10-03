@@ -46,6 +46,14 @@ export default defineEventHandler(async () => {
     .map((f: any) => f.text)
 
   const socials = (data.queryContactsContents ?? [])
+    .filter((c: any) => {
+      try {
+        const parsed = new URL(c.flatData.url)
+        return parsed.protocol === 'mailto:' || parsed.pathname !== '/'
+      } catch {
+        return String(c.flatData.url ?? '').startsWith('mailto:')
+      }
+    })
     .map((c: any) => ({
       label: c.flatData.label,
       url: c.flatData.url,

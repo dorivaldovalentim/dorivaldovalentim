@@ -20,6 +20,10 @@ export default defineEventHandler(async () => {
   `)
 
   return data.queryExperiencesContents
+    .filter((experience: any) => {
+      const value = `${experience.flatData.company ?? ''} ${experience.flatData.description?.html ?? ''}`
+      return !value.toUpperCase().includes('[EXEMPLO]')
+    })
     .map((experience: any) => ({
       id: experience.id,
       role: experience.flatData.role,
