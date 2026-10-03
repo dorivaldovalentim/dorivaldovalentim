@@ -42,7 +42,12 @@ onBeforeUnmount(() => {
               <NuxtLink :to="`/projetos/${project.slug}`" class="btn btn-brand btn-lg fw-bold" @click="emit('closeProject')">
                 {{ t('viewProject') }} <span aria-hidden="true">→</span>
               </NuxtLink>
-              <button type="button" class="btn btn-soft btn-lg" @click="emit('closeProject')">{{ t('close') }}</button>
+              <a v-if="project.websiteUrl" :href="project.websiteUrl" class="btn btn-soft btn-lg" target="_blank" rel="noopener noreferrer">
+                {{ t('website') }} <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+            <div class="modal-share mt-4 pt-4">
+              <ProjectShare :title="project.title" :summary="project.summary" :slug="project.slug" />
             </div>
           </div>
         </div>
@@ -63,4 +68,5 @@ onBeforeUnmount(() => {
 .project-status { background: var(--portfolio-accent); color: var(--portfolio-dark); font-size: .75rem; font-weight: 800; }
 .project-badge { color: var(--portfolio-accent); font-size: .8rem; }
 .modal-backdrop.show { opacity: .82; background: #000; }
+.modal-share { border-top: 1px solid var(--portfolio-line); }
 </style>

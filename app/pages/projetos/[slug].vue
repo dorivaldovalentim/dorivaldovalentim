@@ -64,9 +64,7 @@ useSeoMeta({
 
         <section v-if="project.gallery?.length" class="project-gallery">
           <h2>{{ t('gallery') }}</h2>
-          <div class="gallery-grid">
-            <img v-for="(image, index) in project.gallery" :key="image" :src="image" :alt="`${project.title} ${index + 1}`" />
-          </div>
+          <GalleryLightbox :images="project.gallery" :title="project.title" />
         </section>
       </div>
     </main>
@@ -92,8 +90,6 @@ useSeoMeta({
 .project-meta a { color: var(--portfolio-accent); font-weight: 700; }
 .project-gallery { margin-top: 6rem; }
 .project-gallery h2 { margin-bottom: 2rem; font-size: 2.5rem; }
-.gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-.gallery-grid img { width: 100%; border-radius: 1rem; }
 .empty-page { min-height: 70vh; padding-top: 8rem; }
-@media (max-width: 767.98px) { .project-hero, .project-content { grid-template-columns: 1fr; } .project-hero { gap: 2rem; } .gallery-grid { grid-template-columns: 1fr; } }
+@media (max-width: 767.98px) { .project-hero, .project-content { grid-template-columns: 1fr; } .project-hero { gap: 2rem; } }
 </style>
