@@ -80,6 +80,27 @@ async function squidexToken() {
   return (await response.json()).access_token as string
 }
 
+export async function squidexCreateContent(schema: string, data: Record<string, any>) {
+  const config = useRuntimeConfig()
+  const token = await squidexToken()
+  const response = await fetch(`${config.public.squidexUrl}/api/content/${config.public.squidexApp}/${schema}?publish=true`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  if (!response.ok) {
+    const body = await response.text()
+    console.error(`[squidex] content creation failed: ${response.status} ${response.statusText} - ${body}`)
+    throw createError({ statusCode: 502, statusMessage: 'Unable to save contact message' })
+  }
+
+  return response.json()
+}
+
 export async function squidexContents(schema: string) {
   const config = useRuntimeConfig()
   const token = await squidexToken()
