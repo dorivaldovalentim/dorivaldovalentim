@@ -1,6 +1,30 @@
 <script setup lang="ts">
 const profile = useProfile()
-const { t } = useLocale()
+const { locale, t } = useLocale()
+const form = reactive({ name: '', email: '', message: '', website: '' })
+const pending = ref(false)
+const feedback = ref<'success' | 'error' | null>(null)
+
+const submit = async () => {
+  pending.value = true
+  feedback.value = null
+
+  try {
+    await $fetch('/api/contact', {
+      method: 'POST',
+      body: { ...form, locale: locale.value }
+    })
+    form.name = ''
+    form.email = ''
+    form.message = ''
+    form.website = ''
+    feedback.value = 'success'
+  } catch {
+    feedback.value = 'error'
+  } finally {
+    pending.value = false
+  }
+}
 </script>
 
 <template>
@@ -14,22 +38,32 @@ const { t } = useLocale()
         <span class="contact-phone">{{ profile.phone }}</span>
       </div>
 
-      <form :action="`mailto:${profile?.email}`" method="post" class="contact-form" enctype="text/plain">
+      <form class="contact-form" @submit.prevent="submit">
         <div class="row">
           <div class="col-12 col-md-6 mb-3">
-            <input type="text" name="nome" class="form-control" :placeholder="t('name')" :aria-label="t('name')" />
+            <input v-model="form.name" type="text" name="name" class="form-control" :placeholder="t('name')" :aria-label="t('name')" autocomplete="name" minlength="2" maxlength="120" required />
           </div>
 
           <div class="col-12 col-md-6 mb-3">
-            <input type="email" name="email" class="form-control" :placeholder="t('email')" :aria-label="t('email')" />
+            <input v-model="form.email" type="email" name="email" class="form-control" :placeholder="t('email')" :aria-label="t('email')" autocomplete="email" maxlength="254" required />
           </div>
 
           <div class="col-12 mb-4">
-            <textarea name="mensagem" rows="6" class="form-control" :placeholder="t('message')" :aria-label="t('message')" />
+            <textarea v-model="form.message" name="message" rows="6" class="form-control" :placeholder="t('message')" :aria-label="t('message')" minlength="10" maxlength="5000" required />
+          </div>
+
+          <div class="contact-trap" aria-hidden="true">
+            <label for="contact-website">Website</label>
+            <input id="contact-website" v-model="form.website" type="text" name="website" tabindex="-1" autocomplete="off" />
           </div>
 
           <div class="col-12 text-center">
-            <button class="btn btn-brand btn-lg fw-bold" type="submit">{{ t('send') }}</button>
+            <button class="btn btn-brand btn-lg fw-bold" type="submit" :disabled="pending">
+              {{ pending ? t('sending') : t('send') }}
+            </button>
+            <p v-if="feedback" class="contact-feedback mt-3 mb-0" :class="`is-${feedback}`" role="status" aria-live="polite">
+              {{ feedback === 'success' ? t('sent') : t('sendError') }}
+            </p>
           </div>
         </div>
       </form>
@@ -78,4 +112,9 @@ const { t } = useLocale()
 }
 
 .contact-phone { color: var(--portfolio-accent); font-weight: 700; }
+.contact-trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.contact-feedback { font-weight: 700; }
+.contact-feedback.is-success { color: #6ee7b7; }
+.contact-feedback.is-error { color: #fca5a5; }
+.contact-form button:disabled { cursor: wait; opacity: .68; }
 </style>
