@@ -56,42 +56,12 @@ Trabalho principalmente com **JavaScript, TypeScript, Vue.js, Nuxt, React, Node.
 ![Figma](https://img.shields.io/badge/Figma-F24E1E?style=flat-square&logo=figma&logoColor=white)
 ![Squidex](https://img.shields.io/badge/Headless_CMS-Squidex-14A38B?style=flat-square)
 
-## Experiência
-
-| Período | Função | Organização | Contribuição |
-| --- | --- | --- | --- |
-| Ago 2020 — presente | Programador Júnior | **DigitalFactory** | Desenvolvimento e manutenção de produtos digitais e websites, incluindo interfaces, integrações e melhorias contínuas. |
-| Jan 2020 — Ago 2020 | Programador Júnior | **Trabalhador independente** | Entrega de websites e aplicações web, da análise das necessidades à implementação e publicação. |
-| Jul 2019 — Dez 2019 | Programador Júnior | **Qiub Technology** | Participação em projectos reais, processos de negócio e contacto directo com clientes. |
-| 2017 — Jun 2019 | Programador Júnior | **COERSUM** | Desenvolvimento remoto dos primeiros projectos utilizados por empresas reais. |
-
-## Projectos seleccionados
-
-Ao longo da minha carreira participei na criação de **17+ produtos digitais**, desde plataformas internas a comércio electrónico e websites institucionais.
-
-- **ZAP** — plataforma institucional moderna com Nuxt e gestão de conteúdo headless.
-- **Intranet NCR** — sistema interno de comunicação e centralização de informação para colaboradores.
-- **Pharmasum** — sistema de gestão para farmácias e respectivos processos operacionais.
-- **BiblioBook** — solução para gestão de acervo, leitores, empréstimos e devoluções em bibliotecas.
-- **Real Sound** — plataforma web para disponibilização e descoberta de conteúdos de áudio.
-- **Legislação Compilada** — portal municipal que facilita o acesso a leis e documentos públicos.
-- **eLoja**, **Preciosa Garrido** e **SushiMan** — experiências de comércio electrónico para diferentes segmentos.
-- **Digital Factory**, **Sólida**, **Great Deal**, **Só Promoções**, **Sepima**, **hacitur**, **CCS** e **Box CrossFit** — soluções digitais para empresas de serviços, seguros, imobiliário, turismo, indústria e desporto.
-
-> Os estudos de caso, imagens, tecnologias e links de cada projecto são mantidos no meu portfólio através do Squidex CMS.
-
 ## Um pouco além do código
 
 - 🔭 Gosto de observar o céu nocturno com o meu telescópio — Júpiter é o meu vizinho favorito.
 - 🎮 A minha lista de jogos por terminar continua a crescer, mas ainda não desisti dela.
 - 💻 O meu primeiro `Hello World` foi escrito em QBasic, numa inesquecível tela azul.
 - 🥢 Aprender a usar hashis foi uma pequena vitória que levo muito a sério.
-
-## Idiomas
-
-- Português — fluente
-- Inglês — intermediário
-- Francês — básico
 
 ## Vamos conversar
 
@@ -111,17 +81,6 @@ I am a full-stack web developer based in Luanda, Angola, with professional exper
 Throughout my career, I have built institutional websites, internal platforms, management systems, e-commerce solutions, and digital experiences for companies in different industries. I enjoy turning business needs into useful, clear, and maintainable products, contributing from the initial idea through delivery.
 
 My main toolkit includes **JavaScript, TypeScript, Vue.js, Nuxt, React, Node.js, PHP, Laravel, and relational databases**. I value collaboration, continuous learning, and a practical approach to problem-solving.
-
-### Experience
-
-- **DigitalFactory** — Junior Developer, August 2020 to present.
-- **Independent professional** — Junior Developer, January to August 2020.
-- **Qiub Technology** — Junior Developer, July to December 2019.
-- **COERSUM** — Junior Developer, 2017 to June 2019.
-
-### Selected work
-
-I have contributed to **17+ digital products**, including the ZAP corporate platform, NCR's internal communication platform, the Pharmasum pharmacy management system, the BiblioBook library system, the Real Sound streaming platform, e-commerce experiences, and institutional websites for organisations across insurance, real estate, travel, industry, consulting, and sports.
 
 ### Let's connect
 
