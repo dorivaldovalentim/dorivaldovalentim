@@ -1,38 +1,42 @@
 <script setup lang="ts">
 const profile = useProfile()
+const { t } = useLocale()
 </script>
 
 <template>
   <section id="contacto" class="contact-section section-space">
     <div class="container">
-      <h2 class="section-heading text-md-center">Contato</h2>
+      <h2 class="section-heading text-md-center">{{ t('contact') }}</h2>
       <p class="text-md-center">
-        Tem uma pergunta, uma proposta ou apenas quer dizer oi? Fique à vontade para me contatar.
+        {{ t('contactLead') }}
       </p>
+      <div v-if="profile?.phone" class="text-center mb-4">
+        <span class="contact-phone">{{ profile.phone }}</span>
+      </div>
 
       <form :action="`mailto:${profile?.email}`" method="post" class="contact-form" enctype="text/plain">
         <div class="row">
           <div class="col-12 col-md-6 mb-3">
-            <input type="text" name="nome" class="form-control" placeholder="Seu Nome" aria-label="Seu Nome" />
+            <input type="text" name="nome" class="form-control" :placeholder="t('name')" :aria-label="t('name')" />
           </div>
 
           <div class="col-12 col-md-6 mb-3">
-            <input type="email" name="email" class="form-control" placeholder="Seu Email" aria-label="Seu Email" />
+            <input type="email" name="email" class="form-control" :placeholder="t('email')" :aria-label="t('email')" />
           </div>
 
           <div class="col-12 mb-4">
-            <textarea name="mensagem" rows="6" class="form-control" placeholder="Sua Mensagem" aria-label="Sua Mensagem" />
+            <textarea name="mensagem" rows="6" class="form-control" :placeholder="t('message')" :aria-label="t('message')" />
           </div>
 
           <div class="col-12 text-center">
-            <button class="btn btn-brand btn-lg fw-bold" type="submit">Enviar Mensagem</button>
+            <button class="btn btn-brand btn-lg fw-bold" type="submit">{{ t('send') }}</button>
           </div>
         </div>
       </form>
 
       <div class="social-block">
-        <p>Ou me encontre nas redes sociais:</p>
-        <div class="d-flex flex-wrap gap-3 justify-content-center" aria-label="Redes sociais">
+        <p>{{ t('socialLead') }}</p>
+        <div class="d-flex flex-wrap gap-3 justify-content-center" :aria-label="t('socialLabel')">
           <a v-for="social in profile?.socials ?? []" :key="social.label" :href="social.url">
             {{ social.label }}
           </a>
@@ -72,4 +76,6 @@ const profile = useProfile()
 .contact-form ::placeholder {
   color: #a7b0bd;
 }
+
+.contact-phone { color: var(--portfolio-accent); font-weight: 700; }
 </style>

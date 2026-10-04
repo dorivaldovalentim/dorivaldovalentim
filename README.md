@@ -1,75 +1,29 @@
-# Nuxt Minimal Starter
+# Portfólio de Dorivaldo Valentim
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Portfólio profissional bilingue (português/inglês) e currículo construídos com Nuxt 4, Vue 3, Bootstrap e Squidex CMS.
 
-## Setup
+## Configuração
 
-Make sure to install dependencies:
+Crie um `.env` a partir do `.env.example` e preencha as credenciais do Squidex.
 
 ```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
 yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
 yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+O ambiente local fica disponível em `http://localhost:3000`.
 
-Build the application for production:
+## Build e deploy
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
 yarn build
-
-# bun
-bun run build
+node .output/server/index.mjs
 ```
 
-Locally preview production build:
+Defina as mesmas variáveis do `.env` na plataforma de deploy. O projecto também inclui um `Dockerfile` pronto para uma plataforma compatível com contentores.
 
-```bash
-# npm
-npm run preview
+## Conteúdo
 
-# pnpm
-pnpm preview
+Perfil, contactos, experiências, competências e projectos são geridos no Squidex. Experiências marcadas com `[EXEMPLO]` e links sociais genéricos são omitidos automaticamente do site público.
 
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+A preferência de idioma é guardada durante um ano no navegador. Os textos de interface têm traduções locais; perfil, biografia, curiosidades, experiências, competências e projectos são solicitados ao Squidex no idioma escolhido, com fallback para português.

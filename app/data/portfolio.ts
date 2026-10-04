@@ -36,6 +36,9 @@ export type ProfileData = {
   role: string
   location?: string
   email: string
+  phone?: string
+  education?: string
+  languages?: string
   headline: string
   intro: string
   bio?: string

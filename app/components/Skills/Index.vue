@@ -3,6 +3,7 @@ import { computed, reactive } from 'vue'
 import type { Skill } from '@/data/portfolio'
 
 const skills = useSkills()
+const { t } = useLocale()
 
 const groups = computed(() => {
   const list = skills.value ?? []
@@ -23,7 +24,7 @@ const onIconError = (icon: string) => failedIcons.add(icon)
 
 <template>
   <section v-if="skills && skills.length > 0" id="skills" class="container section-space">
-    <h2 class="section-heading display-5 text-md-center mb-5">Skills</h2>
+    <h2 class="section-heading display-5 text-md-center mb-5">{{ t('navSkills') }}</h2>
 
     <div class="row g-4">
       <div

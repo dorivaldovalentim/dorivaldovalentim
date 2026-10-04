@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const profile = useProfile()
+const { t } = useLocale()
 
 const currentYear = new Date().getFullYear()
 </script>
@@ -8,9 +9,9 @@ const currentYear = new Date().getFullYear()
   <footer class="p-4">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-md-between justify-content-center text-md-start text-center gap-3">
-        <p class="mb-0">© {{ currentYear }} {{ profile?.fullname }}. Todos os direitos reservados.</p>
+        <p class="mb-0">© {{ currentYear }} {{ profile?.fullname }}. {{ t('rights') }}</p>
 
-        <div class="social-links mt-md-0 mt-2" aria-label="Redes sociais">
+        <div class="social-links mt-md-0 mt-2" :aria-label="t('socialLabel')">
           <a v-for="social in profile?.socials ?? []" :key="social.label" :href="social.url">
             {{ social.label }}
           </a>

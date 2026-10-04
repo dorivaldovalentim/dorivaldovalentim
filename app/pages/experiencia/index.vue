@@ -1,19 +1,15 @@
 <script setup lang="ts">
 const experiences = useExperiences()
+const { locale, t } = useLocale()
 
 const formatDate = (value?: string) => {
-  if (!value) return 'Presente'
-  return new Date(value).toLocaleDateString('pt-PT', { year: 'numeric', month: 'long' })
+  if (!value) return t('present')
+  return new Date(value).toLocaleDateString(locale.value === 'pt' ? 'pt-PT' : 'en-US', { year: 'numeric', month: 'long' })
 }
 
-useHead({
-  title: 'Experiência - Dorivaldo Valentim',
-  meta: [
-    {
-      name: 'description',
-      content: 'Confira todo o meu percurso profissional como desenvolvedor web fullstack'
-    }
-  ]
+useSeoMeta({
+  title: () => t('experience'),
+  description: () => t('experienceLead')
 })
 </script>
 
@@ -23,8 +19,8 @@ useHead({
 
     <div class="container section-space">
       <div class="mb-5">
-        <h1 class="display-4 fw-bold mb-3">Experiência</h1>
-        <p class="lead text-muted">Todo o meu percurso profissional como desenvolvedor web fullstack.</p>
+        <h1 class="display-4 fw-bold mb-3">{{ t('experience') }}</h1>
+        <p class="lead text-muted">{{ t('experienceLead') }}</p>
       </div>
 
       <ol v-if="experiences && experiences.length > 0" class="timeline">
@@ -52,7 +48,7 @@ useHead({
       </ol>
 
       <div v-else class="text-center py-5">
-        <p class="text-muted">Nenhuma experiência publicada no momento.</p>
+        <p class="text-muted">{{ t('noneExperience') }}</p>
       </div>
     </div>
 

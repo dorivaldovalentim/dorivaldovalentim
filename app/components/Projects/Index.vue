@@ -4,6 +4,7 @@ import { ref, watch, onMounted } from 'vue'
 import { type Project } from '../../data/portfolio'
 
 const { projects, loading, error, fetchProjects } = useProjects()
+const { t } = useLocale()
 
 const selectedProject = ref<Project | null>(null)
 
@@ -30,9 +31,9 @@ watch(selectedProject, (project) => {
 <template>
   <section id="projetos" class="container section-space">
     <div class="d-flex justify-content-between align-items-center mb-5">
-      <h2 class="section-heading display-5 text-md-center">Projetos</h2>
+      <h2 class="section-heading display-5 text-md-center">{{ t('projects') }}</h2>
       <NuxtLink to="/projetos" class="btn btn-brand fw-bold d-inline-flex align-items-center gap-2">
-        Ver Todos <span aria-hidden="true">→</span>
+        {{ t('allProjects') }} <span aria-hidden="true">→</span>
       </NuxtLink>
     </div>
 
@@ -58,7 +59,9 @@ watch(selectedProject, (project) => {
               </span>
             </div>
 
-            <span class="project-link mt-4">Ver Detalhes <span aria-hidden="true">→</span></span>
+            <NuxtLink class="project-link mt-4" :to="`/projetos/${project.slug}`" @click.stop>
+              {{ t('details') }} <span aria-hidden="true">→</span>
+            </NuxtLink>
           </div>
         </article>
       </div>

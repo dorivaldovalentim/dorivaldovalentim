@@ -1,24 +1,12 @@
-export default defineEventHandler(async () => {
-  const data = await squidexGraphQL(`
-    query Fetch {
-      querySkillsContents {
-        id
+export default defineEventHandler(async (event) => {
+  const locale = getQuery(event).locale === 'en' ? 'en' : 'pt'
+  const items = await squidexContents('skills')
 
-        flatData {
-          name
-          category
-          level
-          icon
-        }
-      }
-    }
-  `)
-
-  return data.querySkillsContents.map((skill: any) => ({
-    id: skill.id,
-    name: skill.flatData.name,
-    category: skill.flatData.category,
-    level: skill.flatData.level,
-    icon: skill.flatData.icon
+  return items.map((item: any) => ({
+    id: item.id,
+    name: localizedField(item.data, 'name', locale),
+    category: localizedField(item.data, 'category', locale),
+    level: localizedField(item.data, 'level', locale),
+    icon: localizedField(item.data, 'icon', locale)
   }))
 })

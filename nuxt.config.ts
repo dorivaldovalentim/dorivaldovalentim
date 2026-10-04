@@ -24,5 +24,19 @@ export default defineNuxtConfig({
   },
   gtag: {
     id: process.env.NUXT_PUBLIC_GTAG_ID ?? ''
+  },
+  app: {
+    head: {
+      htmlAttrs: { lang: 'pt' },
+      titleTemplate: '%s · Dorivaldo Valentim',
+      meta: [
+        { name: 'theme-color', content: '#08110f' },
+        { name: 'color-scheme', content: 'dark' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:locale', content: 'pt_AO' },
+        { property: 'og:site_name', content: 'Dorivaldo Valentim' },
+        { name: 'twitter:card', content: 'summary_large_image' }
+      ]
+    }
   }
 })

@@ -1,10 +1,14 @@
 :root {
-  --portfolio-bg: #0f1726;
-  --portfolio-bg-soft: #172233;
-  --portfolio-card: #202b3a;
-  --portfolio-muted: #9aa4b2;
-  --portfolio-line: rgba(148, 163, 184, 0.14);
-  --portfolio-ink: #f8fafc;
-  --portfolio-accent: #6366f1;
-  --portfolio-accent-2: #8b5cf6;
+  --portfolio-bg: #08110f;
+  --portfolio-bg-soft: #0d1a17;
+  --portfolio-card: #11221e;
+  --portfolio-card-strong: #162a25;
+  --portfolio-muted: #a1b4ad;
+  --portfolio-line: rgba(208, 232, 222, 0.13);
+  --portfolio-ink: #f1f7f4;
+  --portfolio-accent: #9ee6c1;
+  --portfolio-accent-2: #e8ff71;
+  --portfolio-dark: #0b1714;
+  --portfolio-radius: 1.5rem;
+  --portfolio-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
 }
