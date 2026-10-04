@@ -18,7 +18,7 @@ const filteredProjects = computed(() => {
   let filtered = projects.value
 
   if (selectedStatus.value !== 'all') {
-    filtered = filtered.filter(p => p.status === selectedStatus.value)
+    filtered = filtered.filter(p => p.statusKey === selectedStatus.value)
   }
 
   if (searchQuery.value) {
@@ -110,7 +110,7 @@ useSeoMeta({
           >
             <div class="position-relative">
               <img :src="project.coverImage" class="card-img-top project-card-img" :alt="project.title" />
-              <span v-if="project.status" class="badge project-card-status" :class="`status-${project.status.toLowerCase().replace(' ', '-')}`">
+              <span v-if="project.status" class="badge project-card-status" :class="project.statusKey ? `status-${project.statusKey.toLowerCase().replace(' ', '-')}` : ''">
                 {{ project.status }}
               </span>
             </div>
