@@ -59,7 +59,7 @@ useSeoMeta({
 
           <div class="cv-contact-strip">
             <a :href="`mailto:${profile.email}`"><span>@</span>{{ profile.email }}</a>
-            <p v-if="profile.phone"><span>☎</span>{{ profile.phone }}</p>
+            <a v-if="profile.phone" :href="`tel:${profile.phone.replace(/[^\d+]/g, '')}`"><span>☎</span>{{ profile.phone }}</a>
             <p v-if="profile.location"><span>⌖</span>{{ profile.location }}</p>
           </div>
 

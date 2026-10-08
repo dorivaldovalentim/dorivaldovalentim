@@ -4,6 +4,7 @@ const { locale, t } = useLocale()
 const form = reactive({ name: '', email: '', message: '', website: '' })
 const pending = ref(false)
 const feedback = ref<'success' | 'error' | null>(null)
+const phoneHref = computed(() => `tel:${String(profile.value?.phone ?? '').replace(/[^\d+]/g, '')}`)
 
 const submit = async () => {
   pending.value = true
@@ -35,7 +36,9 @@ const submit = async () => {
         {{ t('contactLead') }}
       </p>
       <div v-if="profile?.phone" class="text-center mb-4">
-        <span class="contact-phone">{{ profile.phone }}</span>
+        <a class="contact-phone" :href="phoneHref" :aria-label="`${t('contact')}: ${profile.phone}`">
+          <span aria-hidden="true">☎</span>{{ profile.phone }}
+        </a>
       </div>
 
       <form class="contact-form" @submit.prevent="submit">
@@ -70,11 +73,7 @@ const submit = async () => {
 
       <div class="social-block">
         <p>{{ t('socialLead') }}</p>
-        <div class="d-flex flex-wrap gap-3 justify-content-center" :aria-label="t('socialLabel')">
-          <a v-for="social in profile?.socials ?? []" :key="social.label" :href="social.url">
-            {{ social.label }}
-          </a>
-        </div>
+        <SocialLinks :socials="profile?.socials ?? []" :aria-label="t('socialLabel')" />
       </div>
     </div>
   </section>
@@ -111,7 +110,9 @@ const submit = async () => {
   color: #a7b0bd;
 }
 
-.contact-phone { color: var(--portfolio-accent); font-weight: 700; }
+.contact-phone { display: inline-flex; align-items: center; gap: .6rem; color: var(--portfolio-accent); font-weight: 750; }
+.contact-phone span { display: grid; width: 2rem; aspect-ratio: 1; place-items: center; border: 1px solid var(--portfolio-line); border-radius: 50%; font-size: .8rem; }
+.contact-phone:hover { color: var(--portfolio-accent-2); }
 .contact-trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 .contact-feedback { font-weight: 700; }
 .contact-feedback.is-success { color: #6ee7b7; }

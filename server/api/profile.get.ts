@@ -33,8 +33,8 @@ export default defineEventHandler(async (event) => {
       .filter((social: any) => {
         try {
           const parsed = new URL(social.url)
-          return parsed.protocol === 'mailto:' || parsed.pathname !== '/'
-        } catch { return String(social.url ?? '').startsWith('mailto:') }
+          return ['http:', 'https:', 'mailto:', 'tel:'].includes(parsed.protocol)
+        } catch { return false }
       })
       .sort((a: any, b: any) => a.order - b.order)
       .map(({ label, url, icon }: any) => ({ label, url, icon }))
