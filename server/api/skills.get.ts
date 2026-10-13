@@ -5,7 +5,8 @@ export default defineEventHandler(async (event) => {
   return items.map((item: any) => ({
     id: item.id,
     name: localizedField(item.data, 'name', locale),
-    category: localizedField(item.data, 'category', locale),
+    category: localizedField(item.data, 'categoryLabel', locale)
+      || localizedField(item.data, 'category', locale),
     level: localizedField(item.data, 'level', locale),
     icon: localizedField(item.data, 'icon', locale)
   }))
