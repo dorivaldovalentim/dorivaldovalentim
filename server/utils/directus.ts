@@ -31,7 +31,8 @@ export async function directusItems<T = any>(collection: string, query: Directus
     throw createError({ statusCode: 502, statusMessage: `Directus request failed (${response.status})` })
   }
 
-  return (await response.json()).data ?? []
+  const data = (await response.json()).data
+  return Array.isArray(data) ? data : data ? [data] : []
 }
 
 export async function directusCreateItem<T = any>(collection: string, data: Record<string, any>): Promise<T> {
