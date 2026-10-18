@@ -97,7 +97,7 @@ const collections = [
   {
     collection: 'profile',
     meta: { icon: 'person', singleton: true, note: 'Perfil principal apresentado no website', display_template: '{{fullname}}' },
-    fields: [id(), string('name', { required: true, width: 'half' }), string('fullname', { required: true, width: 'half' }), string('email', { required: true, width: 'half' }), string('phone', { width: 'half' }), uuid('avatar', { interface: 'file-image' }), alias('translations', 'translations', 'translations', { languageField: 'name', defaultLanguage: 'pt' })]
+    fields: [id(), string('name', { required: true, width: 'half' }), string('fullname', { required: true, width: 'half' }), string('email', { required: true, width: 'half' }), string('phone', { width: 'half' }), uuid('avatar', { interface: 'file-image' }), alias('translations', 'translations', 'translations', { languageField: 'name', languageDirectionField: 'direction', defaultLanguage: 'pt' })]
   },
   {
     collection: 'profile_translations', meta: { icon: 'translate', hidden: true },
@@ -105,7 +105,7 @@ const collections = [
   },
   {
     collection: 'fun_facts', meta: { icon: 'lightbulb', note: 'Factos pessoais apresentados na secção Sobre', sort_field: 'sort' },
-    fields: [id(), integer('sort', { defaultValue: 1 }), alias('translations', 'translations', 'translations', { languageField: 'name', defaultLanguage: 'pt' })]
+    fields: [id(), integer('sort', { defaultValue: 1 }), alias('translations', 'translations', 'translations', { languageField: 'name', languageDirectionField: 'direction', defaultLanguage: 'pt' })]
   },
   { collection: 'fun_facts_translations', meta: { icon: 'translate', hidden: true }, fields: [autoId(), uuid('fun_facts_id'), string('languages_code', { required: true, width: 'half', length: 10 }), text('text', { required: true })] },
   {
@@ -114,17 +114,17 @@ const collections = [
   },
   {
     collection: 'skills', meta: { icon: 'code', note: 'Competências técnicas', sort_field: 'sort' },
-    fields: [id(), integer('level'), string('icon', { width: 'half' }), integer('sort', { defaultValue: 1 }), alias('translations', 'translations', 'translations', { languageField: 'name', defaultLanguage: 'pt' })]
+    fields: [id(), integer('level'), string('icon', { width: 'half' }), integer('sort', { defaultValue: 1 }), alias('translations', 'translations', 'translations', { languageField: 'name', languageDirectionField: 'direction', defaultLanguage: 'pt' })]
   },
   { collection: 'skills_translations', meta: { icon: 'translate', hidden: true }, fields: [autoId(), uuid('skills_id'), string('languages_code', { required: true, width: 'half', length: 10 }), string('name', { required: true }), string('category_label', { required: true })] },
   {
     collection: 'experiences', meta: { icon: 'work', note: 'Experiência profissional', sort_field: 'sort', display_template: '{{company}}' },
-    fields: [id(), string('company', { required: true }), date('start_date'), date('end_date'), json('technologies'), integer('sort', { defaultValue: 1 }), alias('translations', 'translations', 'translations', { languageField: 'name', defaultLanguage: 'pt' })]
+    fields: [id(), string('company', { required: true }), date('start_date'), date('end_date'), json('technologies'), integer('sort', { defaultValue: 1 }), alias('translations', 'translations', 'translations', { languageField: 'name', languageDirectionField: 'direction', defaultLanguage: 'pt' })]
   },
   { collection: 'experiences_translations', meta: { icon: 'translate', hidden: true }, fields: [autoId(), uuid('experiences_id'), string('languages_code', { required: true, width: 'half', length: 10 }), string('role', { required: true }), string('location'), text('description', { interface: 'input-rich-text-html' })] },
   {
     collection: 'projects', meta: { icon: 'rocket_launch', note: 'Projectos do portfólio', sort_field: 'sort', display_template: '{{slug}}' },
-    fields: [id(), string('slug', { required: true, unique: true }), uuid('cover_image', { interface: 'file-image' }), json('technologies'), string('status_key', { width: 'half' }), date('start_date'), date('end_date'), string('website_url'), string('repository_url'), string('demo_url'), integer('sort', { defaultValue: 1 }), alias('gallery', 'o2m', 'list-o2m'), alias('translations', 'translations', 'translations', { languageField: 'name', defaultLanguage: 'pt' })]
+    fields: [id(), string('slug', { required: true, unique: true }), uuid('cover_image', { interface: 'file-image' }), json('technologies'), string('status_key', { width: 'half' }), date('start_date'), date('end_date'), string('website_url'), string('repository_url'), string('demo_url'), integer('sort', { defaultValue: 1 }), alias('gallery', 'o2m', 'list-o2m'), alias('translations', 'translations', 'translations', { languageField: 'name', languageDirectionField: 'direction', defaultLanguage: 'pt' })]
   },
   { collection: 'projects_translations', meta: { icon: 'translate', hidden: true }, fields: [autoId(), uuid('projects_id'), string('languages_code', { required: true, width: 'half', length: 10 }), string('title', { required: true }), text('summary', { required: true }), text('description', { interface: 'input-rich-text-html' }), string('status_label'), string('client')] },
   {
@@ -203,6 +203,19 @@ for (const language of [{ code: 'pt', name: 'Português', direction: 'ltr' }, { 
   } catch (error) {
     if (!String(error).includes('RECORD_NOT_UNIQUE')) throw error
   }
+}
+
+for (const collection of ['profile', 'fun_facts', 'skills', 'experiences', 'projects']) {
+  await request(`/fields/${collection}/translations`, {
+    method: 'PATCH',
+    body: JSON.stringify({
+      meta: {
+        special: ['translations'],
+        interface: 'translations',
+        options: { languageField: 'name', languageDirectionField: 'direction', defaultLanguage: 'pt' }
+      }
+    })
+  })
 }
 
 console.log('Directus schema is ready.')
