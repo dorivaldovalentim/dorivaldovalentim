@@ -1,0 +1,162 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dorivaldovalentim-cms-dev
+  labels:
+    name: dorivaldovalentim-cms-dev
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dorivaldovalentim-cms-dev
+  namespace: dorivaldovalentim-cms-dev
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dorivaldovalentim-cms-dev
+  namespace: dorivaldovalentim-cms-dev
+data:
+  PUBLIC_URL: "https://cms-dev.dorivaldovalentim.ao"
+  DB_CLIENT: "mysql"
+  # Change this to the DNS name of the existing MySQL Service if different.
+  DB_HOST: "mysql.mysql.svc.cluster.local"
+  DB_PORT: "3306"
+  DB_DATABASE: "dorivaldovalentim_directus"
+  DB_USER: "directus"
+  WEBSOCKETS_ENABLED: "true"
+  TELEMETRY: "false"
+  CORS_ENABLED: "true"
+  CORS_ORIGIN: "https://dev.dorivaldovalentim.ao"
+  EMAIL_TRANSPORT: "smtp"
+  EMAIL_FROM: "no-reply@dorivaldovalentim.ao"
+  EMAIL_SMTP_PORT: "587"
+  EMAIL_SMTP_SECURE: "false"
+---
+# Fill stringData before applying, or replace this resource with your secret manager.
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dorivaldovalentim-cms-dev
+  namespace: dorivaldovalentim-cms-dev
+type: Opaque
+stringData:
+  SECRET: "CHANGE_ME_WITH_AT_LEAST_32_RANDOM_CHARACTERS"
+  ADMIN_EMAIL: "CHANGE_ME"
+  ADMIN_PASSWORD: "CHANGE_ME"
+  ADMIN_TOKEN: "CHANGE_ME_WITH_A_RANDOM_STATIC_TOKEN"
+  DB_PASSWORD: "CHANGE_ME"
+  EMAIL_SMTP_HOST: "CHANGE_ME"
+  EMAIL_SMTP_USER: "CHANGE_ME"
+  EMAIL_SMTP_PASSWORD: "CHANGE_ME"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dorivaldovalentim-cms-uploads-dev
+  namespace: dorivaldovalentim-cms-dev
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dorivaldovalentim-cms-dev
+  namespace: dorivaldovalentim-cms-dev
+spec:
+  selector:
+    app: dorivaldovalentim-cms-dev
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8055
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dorivaldovalentim-cms-dev
+  namespace: dorivaldovalentim-cms-dev
+  labels:
+    app: dorivaldovalentim-cms-dev
+spec:
+  # Keep one replica while uploads use a ReadWriteOnce PVC. Use S3/RWX before scaling.
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: dorivaldovalentim-cms-dev
+  template:
+    metadata:
+      labels:
+        app: dorivaldovalentim-cms-dev
+    spec:
+      serviceAccountName: dorivaldovalentim-cms-dev
+      containers:
+        - name: directus
+          image: directus/directus:11
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8055
+          envFrom:
+            - configMapRef:
+                name: dorivaldovalentim-cms-dev
+            - secretRef:
+                name: dorivaldovalentim-cms-dev
+          volumeMounts:
+            - name: uploads
+              mountPath: /directus/uploads
+          startupProbe:
+            httpGet:
+              path: /server/health
+              port: http
+            periodSeconds: 10
+            failureThreshold: 30
+          readinessProbe:
+            httpGet:
+              path: /server/health
+              port: http
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /server/health
+              port: http
+            periodSeconds: 20
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+      volumes:
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: dorivaldovalentim-cms-uploads-dev
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dorivaldovalentim-cms-dev
+  namespace: dorivaldovalentim-cms-dev
+spec:
+  rules:
+    - host: cms-dev.dorivaldovalentim.ao
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dorivaldovalentim-cms-dev
+                port:
+                  number: 80

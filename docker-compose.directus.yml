@@ -1,0 +1,66 @@
+services:
+  directus-database:
+    image: mysql:8.4
+    container_name: dorivaldovalentim-directus-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DIRECTUS_DB_DATABASE:-directus}
+      MYSQL_USER: ${DIRECTUS_DB_USER:-directus}
+      MYSQL_PASSWORD: ${DIRECTUS_DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DIRECTUS_DB_ROOT_PASSWORD}
+    volumes:
+      - directus_database:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u$${MYSQL_USER} -p$${MYSQL_PASSWORD} --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  directus:
+    image: directus/directus:11
+    container_name: dorivaldovalentim-directus
+    restart: unless-stopped
+    depends_on:
+      directus-database:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8055:8055"
+    environment:
+      PUBLIC_URL: ${DIRECTUS_PUBLIC_URL:-http://localhost:8055}
+      SECRET: ${DIRECTUS_SECRET}
+      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD}
+      ADMIN_TOKEN: ${DIRECTUS_ADMIN_TOKEN}
+      DB_CLIENT: mysql
+      DB_HOST: directus-database
+      DB_PORT: 3306
+      DB_DATABASE: ${DIRECTUS_DB_DATABASE:-directus}
+      DB_USER: ${DIRECTUS_DB_USER:-directus}
+      DB_PASSWORD: ${DIRECTUS_DB_PASSWORD}
+      WEBSOCKETS_ENABLED: "true"
+      TELEMETRY: "false"
+      CORS_ENABLED: "true"
+      CORS_ORIGIN: ${DIRECTUS_CORS_ORIGIN:-http://localhost:3000}
+      EMAIL_TRANSPORT: ${DIRECTUS_EMAIL_TRANSPORT:-smtp}
+      EMAIL_FROM: ${DIRECTUS_EMAIL_FROM:-no-reply@dorivaldovalentim.ao}
+      EMAIL_SMTP_HOST: ${DIRECTUS_EMAIL_SMTP_HOST:-}
+      EMAIL_SMTP_PORT: ${DIRECTUS_EMAIL_SMTP_PORT:-587}
+      EMAIL_SMTP_USER: ${DIRECTUS_EMAIL_SMTP_USER:-}
+      EMAIL_SMTP_PASSWORD: ${DIRECTUS_EMAIL_SMTP_PASSWORD:-}
+      EMAIL_SMTP_SECURE: ${DIRECTUS_EMAIL_SMTP_SECURE:-false}
+    volumes:
+      - directus_uploads:/directus/uploads
+      - directus_extensions:/directus/extensions
+      - directus_templates:/directus/templates
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:8055/server/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  directus_database:
+  directus_uploads:
+  directus_extensions:
+  directus_templates:
