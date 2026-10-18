@@ -77,8 +77,13 @@ const timestamp = field => ({ field, type: 'timestamp', meta: { interface: 'date
 const json = field => ({ field, type: 'json', meta: { interface: 'tags', width: 'full' }, schema: { is_nullable: true } })
 const uuid = (field, options = {}) => ({
   field, type: 'uuid',
-  meta: { interface: options.interface || 'select-dropdown-m2o', special: ['m2o'], width: options.width || 'full' },
+  meta: { interface: options.interface || 'select-dropdown-m2o', special: ['m2o'], hidden: options.hidden ?? false, width: options.width || 'full' },
   schema: { is_nullable: options.nullable ?? true }
+})
+const languageRelation = () => ({
+  field: 'languages_code', type: 'string',
+  meta: { interface: 'select-dropdown-m2o', special: ['m2o'], hidden: true, width: 'half' },
+  schema: { max_length: 10, is_nullable: false }
 })
 const alias = (field, special, interfaceName, options = {}) => ({
   field, type: 'alias', meta: { special: [special], interface: interfaceName, options, width: 'full' }, schema: null
@@ -101,13 +106,13 @@ const collections = [
   },
   {
     collection: 'profile_translations', meta: { icon: 'translate', hidden: true },
-    fields: [autoId(), uuid('profile_id'), string('languages_code', { required: true, width: 'half', length: 10 }), string('role', { required: true }), string('location'), string('education'), string('languages'), text('headline', { required: true }), text('intro', { required: true }), text('bio', { interface: 'input-rich-text-html' })]
+    fields: [autoId(), uuid('profile_id', { hidden: true }), languageRelation(), string('role', { required: true }), string('location'), string('education'), string('languages'), text('headline', { required: true }), text('intro', { required: true }), text('bio', { interface: 'input-rich-text-html' })]
   },
   {
     collection: 'fun_facts', meta: { icon: 'lightbulb', note: 'Factos pessoais apresentados na secção Sobre', sort_field: 'sort' },
     fields: [id(), integer('sort', { defaultValue: 1 }), alias('translations', 'translations', 'translations', { languageField: 'name', languageDirectionField: 'direction', defaultLanguage: 'pt' })]
   },
-  { collection: 'fun_facts_translations', meta: { icon: 'translate', hidden: true }, fields: [autoId(), uuid('fun_facts_id'), string('languages_code', { required: true, width: 'half', length: 10 }), text('text', { required: true })] },
+  { collection: 'fun_facts_translations', meta: { icon: 'translate', hidden: true }, fields: [autoId(), uuid('fun_facts_id', { hidden: true }), languageRelation(), text('text', { required: true })] },
   {
     collection: 'contacts', meta: { icon: 'share', note: 'Links de contacto e redes sociais', sort_field: 'sort', display_template: '{{label}}' },
     fields: [id(), string('label', { required: true, width: 'half' }), string('url', { required: true, width: 'half' }), string('icon', { width: 'half' }), integer('sort', { defaultValue: 1 })]
@@ -116,17 +121,17 @@ const collections = [
     collection: 'skills', meta: { icon: 'code', note: 'Competências técnicas', sort_field: 'sort' },
     fields: [id(), integer('level'), string('icon', { width: 'half' }), integer('sort', { defaultValue: 1 }), alias('translations', 'translations', 'translations', { languageField: 'name', languageDirectionField: 'direction', defaultLanguage: 'pt' })]
   },
-  { collection: 'skills_translations', meta: { icon: 'translate', hidden: true }, fields: [autoId(), uuid('skills_id'), string('languages_code', { required: true, width: 'half', length: 10 }), string('name', { required: true }), string('category_label', { required: true })] },
+  { collection: 'skills_translations', meta: { icon: 'translate', hidden: true }, fields: [autoId(), uuid('skills_id', { hidden: true }), languageRelation(), string('name', { required: true }), string('category_label', { required: true })] },
   {
     collection: 'experiences', meta: { icon: 'work', note: 'Experiência profissional', sort_field: 'sort', display_template: '{{company}}' },
     fields: [id(), string('company', { required: true }), date('start_date'), date('end_date'), json('technologies'), integer('sort', { defaultValue: 1 }), alias('translations', 'translations', 'translations', { languageField: 'name', languageDirectionField: 'direction', defaultLanguage: 'pt' })]
   },
-  { collection: 'experiences_translations', meta: { icon: 'translate', hidden: true }, fields: [autoId(), uuid('experiences_id'), string('languages_code', { required: true, width: 'half', length: 10 }), string('role', { required: true }), string('location'), text('description', { interface: 'input-rich-text-html' })] },
+  { collection: 'experiences_translations', meta: { icon: 'translate', hidden: true }, fields: [autoId(), uuid('experiences_id', { hidden: true }), languageRelation(), string('role', { required: true }), string('location'), text('description', { interface: 'input-rich-text-html' })] },
   {
     collection: 'projects', meta: { icon: 'rocket_launch', note: 'Projectos do portfólio', sort_field: 'sort', display_template: '{{slug}}' },
     fields: [id(), string('slug', { required: true, unique: true }), uuid('cover_image', { interface: 'file-image' }), json('technologies'), string('status_key', { width: 'half' }), date('start_date'), date('end_date'), string('website_url'), string('repository_url'), string('demo_url'), integer('sort', { defaultValue: 1 }), alias('gallery', 'o2m', 'list-o2m'), alias('translations', 'translations', 'translations', { languageField: 'name', languageDirectionField: 'direction', defaultLanguage: 'pt' })]
   },
-  { collection: 'projects_translations', meta: { icon: 'translate', hidden: true }, fields: [autoId(), uuid('projects_id'), string('languages_code', { required: true, width: 'half', length: 10 }), string('title', { required: true }), text('summary', { required: true }), text('description', { interface: 'input-rich-text-html' }), string('status_label'), string('client')] },
+  { collection: 'projects_translations', meta: { icon: 'translate', hidden: true }, fields: [autoId(), uuid('projects_id', { hidden: true }), languageRelation(), string('title', { required: true }), text('summary', { required: true }), text('description', { interface: 'input-rich-text-html' }), string('status_label'), string('client')] },
   {
     collection: 'projects_files', meta: { icon: 'image', hidden: true },
     fields: [autoId(), uuid('projects_id'), uuid('directus_files_id', { interface: 'file-image' }), integer('sort', { defaultValue: 1 })]
@@ -229,6 +234,14 @@ for (const [translationCollection, parentField] of [
   await request(`/relations/${translationCollection}/${parentField}`, {
     method: 'PATCH',
     body: JSON.stringify({ meta: { junction_field: 'languages_code' } })
+  })
+  await request(`/fields/${translationCollection}/${parentField}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ meta: { interface: 'select-dropdown-m2o', special: ['m2o'], hidden: true } })
+  })
+  await request(`/fields/${translationCollection}/languages_code`, {
+    method: 'PATCH',
+    body: JSON.stringify({ meta: { interface: 'select-dropdown-m2o', special: ['m2o'], hidden: true } })
   })
 }
 
