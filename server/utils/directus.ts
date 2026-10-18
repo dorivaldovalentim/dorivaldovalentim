@@ -2,26 +2,27 @@ type DirectusQuery = Record<string, string | number | boolean | undefined>
 
 const directusConfig = () => {
   const config = useRuntimeConfig()
-  const url = String(config.public.directusUrl || '').replace(/\/$/, '')
+  const apiUrl = String(config.directusUrl || config.public.directusUrl || '').replace(/\/$/, '')
+  const publicUrl = String(config.public.directusUrl || apiUrl).replace(/\/$/, '')
 
-  if (!url) {
+  if (!apiUrl) {
     throw createError({ statusCode: 500, statusMessage: 'Directus URL is not configured' })
   }
 
-  return { url, token: String(config.directusToken || '') }
+  return { apiUrl, publicUrl, token: String(config.directusToken || '') }
 }
 
 export const isDirectusProvider = () => useRuntimeConfig().cmsProvider === 'directus'
 
 export async function directusItems<T = any>(collection: string, query: DirectusQuery = {}): Promise<T[]> {
-  const { url, token } = directusConfig()
+  const { apiUrl, token } = directusConfig()
   const search = new URLSearchParams()
 
   for (const [key, value] of Object.entries(query)) {
     if (value !== undefined) search.set(key, String(value))
   }
 
-  const response = await fetch(`${url}/items/${collection}?${search}`, {
+  const response = await fetch(`${apiUrl}/items/${collection}?${search}`, {
     headers: token ? { Authorization: `Bearer ${token}` } : undefined
   })
 
@@ -36,8 +37,8 @@ export async function directusItems<T = any>(collection: string, query: Directus
 }
 
 export async function directusCreateItem<T = any>(collection: string, data: Record<string, any>): Promise<T> {
-  const { url, token } = directusConfig()
-  const response = await fetch(`${url}/items/${collection}`, {
+  const { apiUrl, token } = directusConfig()
+  const response = await fetch(`${apiUrl}/items/${collection}`, {
     method: 'POST',
     headers: {
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -71,7 +72,7 @@ export function directusTranslation(item: any, locale: string) {
 export function directusAssetUrl(file?: string | { id?: string } | null) {
   const id = typeof file === 'string' ? file : file?.id
   if (!id) return undefined
-  return `${directusConfig().url}/assets/${id}`
+  return `${directusConfig().publicUrl}/assets/${id}`
 }
 
 export function directusGallery(items?: any[]) {

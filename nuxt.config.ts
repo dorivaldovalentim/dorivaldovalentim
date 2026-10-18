@@ -16,6 +16,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     cmsProvider: process.env.NUXT_CMS_PROVIDER ?? 'squidex',
     directusToken: process.env.NUXT_DIRECTUS_TOKEN ?? '',
+    directusUrl: process.env.NUXT_DIRECTUS_URL ?? process.env.NUXT_PUBLIC_DIRECTUS_URL ?? '',
     squidexClientId: `${process.env.NUXT_SQUIDEX_CLIENT_ID ?? ''}`,
     squidexClientSecret: `${process.env.NUXT_SQUIDEX_CLIENT_SECRET ?? ''}`,
     public: {
