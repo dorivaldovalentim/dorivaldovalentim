@@ -181,6 +181,7 @@ for (const [collection, field, relatedCollection, oneField] of relations) {
         many_field: field,
         one_collection: relatedCollection,
         one_field: oneField,
+        junction_field: oneField === 'translations' ? 'languages_code' : null,
         one_deselect_action: 'nullify'
       },
       schema: {
@@ -215,6 +216,19 @@ for (const collection of ['profile', 'fun_facts', 'skills', 'experiences', 'proj
         options: { languageField: 'name', languageDirectionField: 'direction', defaultLanguage: 'pt' }
       }
     })
+  })
+}
+
+for (const [translationCollection, parentField] of [
+  ['profile_translations', 'profile_id'],
+  ['fun_facts_translations', 'fun_facts_id'],
+  ['skills_translations', 'skills_id'],
+  ['experiences_translations', 'experiences_id'],
+  ['projects_translations', 'projects_id']
+]) {
+  await request(`/relations/${translationCollection}/${parentField}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ meta: { junction_field: 'languages_code' } })
   })
 }
 
