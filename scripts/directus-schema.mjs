@@ -144,18 +144,18 @@ const collections = [
 ]
 
 const relations = [
-  ['profile_translations', 'profile_id', 'profile', 'translations'],
-  ['profile_translations', 'languages_code', 'languages', null],
-  ['fun_facts_translations', 'fun_facts_id', 'fun_facts', 'translations'],
-  ['fun_facts_translations', 'languages_code', 'languages', null],
-  ['skills_translations', 'skills_id', 'skills', 'translations'],
-  ['skills_translations', 'languages_code', 'languages', null],
-  ['experiences_translations', 'experiences_id', 'experiences', 'translations'],
-  ['experiences_translations', 'languages_code', 'languages', null],
-  ['projects_translations', 'projects_id', 'projects', 'translations'],
-  ['projects_translations', 'languages_code', 'languages', null],
-  ['projects_files', 'projects_id', 'projects', 'gallery'],
-  ['projects_files', 'directus_files_id', 'directus_files', null],
+  ['profile_translations', 'profile_id', 'profile', 'translations', 'languages_code'],
+  ['profile_translations', 'languages_code', 'languages', null, 'profile_id'],
+  ['fun_facts_translations', 'fun_facts_id', 'fun_facts', 'translations', 'languages_code'],
+  ['fun_facts_translations', 'languages_code', 'languages', null, 'fun_facts_id'],
+  ['skills_translations', 'skills_id', 'skills', 'translations', 'languages_code'],
+  ['skills_translations', 'languages_code', 'languages', null, 'skills_id'],
+  ['experiences_translations', 'experiences_id', 'experiences', 'translations', 'languages_code'],
+  ['experiences_translations', 'languages_code', 'languages', null, 'experiences_id'],
+  ['projects_translations', 'projects_id', 'projects', 'translations', 'languages_code'],
+  ['projects_translations', 'languages_code', 'languages', null, 'projects_id'],
+  ['projects_files', 'projects_id', 'projects', 'gallery', 'directus_files_id'],
+  ['projects_files', 'directus_files_id', 'directus_files', null, 'projects_id'],
   ['profile', 'avatar', 'directus_files', null],
   ['projects', 'cover_image', 'directus_files', null]
 ]
@@ -173,7 +173,7 @@ for (const definition of collections) {
 }
 
 const currentRelations = await request('/relations')
-for (const [collection, field, relatedCollection, oneField] of relations) {
+for (const [collection, field, relatedCollection, oneField, junctionField = null] of relations) {
   if (currentRelations.some(item => item.collection === collection && item.field === field)) continue
   await request('/relations', {
     method: 'POST',
@@ -186,7 +186,7 @@ for (const [collection, field, relatedCollection, oneField] of relations) {
         many_field: field,
         one_collection: relatedCollection,
         one_field: oneField,
-        junction_field: oneField === 'translations' ? 'languages_code' : null,
+        junction_field: junctionField,
         one_deselect_action: 'nullify'
       },
       schema: {
@@ -234,6 +234,10 @@ for (const [translationCollection, parentField] of [
   await request(`/relations/${translationCollection}/${parentField}`, {
     method: 'PATCH',
     body: JSON.stringify({ meta: { junction_field: 'languages_code' } })
+  })
+  await request(`/relations/${translationCollection}/languages_code`, {
+    method: 'PATCH',
+    body: JSON.stringify({ meta: { junction_field: parentField } })
   })
   await request(`/fields/${translationCollection}/${parentField}`, {
     method: 'PATCH',
