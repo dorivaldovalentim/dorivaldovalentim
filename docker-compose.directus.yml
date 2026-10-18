@@ -1,6 +1,6 @@
 services:
   directus-database:
-    image: mysql:8.4
+    image: mysql:8.0
     container_name: dorivaldovalentim-directus-db
     restart: unless-stopped
     environment:
@@ -48,6 +48,7 @@ services:
       EMAIL_SMTP_USER: ${DIRECTUS_EMAIL_SMTP_USER:-}
       EMAIL_SMTP_PASSWORD: ${DIRECTUS_EMAIL_SMTP_PASSWORD:-}
       EMAIL_SMTP_SECURE: ${DIRECTUS_EMAIL_SMTP_SECURE:-false}
+      EMAIL_VERIFY_SETUP: ${DIRECTUS_EMAIL_VERIFY_SETUP:-false}
     volumes:
       - directus_uploads:/directus/uploads
       - directus_extensions:/directus/extensions

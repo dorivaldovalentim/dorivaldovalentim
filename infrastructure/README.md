@@ -1,6 +1,6 @@
 # Directus infrastructure
 
-The CMS runs as Directus 11 backed by MySQL 8.4 locally and by the existing
+The CMS runs as Directus 11 backed by MySQL 8.0 locally and by the existing
 MySQL service in Kubernetes. Uploaded assets are persisted independently from
 the Directus container.
 

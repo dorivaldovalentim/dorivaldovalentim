@@ -32,6 +32,7 @@ data:
   EMAIL_FROM: "no-reply@dorivaldovalentim.ao"
   EMAIL_SMTP_PORT: "587"
   EMAIL_SMTP_SECURE: "false"
+  EMAIL_VERIFY_SETUP: "true"
 ---
 # Fill stringData before applying, or replace this resource with your secret manager.
 apiVersion: v1
