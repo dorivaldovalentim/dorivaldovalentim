@@ -40,14 +40,25 @@ export default defineEventHandler(async (event) => {
     current.count += 1
   }
 
-  await squidexCreateContent('contact-messages', {
-    name: { iv: name },
-    email: { iv: email },
-    message: { iv: message },
-    locale: { iv: locale },
-    submittedAt: { iv: new Date(now).toISOString() },
-    status: { iv: 'New' }
-  })
+  if (isDirectusProvider()) {
+    await directusCreateItem('contact_messages', {
+      name,
+      email,
+      message,
+      locale,
+      submitted_at: new Date(now).toISOString(),
+      status: 'new'
+    })
+  } else {
+    await squidexCreateContent('contact-messages', {
+      name: { iv: name },
+      email: { iv: email },
+      message: { iv: message },
+      locale: { iv: locale },
+      submittedAt: { iv: new Date(now).toISOString() },
+      status: { iv: 'New' }
+    })
+  }
 
   return { ok: true }
 })

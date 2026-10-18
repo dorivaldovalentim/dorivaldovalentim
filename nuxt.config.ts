@@ -14,10 +14,13 @@ export default defineNuxtConfig({
   },
   modules: ['nuxt-gtag'],
   runtimeConfig: {
+    cmsProvider: process.env.NUXT_CMS_PROVIDER ?? 'squidex',
+    directusToken: process.env.NUXT_DIRECTUS_TOKEN ?? '',
     squidexClientId: `${process.env.NUXT_SQUIDEX_CLIENT_ID ?? ''}`,
     squidexClientSecret: `${process.env.NUXT_SQUIDEX_CLIENT_SECRET ?? ''}`,
     public: {
       gtagId: process.env.NUXT_PUBLIC_GTAG_ID ?? '',
+      directusUrl: process.env.NUXT_PUBLIC_DIRECTUS_URL ?? '',
       squidexUrl: `${process.env.NUXT_PUBLIC_SQUIDEX_URL ?? ''}`,
       squidexApp: `${process.env.NUXT_PUBLIC_SQUIDEX_APP ?? ''}`
     }
