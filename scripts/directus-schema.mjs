@@ -12,7 +12,7 @@ function readEnv(file) {
   return result
 }
 
-const env = readEnv('.env.directus')
+const env = readEnv(process.env.DIRECTUS_ENV_FILE || '.env.directus')
 const baseUrl = (env.DIRECTUS_PUBLIC_URL || 'http://localhost:8055').replace(/\/$/, '')
 const token = env.DIRECTUS_ADMIN_TOKEN
 

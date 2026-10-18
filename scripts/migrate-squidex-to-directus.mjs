@@ -6,8 +6,8 @@ const parseEnv = text => Object.fromEntries(text.split(/\r?\n/).map(line => line
   return [line.slice(0, index), line.slice(index + 1).replace(/^['"]|['"]$/g, '')]
 }))
 
-const squidexEnv = parseEnv(await readFile('.env', 'utf8'))
-const directusEnv = parseEnv(await readFile('.env.directus', 'utf8'))
+const squidexEnv = parseEnv(await readFile(process.env.SQUIDEX_ENV_FILE || '.env', 'utf8'))
+const directusEnv = parseEnv(await readFile(process.env.DIRECTUS_ENV_FILE || '.env.directus', 'utf8'))
 const squidexUrl = (squidexEnv.NUXT_PUBLIC_SQUIDEX_URL || 'https://cloud.squidex.io').replace(/\/$/, '')
 const squidexApp = squidexEnv.NUXT_PUBLIC_SQUIDEX_APP
 const directusUrl = (directusEnv.DIRECTUS_PUBLIC_URL || 'http://localhost:8055').replace(/\/$/, '')
