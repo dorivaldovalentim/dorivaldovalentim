@@ -97,6 +97,18 @@ After validation, replace the admin migration token with a dedicated website
 service token that can read published portfolio content and create contact
 messages only.
 
+When the local Directus instance already contains the approved content, promote
+it directly instead of importing Squidex again. Add the temporary production
+admin token as `TOKEN` in the ignored `.env.directus`, then run:
+
+```powershell
+node scripts/promote-directus.mjs
+```
+
+The promotion preserves IDs, translations, files and relations, and is safe to
+run again after subsequent local edits. Remove the temporary `TOKEN` line as
+soon as the promotion has been validated.
+
 ## Website configuration during migration
 
 Keep the current provider until the imported content has been compared:

@@ -13,8 +13,8 @@ function readEnv(file) {
 }
 
 const env = readEnv(process.env.DIRECTUS_ENV_FILE || '.env.directus')
-const baseUrl = (env.DIRECTUS_PUBLIC_URL || 'http://localhost:8055').replace(/\/$/, '')
-const token = env.DIRECTUS_ADMIN_TOKEN
+const baseUrl = (process.env.DIRECTUS_PUBLIC_URL || env.DIRECTUS_PUBLIC_URL || 'http://localhost:8055').replace(/\/$/, '')
+const token = process.env.DIRECTUS_ADMIN_TOKEN || env.DIRECTUS_ADMIN_TOKEN
 
 async function request(endpoint, options = {}) {
   const response = await fetch(`${baseUrl}${endpoint}`, {
