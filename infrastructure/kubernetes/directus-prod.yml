@@ -48,9 +48,6 @@ metadata:
 type: Opaque
 stringData:
   SECRET: "CHANGE_ME_WITH_AT_LEAST_32_RANDOM_CHARACTERS"
-  ADMIN_EMAIL: "CHANGE_ME"
-  ADMIN_PASSWORD: "CHANGE_ME"
-  ADMIN_TOKEN: "CHANGE_ME_WITH_A_RANDOM_STATIC_TOKEN"
   DB_PASSWORD: "CHANGE_ME"
   EMAIL_SMTP_HOST: "CHANGE_ME"
   EMAIL_SMTP_USER: "CHANGE_ME"
@@ -109,7 +106,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
       containers:
         - name: directus
-          image: directus/directus:11.17.4
+          image: directus/directus:12.5.0
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
@@ -124,21 +121,21 @@ spec:
               mountPath: /directus/uploads
           startupProbe:
             httpGet:
-              path: /server/health
+              path: /server/ping
               port: http
             timeoutSeconds: 5
             periodSeconds: 10
             failureThreshold: 30
           readinessProbe:
             httpGet:
-              path: /server/health
+              path: /server/ping
               port: http
             timeoutSeconds: 5
             periodSeconds: 10
             failureThreshold: 3
           livenessProbe:
             httpGet:
-              path: /server/health
+              path: /server/ping
               port: http
             timeoutSeconds: 5
             periodSeconds: 20

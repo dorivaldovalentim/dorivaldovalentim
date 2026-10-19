@@ -116,19 +116,19 @@ spec:
               mountPath: /directus/uploads
           startupProbe:
             httpGet:
-              path: /server/health
+              path: /server/ping
               port: http
             periodSeconds: 10
             failureThreshold: 30
           readinessProbe:
             httpGet:
-              path: /server/health
+              path: /server/ping
               port: http
             periodSeconds: 10
             failureThreshold: 3
           livenessProbe:
             httpGet:
-              path: /server/health
+              path: /server/ping
               port: http
             periodSeconds: 20
             failureThreshold: 3

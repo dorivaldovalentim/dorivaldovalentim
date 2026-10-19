@@ -61,6 +61,17 @@ The production manifest is `kubernetes/directus-prod.yml` and exposes Directus
 at `https://bo.dorivaldovalentim.ao`. It deliberately contains placeholders,
 not production credentials.
 
+`ADMIN_EMAIL`, `ADMIN_PASSWORD` and `ADMIN_TOKEN` are bootstrap-only values and
+are intentionally absent from the production manifest after the first admin has
+been created. Administrator credentials and static tokens are managed in
+Directus itself. Keep `SECRET` configured because it is application runtime
+configuration, not a bootstrap credential.
+
+Directus 12 protects `/server/health` from anonymous requests. Kubernetes and
+Docker therefore probe `/server/ping`; use an authenticated `/server/health`
+request separately when detailed database, storage and email diagnostics are
+needed.
+
 Before applying it:
 
 1. Point the DNS `A`/`AAAA` record for `bo.dorivaldovalentim.ao` to the public
