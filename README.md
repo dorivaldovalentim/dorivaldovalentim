@@ -1,9 +1,9 @@
 <div align="center">
-  <img src="https://cloud.squidex.io/api/assets/dorivaldovalentim/dbb965da-73de-4aa9-a799-05406cfaeae1/" width="150" alt="Dorivaldo Valentim" />
+  <img src="https://dorivaldovalentim.ao/api/assets/dbb965da-73de-4aa9-a799-05406cfaeae1" width="150" alt="Dorivaldo Valentim" />
 
   # Olá, eu sou o Dorivaldo Valentim 👋
 
-  **Desenvolvedor Web Fullstack · Luanda, Angola**
+  **Desenvolvedor Fullstack · Luanda, Angola**
 
   Construo produtos digitais que transformam ideias em soluções reais.
 
@@ -15,7 +15,7 @@
 
 ## Sobre mim
 
-Sou desenvolvedor web fullstack com experiência profissional desde **2017**, trabalhando em equipas de produto, projectos independentes e ambientes remotos.
+Sou desenvolvedor fullstack com experiência profissional desde **2017**, trabalhando em equipas de produto, projectos independentes e ambientes remotos.
 
 Ao longo do meu percurso, desenvolvi websites institucionais, plataformas internas, sistemas de gestão, soluções de comércio electrónico e experiências digitais para empresas de diferentes sectores. Gosto de transformar necessidades de negócio em produtos úteis, claros e sustentáveis, acompanhando o trabalho desde a ideia até à publicação.
 
@@ -54,7 +54,7 @@ Trabalho principalmente com **JavaScript, TypeScript, Vue.js, Nuxt, React, Node.
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=111827)
 ![Figma](https://img.shields.io/badge/Figma-F24E1E?style=flat-square&logo=figma&logoColor=white)
-![Squidex](https://img.shields.io/badge/Headless_CMS-Squidex-14A38B?style=flat-square)
+![Directus](https://img.shields.io/badge/Headless_CMS-Directus-6644FF?style=flat-square&logo=directus&logoColor=white)
 
 ## Um pouco além do código
 
@@ -76,7 +76,7 @@ Estou disponível para trocar ideias sobre desenvolvimento web, produtos digitai
 
 ## About me
 
-I am a full-stack web developer based in Luanda, Angola, with professional experience since **2017** across product teams, independent projects, and remote environments.
+I am a full-stack developer based in Luanda, Angola, with professional experience since **2017** across product teams, independent projects, and remote environments.
 
 Throughout my career, I have built institutional websites, internal platforms, management systems, e-commerce solutions, and digital experiences for companies in different industries. I enjoy turning business needs into useful, clear, and maintainable products, contributing from the initial idea through delivery.
 
@@ -92,4 +92,4 @@ I am open to conversations about web development, digital products, technical co
 
 ---
 
-<sub>Este perfil é alimentado pelas informações do meu CV e do meu portfólio bilingue desenvolvido com Nuxt e Squidex.</sub>
+<sub>Este perfil é alimentado pelas informações do meu CV e do meu portfólio bilingue desenvolvido com Nuxt e Directus.</sub>
