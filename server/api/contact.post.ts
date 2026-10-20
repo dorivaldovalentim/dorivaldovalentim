@@ -41,6 +41,7 @@ export default defineEventHandler(async (event) => {
   }
 
   await directusCreateItem('contact_messages', {
+    id: crypto.randomUUID(),
     name,
     email,
     message,

@@ -33,7 +33,7 @@ async function request(endpoint, options = {}) {
 
 const id = () => ({
   field: 'id', type: 'uuid',
-  meta: { interface: 'input', hidden: true, readonly: true },
+  meta: { interface: 'input', special: ['uuid'], hidden: true, readonly: true },
   schema: { is_primary_key: true, is_nullable: false }
 })
 
@@ -170,6 +170,14 @@ for (const definition of collections) {
     body: JSON.stringify({ ...definition, schema: { name: definition.collection } })
   })
   console.log(`created collection ${definition.collection}`)
+}
+
+// Keep existing UUID primary keys configured as generated UUIDs as well.
+for (const collection of ['profile', 'fun_facts', 'contacts', 'skills', 'experiences', 'projects', 'contact_messages']) {
+  await request(`/fields/${collection}/id`, {
+    method: 'PATCH',
+    body: JSON.stringify({ meta: { interface: 'input', special: ['uuid'], hidden: true, readonly: true } })
+  })
 }
 
 const currentRelations = await request('/relations')
