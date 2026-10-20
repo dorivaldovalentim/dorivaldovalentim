@@ -45,14 +45,18 @@ export async function directusCreateItem<T = any>(collection: string, data: Reco
     },
     body: JSON.stringify(data)
   })
+  const body = await response.text()
 
   if (!response.ok) {
-    const body = await response.text()
     console.error(`[directus] ${collection} creation failed: ${response.status} - ${body}`)
     throw createError({ statusCode: 502, statusMessage: 'Unable to save content in Directus' })
   }
 
-  return (await response.json()).data
+  // Directus may return 204 when the policy can create an item but cannot read
+  // the newly-created record. In that case the operation still succeeded.
+  if (!body) return undefined as T
+
+  return JSON.parse(body).data
 }
 
 export function directusTranslation(item: any, locale: string) {
