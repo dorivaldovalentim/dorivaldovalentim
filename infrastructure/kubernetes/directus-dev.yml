@@ -101,7 +101,7 @@ spec:
       serviceAccountName: dorivaldovalentim-cms-dev
       containers:
         - name: directus
-          image: directus/directus:11
+          image: directus/directus:12.5.0
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

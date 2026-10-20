@@ -1,6 +1,6 @@
 # Directus infrastructure
 
-The CMS runs as Directus 11 backed by MySQL 8.0 locally and by the existing
+The CMS runs as Directus 12 backed by MySQL 8.0 locally and by the existing
 MySQL service in Kubernetes. Uploaded assets are persisted independently from
 the Directus container.
 
@@ -26,7 +26,7 @@ The manifest at `kubernetes/directus-dev.yml` creates:
 - the `dorivaldovalentim-cms-dev` namespace and service account;
 - an opaque application secret, separate from registry credentials;
 - a connection to the existing MySQL Service in the cluster;
-- Directus 11 as a single-replica Deployment with a 5 Gi uploads PVC;
+- Directus 12 as a single-replica Deployment with a 5 Gi uploads PVC;
 - health probes, resource requests and limits;
 - ClusterIP services and an Ingress for `cms-dev.dorivaldovalentim.ao`.
 
@@ -93,24 +93,20 @@ kubectl -n dorivaldovalentim-cms-prod get pod,service,ingress,pvc
 ```
 
 Once the production instance is healthy, create an ignored
-`.env.directus.production` with its public URL and admin migration token, then
-apply the schema and content from this workstation:
+`.env.directus.production` with its public URL and an admin migration token,
+then apply the schema from this workstation:
 
 ```powershell
 $env:DIRECTUS_ENV_FILE='.env.directus.production'
 node scripts/directus-schema.mjs
-$env:SQUIDEX_ENV_FILE='.env'
-node scripts/migrate-squidex-to-directus.mjs
 ```
 
-Run the migration command a second time: it must report `0 new records`.
-After validation, replace the admin migration token with a dedicated website
-service token that can read published portfolio content and create contact
-messages only.
+After validation, remove the temporary admin migration token. The website uses
+a dedicated service token that can read portfolio content and files and create
+contact messages only.
 
-When the local Directus instance already contains the approved content, promote
-it directly instead of importing Squidex again. Add the temporary production
-admin token as `TOKEN` in the ignored `.env.directus`, then run:
+To promote approved content from the local Directus instance, add the temporary
+production admin token as `TOKEN` in the ignored `.env.directus`, then run:
 
 ```powershell
 node scripts/promote-directus.mjs
@@ -120,19 +116,18 @@ The promotion preserves IDs, translations, files and relations, and is safe to
 run again after subsequent local edits. Remove the temporary `TOKEN` line as
 soon as the promotion has been validated.
 
-## Website configuration during migration
+## Website configuration
 
-Keep the current provider until the imported content has been compared:
+Only the internal Directus URL and service token are required. Browser asset
+requests are proxied through Nuxt so the token is never exposed publicly.
 
 ```dotenv
-NUXT_CMS_PROVIDER=squidex
-NUXT_PUBLIC_DIRECTUS_URL=https://bo.dorivaldovalentim.ao
-NUXT_DIRECTUS_URL=http://dorivaldovalentim-cms-prod.dorivaldovalentim-cms-prod.svc.cluster.local
+NUXT_DIRECTUS_URL=http://dorivaldovalentim-bo-prod.dorivaldovalentim-bo-prod.svc.cluster.local
 NUXT_DIRECTUS_TOKEN=<read-and-create-contact-token>
 ```
 
-After validation, change only `NUXT_CMS_PROVIDER` to `directus`. The Directus
-token is server-only and must remain in an opaque Kubernetes Secret.
+The Directus token is server-only and must remain in an opaque Kubernetes
+Secret. `NUXT_DIRECTUS_URL` belongs in the frontend ConfigMap.
 
 ## Backups
 

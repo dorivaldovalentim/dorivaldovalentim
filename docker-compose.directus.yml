@@ -17,7 +17,7 @@ services:
       retries: 10
 
   directus:
-    image: directus/directus:11
+    image: directus/directus:12.5.0
     container_name: dorivaldovalentim-directus
     restart: unless-stopped
     depends_on:
