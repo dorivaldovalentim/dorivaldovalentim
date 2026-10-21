@@ -211,6 +211,16 @@ for (const [collection, field, relatedCollection, oneField, junctionField = null
   console.log(`created relation ${collection}.${field}`)
 }
 
+for (const [field, junctionField] of [
+  ['projects_id', 'directus_files_id'],
+  ['directus_files_id', 'projects_id']
+]) {
+  await request(`/relations/projects_files/${field}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ meta: { junction_field: junctionField } })
+  })
+}
+
 for (const language of [{ code: 'pt', name: 'Português', direction: 'ltr' }, { code: 'en', name: 'English', direction: 'ltr' }]) {
   try {
     await request('/items/languages', { method: 'POST', body: JSON.stringify(language) })
