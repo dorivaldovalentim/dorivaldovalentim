@@ -24,7 +24,7 @@ useSeoMeta({
   description: () => project.value?.summary ?? '',
   ogTitle: () => project.value?.title ?? '',
   ogDescription: () => project.value?.summary ?? '',
-  ogImage: () => project.value?.coverImage ?? '',
+  ogImage: () => projectCover(project.value?.coverImage),
   ogUrl: () => new URL(route.fullPath, requestUrl.origin).toString(),
   twitterCard: 'summary_large_image'
 })
@@ -48,7 +48,7 @@ useSeoMeta({
 
         <div class="project-content">
           <article class="surface project-description">
-            <p>{{ project.description }}</p>
+            <div v-if="project.description" class="project-rich-text" v-html="project.description"></div>
             <div class="d-flex flex-wrap gap-2 mt-4">
               <span v-for="tech in project.technologies" :key="tech" class="tech-pill">{{ tech }}</span>
             </div>
@@ -83,7 +83,10 @@ useSeoMeta({
 .project-summary { max-width: 620px; font-size: clamp(1.1rem, 2vw, 1.4rem); }
 .project-content { display: grid; grid-template-columns: 1.4fr .6fr; gap: 1.5rem; margin-top: 5rem; }
 .project-description, .project-meta { padding: clamp(1.5rem, 4vw, 3rem); }
-.project-description > p { color: var(--portfolio-ink); font-size: 1.15rem; }
+.project-rich-text { color: var(--portfolio-ink); font-size: 1.15rem; }
+.project-rich-text :deep(p:last-child) { margin-bottom: 0; }
+.project-rich-text :deep(a) { color: var(--portfolio-accent); text-decoration: underline; text-underline-offset: .2em; }
+.project-rich-text :deep(ul), .project-rich-text :deep(ol) { color: var(--portfolio-muted); }
 .tech-pill { border: 1px solid var(--portfolio-line); border-radius: 999px; padding: .45rem .75rem; color: var(--portfolio-accent); }
 .project-meta { display: grid; gap: 1.4rem; }
 .project-meta div { display: grid; gap: .2rem; }
