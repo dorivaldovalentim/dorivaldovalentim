@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted } from 'vue'
 import type { Project } from '../../data/portfolio'
+import { projectCover } from '~/utils/projectCover'
 
 const props = defineProps<{ project: Project | null }>()
 const emit = defineEmits(['closeProject'])
@@ -25,7 +26,7 @@ onBeforeUnmount(() => {
       <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content project-modal-content border-0">
           <div class="position-relative">
-            <img v-if="project.coverImage" :src="project.coverImage" class="project-modal-img" :alt="project.title" />
+            <img :src="projectCover(project.coverImage)" class="project-modal-img" :alt="project.title" />
             <button type="button" class="btn-close btn-close-white project-modal-close" :aria-label="t('close')" @click="emit('closeProject')" />
           </div>
 

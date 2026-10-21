@@ -1,3 +1,5 @@
+export type ProjectStatus = 'Planning' | 'In Progress' | 'Completed' | 'Maintained' | 'Archived'
+
 export type Project = {
   id: string
 
@@ -12,7 +14,8 @@ export type Project = {
 
   technologies: string[]
 
-  status?: 'Planning' | 'In Progress' | 'Completed' | 'Maintained' | 'Archived'
+  status?: string
+  statusKey?: ProjectStatus
 
   startDate?: string
   endDate?: string

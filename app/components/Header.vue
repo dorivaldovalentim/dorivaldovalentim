@@ -17,6 +17,11 @@ const sections = computed(() => [
 
 const isHome = computed(() => route.path === '/')
 
+const displayName = computed(() => {
+  const parts = (profile.value?.fullname ?? 'Dorivaldo Valentim').trim().split(/\s+/)
+  return parts.length > 1 ? `${parts[0]} ${parts.at(-1)}` : parts[0]
+})
+
 const links = computed(() =>
   sections.value.map((section) => ({
     label: section.label,
@@ -30,7 +35,7 @@ const links = computed(() =>
     <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
       <div class="container">
         <NuxtLink class="navbar-brand" :to="isHome ? '#inicio' : '/#inicio'">
-          <span class="brand-mark">DV</span><span class="brand-name">{{ profile?.fullname }}</span>
+          <span class="brand-mark">DV</span><span class="brand-name">{{ displayName }}</span>
         </NuxtLink>
 
         <button class="navbar-toggler border-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"

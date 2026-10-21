@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Project } from '~/data/portfolio'
+import { projectCover } from '~/utils/projectCover'
 
 const route = useRoute()
 const { locale, t } = useLocale()
@@ -42,7 +43,7 @@ useSeoMeta({
             <p class="project-summary">{{ project.summary }}</p>
             <ProjectShare :title="project.title" :summary="project.summary" :slug="project.slug" />
           </div>
-          <img v-if="project.coverImage" :src="project.coverImage" :alt="project.title" />
+          <img :src="projectCover(project.coverImage)" :alt="project.title" />
         </header>
 
         <div class="project-content">

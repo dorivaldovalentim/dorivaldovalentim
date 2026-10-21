@@ -1,0 +1,175 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dorivaldovalentim-cms-prod
+  labels:
+    name: dorivaldovalentim-cms-prod
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dorivaldovalentim-cms-prod
+  namespace: dorivaldovalentim-cms-prod
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dorivaldovalentim-cms-prod
+  namespace: dorivaldovalentim-cms-prod
+data:
+  PUBLIC_URL: "https://bo.dorivaldovalentim.ao"
+  DB_CLIENT: "mysql"
+  # Replace if the existing MySQL Service uses another namespace or name.
+  DB_HOST: "mysql.mysql.svc.cluster.local"
+  DB_PORT: "3306"
+  DB_DATABASE: "dorivaldovalentim_directus"
+  DB_USER: "directus"
+  WEBSOCKETS_ENABLED: "true"
+  TELEMETRY: "false"
+  CORS_ENABLED: "true"
+  CORS_ORIGIN: "https://dorivaldovalentim.ao,https://www.dorivaldovalentim.ao"
+  RATE_LIMITER_ENABLED: "true"
+  RATE_LIMITER_STORE: "memory"
+  TRUST_PROXY: "true"
+  LOG_LEVEL: "info"
+  EMAIL_TRANSPORT: "smtp"
+  EMAIL_FROM: "no-reply@dorivaldovalentim.ao"
+  EMAIL_SMTP_PORT: "587"
+  EMAIL_SMTP_SECURE: "false"
+  EMAIL_VERIFY_SETUP: "true"
+---
+# Replace this resource with External Secrets or Sealed Secrets when available.
+# Never commit real production values.
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dorivaldovalentim-cms-prod
+  namespace: dorivaldovalentim-cms-prod
+type: Opaque
+stringData:
+  SECRET: "CHANGE_ME_WITH_AT_LEAST_32_RANDOM_CHARACTERS"
+  DB_PASSWORD: "CHANGE_ME"
+  EMAIL_SMTP_HOST: "CHANGE_ME"
+  EMAIL_SMTP_USER: "CHANGE_ME"
+  EMAIL_SMTP_PASSWORD: "CHANGE_ME"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dorivaldovalentim-cms-uploads-prod
+  namespace: dorivaldovalentim-cms-prod
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dorivaldovalentim-cms-prod
+  namespace: dorivaldovalentim-cms-prod
+spec:
+  selector:
+    app: dorivaldovalentim-cms-prod
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8055
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dorivaldovalentim-cms-prod
+  namespace: dorivaldovalentim-cms-prod
+  labels:
+    app: dorivaldovalentim-cms-prod
+spec:
+  # Keep one replica while uploads use ReadWriteOnce storage.
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: dorivaldovalentim-cms-prod
+  template:
+    metadata:
+      labels:
+        app: dorivaldovalentim-cms-prod
+    spec:
+      serviceAccountName: dorivaldovalentim-cms-prod
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+      containers:
+        - name: directus
+          image: directus/directus:12.5.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8055
+          envFrom:
+            - configMapRef:
+                name: dorivaldovalentim-cms-prod
+            - secretRef:
+                name: dorivaldovalentim-cms-prod
+          volumeMounts:
+            - name: uploads
+              mountPath: /directus/uploads
+          startupProbe:
+            httpGet:
+              path: /server/ping
+              port: http
+            timeoutSeconds: 5
+            periodSeconds: 10
+            failureThreshold: 30
+          readinessProbe:
+            httpGet:
+              path: /server/ping
+              port: http
+            timeoutSeconds: 5
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /server/ping
+              port: http
+            timeoutSeconds: 5
+            periodSeconds: 20
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+      volumes:
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: dorivaldovalentim-cms-uploads-prod
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dorivaldovalentim-cms-prod
+  namespace: dorivaldovalentim-cms-prod
+spec:
+  tls:
+    - hosts:
+        - bo.dorivaldovalentim.ao
+      secretName: bo-dorivaldovalentim-ao-tls
+  rules:
+    - host: bo.dorivaldovalentim.ao
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dorivaldovalentim-cms-prod
+                port:
+                  number: 80
