@@ -2,6 +2,7 @@
 import { useProjects } from '~/composables/useProjects'
 import { ref, watch, onMounted } from 'vue'
 import { type Project } from '../../data/portfolio'
+import { projectCover } from '~/utils/projectCover'
 
 const { projects, loading, error, fetchProjects } = useProjects()
 const { t } = useLocale()
@@ -47,7 +48,7 @@ watch(selectedProject, (project) => {
           @keydown.enter.prevent="openProject(project)"
           @keydown.space.prevent="openProject(project)"
         >
-          <img :src="project.coverImage" class="card-img-top project-card-img" :alt="project.title" />
+          <img :src="projectCover(project.coverImage)" class="card-img-top project-card-img" :alt="project.title" />
 
           <div class="card-body project-body d-flex flex-column p-4">
             <h3 class="card-title h4 fw-bold">{{ project.title }}</h3>
