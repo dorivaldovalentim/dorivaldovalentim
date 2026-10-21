@@ -129,7 +129,7 @@ const collections = [
   { collection: 'experiences_translations', meta: { icon: 'translate', hidden: true }, fields: [autoId(), uuid('experiences_id', { hidden: true }), languageRelation(), string('role', { required: true }), string('location'), text('description', { interface: 'input-rich-text-html' })] },
   {
     collection: 'projects', meta: { icon: 'rocket_launch', note: 'Projectos do portfólio', sort_field: 'sort', display_template: '{{slug}}' },
-    fields: [id(), string('slug', { required: true, unique: true }), uuid('cover_image', { interface: 'file-image' }), json('technologies'), string('status_key', { width: 'half' }), date('start_date'), date('end_date'), string('website_url'), string('repository_url'), string('demo_url'), integer('sort', { defaultValue: 1 }), alias('gallery', 'o2m', 'list-o2m'), alias('translations', 'translations', 'translations', { languageField: 'name', languageDirectionField: 'direction', defaultLanguage: 'pt' })]
+    fields: [id(), string('slug', { required: true, unique: true }), uuid('cover_image', { interface: 'file-image' }), json('technologies'), string('status_key', { width: 'half' }), date('start_date'), date('end_date'), string('website_url'), string('repository_url'), string('demo_url'), integer('sort', { defaultValue: 1 }), alias('gallery', 'files', 'files'), alias('translations', 'translations', 'translations', { languageField: 'name', languageDirectionField: 'direction', defaultLanguage: 'pt' })]
   },
   { collection: 'projects_translations', meta: { icon: 'translate', hidden: true }, fields: [autoId(), uuid('projects_id', { hidden: true }), languageRelation(), string('title', { required: true }), text('summary', { required: true }), text('description', { interface: 'input-rich-text-html' }), string('status_label'), string('client')] },
   {
@@ -231,6 +231,11 @@ for (const collection of ['profile', 'fun_facts', 'skills', 'experiences', 'proj
     })
   })
 }
+
+await request('/fields/projects/gallery', {
+  method: 'PATCH',
+  body: JSON.stringify({ meta: { special: ['files'], interface: 'files' } })
+})
 
 for (const [translationCollection, parentField] of [
   ['profile_translations', 'profile_id'],
