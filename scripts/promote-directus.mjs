@@ -80,9 +80,9 @@ async function upsertByFilter(collection, filter, item) {
 
 const data = {}
 for (const collection of [
-  'languages', 'profile', 'fun_facts', 'contacts', 'skills', 'experiences', 'projects',
+  'languages', 'profile', 'fun_facts', 'contacts', 'skills', 'experiences', 'achievements', 'projects',
   'profile_translations', 'fun_facts_translations', 'skills_translations',
-  'experiences_translations', 'projects_translations', 'projects_files', 'contact_messages'
+  'experiences_translations', 'achievements_translations', 'projects_translations', 'projects_files', 'contact_messages'
 ]) data[collection] = await items(collection)
 
 const fileIds = new Set([
@@ -116,7 +116,7 @@ const withoutAliases = ({ translations: _translations, gallery: _gallery, ...ite
 
 for (const item of data.languages) count(await upsert('languages', item.code, item))
 
-for (const collection of ['fun_facts', 'contacts', 'skills', 'experiences', 'projects', 'contact_messages']) {
+for (const collection of ['fun_facts', 'contacts', 'skills', 'experiences', 'achievements', 'projects', 'contact_messages']) {
   for (const item of data[collection]) {
     const payload = withoutAliases(item)
     count(await upsert(collection, payload.id, payload))
@@ -135,6 +135,7 @@ for (const [collection, relationField] of [
   ['fun_facts_translations', 'fun_facts_id'],
   ['skills_translations', 'skills_id'],
   ['experiences_translations', 'experiences_id'],
+  ['achievements_translations', 'achievements_id'],
   ['projects_translations', 'projects_id']
 ]) {
   for (const { id: _id, ...item } of data[collection]) {

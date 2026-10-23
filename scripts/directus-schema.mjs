@@ -128,6 +128,11 @@ const collections = [
   },
   { collection: 'experiences_translations', meta: { icon: 'translate', hidden: true }, fields: [autoId(), uuid('experiences_id', { hidden: true }), languageRelation(), string('role', { required: true }), string('location'), text('description', { interface: 'input-rich-text-html' })] },
   {
+    collection: 'achievements', meta: { icon: 'emoji_events', note: 'Prémios, hackathons e outras conquistas profissionais', sort_field: 'sort', display_template: '{{organization}}' },
+    fields: [id(), string('organization', { required: true, width: 'half' }), date('achievement_date'), string('website_url'), integer('team_size', { defaultValue: 1 }), json('technologies'), integer('sort', { defaultValue: 1 }), alias('translations', 'translations', 'translations', { languageField: 'name', languageDirectionField: 'direction', defaultLanguage: 'pt' })]
+  },
+  { collection: 'achievements_translations', meta: { icon: 'translate', hidden: true }, fields: [autoId(), uuid('achievements_id', { hidden: true }), languageRelation(), string('title', { required: true }), string('result', { required: true }), text('summary', { required: true }), text('description', { interface: 'input-rich-text-html' })] },
+  {
     collection: 'projects', meta: { icon: 'rocket_launch', note: 'Projectos do portfólio', sort_field: 'sort', display_template: '{{slug}}' },
     fields: [id(), string('slug', { required: true, unique: true }), uuid('cover_image', { interface: 'file-image' }), json('technologies'), string('status_key', { width: 'half' }), date('start_date'), date('end_date'), string('website_url'), string('repository_url'), string('demo_url'), integer('sort', { defaultValue: 1 }), alias('gallery', 'files', 'files'), alias('translations', 'translations', 'translations', { languageField: 'name', languageDirectionField: 'direction', defaultLanguage: 'pt' })]
   },
@@ -152,6 +157,8 @@ const relations = [
   ['skills_translations', 'languages_code', 'languages', null, 'skills_id'],
   ['experiences_translations', 'experiences_id', 'experiences', 'translations', 'languages_code'],
   ['experiences_translations', 'languages_code', 'languages', null, 'experiences_id'],
+  ['achievements_translations', 'achievements_id', 'achievements', 'translations', 'languages_code'],
+  ['achievements_translations', 'languages_code', 'languages', null, 'achievements_id'],
   ['projects_translations', 'projects_id', 'projects', 'translations', 'languages_code'],
   ['projects_translations', 'languages_code', 'languages', null, 'projects_id'],
   ['projects_files', 'projects_id', 'projects', 'gallery', 'directus_files_id'],
@@ -173,7 +180,7 @@ for (const definition of collections) {
 }
 
 // Keep existing UUID primary keys configured as generated UUIDs as well.
-for (const collection of ['profile', 'fun_facts', 'contacts', 'skills', 'experiences', 'projects', 'contact_messages']) {
+for (const collection of ['profile', 'fun_facts', 'contacts', 'skills', 'experiences', 'achievements', 'projects', 'contact_messages']) {
   await request(`/fields/${collection}/id`, {
     method: 'PATCH',
     body: JSON.stringify({ meta: { interface: 'input', special: ['uuid'], hidden: true, readonly: true } })
@@ -229,7 +236,7 @@ for (const language of [{ code: 'pt', name: 'Português', direction: 'ltr' }, { 
   }
 }
 
-for (const collection of ['profile', 'fun_facts', 'skills', 'experiences', 'projects']) {
+for (const collection of ['profile', 'fun_facts', 'skills', 'experiences', 'achievements', 'projects']) {
   await request(`/fields/${collection}/translations`, {
     method: 'PATCH',
     body: JSON.stringify({
@@ -252,6 +259,7 @@ for (const [translationCollection, parentField] of [
   ['fun_facts_translations', 'fun_facts_id'],
   ['skills_translations', 'skills_id'],
   ['experiences_translations', 'experiences_id'],
+  ['achievements_translations', 'achievements_id'],
   ['projects_translations', 'projects_id']
 ]) {
   await request(`/relations/${translationCollection}/${parentField}`, {
