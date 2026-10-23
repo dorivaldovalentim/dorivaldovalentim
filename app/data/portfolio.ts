@@ -64,6 +64,19 @@ export type Experience = {
   technologies: string[]
 }
 
+export type Achievement = {
+  id: string
+  title: string
+  result: string
+  summary: string
+  description?: string
+  organization: string
+  achievementDate: string
+  websiteUrl?: string
+  teamSize?: number
+  technologies: string[]
+}
+
 export type Skill = {
   id: string
 
