@@ -2,10 +2,10 @@ export type Locale = 'pt' | 'en'
 
 const messages = {
   pt: {
-    navHome: 'Início', navAbout: 'Sobre', navExperience: 'Experiência', navSkills: 'Competências', navProjects: 'Projetos', navContact: 'Contacto', navCv: 'CV',
+    navHome: 'Início', navAbout: 'Sobre', navExperience: 'Experiência', navAchievements: 'Conquistas', navSkills: 'Competências', navProjects: 'Projetos', navContact: 'Contacto', navCv: 'CV',
     heroEyebrow: 'Fullstack developer', heroWork: 'Explorar trabalho', heroCv: 'Ver currículo', available: 'Disponível para novos desafios',
     about: 'Sobre mim', funFacts: 'Curiosidades',
-    experience: 'Experiência', more: 'Ver mais', projects: 'Projetos', allProjects: 'Ver todos', details: 'Ver detalhes', present: 'Presente',
+    experience: 'Experiência', achievements: 'Conquistas', achievementsLead: 'Marcos que traduzem trabalho em equipa, execução e impacto.', teamOf: 'Equipa de', people: 'pessoas', more: 'Ver mais', projects: 'Projetos', allProjects: 'Ver todos', details: 'Ver detalhes', present: 'Presente',
     contact: 'Contacto', contactLead: 'Tem uma pergunta, uma proposta ou quer apenas dizer olá? Fique à vontade para entrar em contacto.', name: 'O seu nome', email: 'O seu email', message: 'A sua mensagem', send: 'Enviar mensagem', sending: 'A enviar…', sent: 'Mensagem enviada com sucesso. Obrigado pelo contacto!', sendError: 'Não foi possível enviar a mensagem. Tente novamente dentro de instantes.', socialLead: 'Ou encontre-me nas redes sociais:', socialLabel: 'Redes sociais',
     rights: 'Todos os direitos reservados.',
     cvLabel: 'Curriculum vitae', backPortfolio: '← Voltar ao portfólio', savePdf: 'Guardar como PDF', profile: 'Perfil',
@@ -13,10 +13,10 @@ const messages = {
     experienceLead: 'O meu percurso profissional como desenvolvedor fullstack.', noneExperience: 'Nenhuma experiência publicada neste momento.', client: 'Cliente', status: 'Estado', technologies: 'Tecnologias', gallery: 'Galeria', repository: 'Repositório', demo: 'Demonstração', website: 'Ver site', close: 'Fechar', share: 'Partilhar', copyLink: 'Copiar link', copied: 'Link copiado', backProjects: '← Voltar aos projectos', projectNotFound: 'Projecto não encontrado.', viewProject: 'Ver projecto', previousImage: 'Imagem anterior', nextImage: 'Imagem seguinte', openImage: 'Abrir imagem'
   },
   en: {
-    navHome: 'Home', navAbout: 'About', navExperience: 'Experience', navSkills: 'Skills', navProjects: 'Projects', navContact: 'Contact', navCv: 'Résumé',
+    navHome: 'Home', navAbout: 'About', navExperience: 'Experience', navAchievements: 'Achievements', navSkills: 'Skills', navProjects: 'Projects', navContact: 'Contact', navCv: 'Résumé',
     heroEyebrow: 'Full-stack developer', heroWork: 'Explore my work', heroCv: 'View résumé', available: 'Available for new opportunities',
     about: 'About me', funFacts: 'A few fun facts',
-    experience: 'Experience', more: 'See more', projects: 'Projects', allProjects: 'View all', details: 'View details', present: 'Present',
+    experience: 'Experience', achievements: 'Achievements', achievementsLead: 'Milestones shaped by teamwork, execution and impact.', teamOf: 'Team of', people: 'people', more: 'See more', projects: 'Projects', allProjects: 'View all', details: 'View details', present: 'Present',
     contact: 'Contact', contactLead: 'Have a question, a proposal or just want to say hello? Feel free to get in touch.', name: 'Your name', email: 'Your email', message: 'Your message', send: 'Send message', sending: 'Sending…', sent: 'Your message was sent successfully. Thank you for reaching out!', sendError: 'Your message could not be sent. Please try again in a moment.', socialLead: 'Or find me on social media:', socialLabel: 'Social media',
     rights: 'All rights reserved.',
     cvLabel: 'Curriculum vitae', backPortfolio: '← Back to portfolio', savePdf: 'Save as PDF', profile: 'Profile',

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const profile = useProfile()
 const experiences = useExperiences()
+const achievements = useAchievements()
 const skills = useSkills()
 const { locale, t } = useLocale()
 
@@ -126,6 +127,29 @@ useSeoMeta({
                 </article>
                 <p v-if="!experiences?.length">{{ t('noneExperience') }}</p>
               </section>
+
+              <section v-if="achievements?.length" class="cv-achievements">
+                <div class="cv-section-title">
+                  <span>03 /</span>
+                  <h2>{{ t('achievements') }}</h2>
+                </div>
+                <article v-for="achievement in achievements" :key="achievement.id" class="cv-achievement">
+                  <div class="cv-achievement-rank">1.º</div>
+                  <div>
+                    <div class="cv-entry-head">
+                      <div>
+                        <h3>{{ achievement.title }}</h3>
+                        <p>{{ achievement.result }} · {{ achievement.organization }}</p>
+                      </div>
+                      <time>{{ formatDate(achievement.achievementDate) }}</time>
+                    </div>
+                    <p>{{ achievement.summary }}</p>
+                    <div class="cv-entry-tech">
+                      <span v-for="technology in achievement.technologies" :key="technology">{{ technology }}</span>
+                    </div>
+                  </div>
+                </article>
+              </section>
             </div>
           </div>
 
@@ -196,6 +220,9 @@ useSeoMeta({
 .cv-entry time { flex: 0 0 auto; padding-top: .12rem; color: #71827b; font-size: .69rem; font-weight: 700; white-space: nowrap; }
 .cv-entry-description :deep(p) { margin-bottom: .75rem; }
 .cv-entry-tech span { padding: .28rem .5rem; border-radius: 999px; background: #e7f2eb; color: #337657; font-size: .63rem; font-weight: 750; }
+.cv-achievement { display: grid; grid-template-columns: 48px 1fr; gap: 1rem; padding: 1.1rem; border: 1px solid #d9e5dd; border-radius: 8px; background: #f4f8f3; break-inside: avoid; }
+.cv-achievement-rank { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 50%; background: var(--cv-forest); color: var(--cv-lime); font-size: .75rem; font-weight: 900; }
+.cv-achievement > div > p { margin: 0 0 .75rem; }
 .cv-footer { display: flex; align-items: center; gap: 1rem; padding: 1.15rem 4.5rem; border-top: 1px solid #dfe7e1; color: #6d7d76; font-size: .68rem; }
 .cv-footer strong { display: grid; width: 28px; height: 28px; place-items: center; border-radius: 50%; background: var(--cv-forest); color: var(--cv-lime); font-size: .62rem; }
 .cv-footer span:last-child { margin-left: auto; }

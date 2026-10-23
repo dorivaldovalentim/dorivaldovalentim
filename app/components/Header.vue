@@ -9,6 +9,7 @@ const sections = computed(() => [
   { label: t('navHome'), anchor: 'inicio' },
   { label: t('navAbout'), anchor: 'sobre' },
   { label: t('navExperience'), anchor: 'experiencia' },
+  { label: t('navAchievements'), anchor: 'conquistas' },
   { label: t('navSkills'), anchor: 'skills' },
   { label: t('navProjects'), anchor: 'projetos' },
   { label: t('navContact'), anchor: 'contacto' },

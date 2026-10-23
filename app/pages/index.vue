@@ -21,6 +21,7 @@ useSeoMeta({
       <Hero />
       <About />
       <Experience />
+      <Achievements />
       <Skills />
       <Projects />
       <Contact />
