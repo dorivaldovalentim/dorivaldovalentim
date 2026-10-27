@@ -13,6 +13,12 @@ export type Project = {
   gallery: string[]
 
   technologies: string[]
+  featured?: boolean
+  badge?: string
+  problem?: string
+  solution?: string
+  role?: string
+  outcome?: string
 
   status?: string
   statusKey?: ProjectStatus

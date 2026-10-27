@@ -72,6 +72,12 @@ const integer = (field, options = {}) => ({
   schema: { is_nullable: true, default_value: options.defaultValue }
 })
 
+const boolean = (field, options = {}) => ({
+  field, type: 'boolean',
+  meta: { interface: 'boolean', width: options.width || 'half' },
+  schema: { is_nullable: false, default_value: options.defaultValue ?? false }
+})
+
 const date = field => ({ field, type: 'date', meta: { interface: 'datetime', width: 'half' }, schema: { is_nullable: true } })
 const timestamp = field => ({ field, type: 'timestamp', meta: { interface: 'datetime', width: 'half' }, schema: { is_nullable: true } })
 const json = field => ({ field, type: 'json', meta: { interface: 'tags', width: 'full' }, schema: { is_nullable: true } })
@@ -134,9 +140,9 @@ const collections = [
   { collection: 'achievements_translations', meta: { icon: 'translate', hidden: true }, fields: [autoId(), uuid('achievements_id', { hidden: true }), languageRelation(), string('title', { required: true }), string('result', { required: true }), text('summary', { required: true }), text('description', { interface: 'input-rich-text-html' })] },
   {
     collection: 'projects', meta: { icon: 'rocket_launch', note: 'Projectos do portfólio', sort_field: 'sort', display_template: '{{slug}}' },
-    fields: [id(), string('slug', { required: true, unique: true }), uuid('cover_image', { interface: 'file-image' }), json('technologies'), string('status_key', { width: 'half' }), date('start_date'), date('end_date'), string('website_url'), string('repository_url'), string('demo_url'), integer('sort', { defaultValue: 1 }), alias('gallery', 'files', 'files'), alias('translations', 'translations', 'translations', { languageField: 'name', languageDirectionField: 'direction', defaultLanguage: 'pt' })]
+    fields: [id(), string('slug', { required: true, unique: true }), uuid('cover_image', { interface: 'file-image' }), json('technologies'), boolean('featured'), string('status_key', { width: 'half' }), date('start_date'), date('end_date'), string('website_url'), string('repository_url'), string('demo_url'), integer('sort', { defaultValue: 1 }), alias('gallery', 'files', 'files'), alias('translations', 'translations', 'translations', { languageField: 'name', languageDirectionField: 'direction', defaultLanguage: 'pt' })]
   },
-  { collection: 'projects_translations', meta: { icon: 'translate', hidden: true }, fields: [autoId(), uuid('projects_id', { hidden: true }), languageRelation(), string('title', { required: true }), text('summary', { required: true }), text('description', { interface: 'input-rich-text-html' }), string('status_label'), string('client')] },
+  { collection: 'projects_translations', meta: { icon: 'translate', hidden: true }, fields: [autoId(), uuid('projects_id', { hidden: true }), languageRelation(), string('title', { required: true }), text('summary', { required: true }), text('description', { interface: 'input-rich-text-html' }), string('status_label'), string('client'), string('badge'), text('problem'), text('solution'), text('role'), text('outcome')] },
   {
     collection: 'projects_files', meta: { icon: 'image', hidden: true },
     fields: [autoId(), uuid('projects_id'), uuid('directus_files_id', { interface: 'file-image' }), integer('sort', { defaultValue: 1 })]
@@ -177,6 +183,21 @@ for (const definition of collections) {
     body: JSON.stringify({ ...definition, schema: { name: definition.collection } })
   })
   console.log(`created collection ${definition.collection}`)
+}
+
+// Fields added after the initial projects collection was introduced.
+for (const [collection, definition] of [
+  ['projects', boolean('featured')],
+  ['projects_translations', string('badge')],
+  ['projects_translations', text('problem')],
+  ['projects_translations', text('solution')],
+  ['projects_translations', text('role')],
+  ['projects_translations', text('outcome')]
+]) {
+  const fields = await request(`/fields/${collection}`)
+  if (fields.some(item => item.field === definition.field)) continue
+  await request(`/fields/${collection}`, { method: 'POST', body: JSON.stringify(definition) })
+  console.log(`created field ${collection}.${definition.field}`)
 }
 
 // Keep existing UUID primary keys configured as generated UUIDs as well.

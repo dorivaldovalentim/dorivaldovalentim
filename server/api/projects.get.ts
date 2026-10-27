@@ -1,7 +1,7 @@
 export default defineEventHandler(async (event) => {
   const locale = getQuery(event).locale === 'en' ? 'en' : 'pt'
   const items = await directusItems('projects', {
-    fields: 'id,slug,cover_image,gallery.directus_files_id,technologies,status_key,start_date,end_date,website_url,repository_url,demo_url,sort,translations.*',
+    fields: 'id,slug,cover_image,gallery.directus_files_id,technologies,featured,status_key,start_date,end_date,website_url,repository_url,demo_url,sort,translations.*',
     sort: 'sort,-start_date'
   })
 
@@ -16,6 +16,12 @@ export default defineEventHandler(async (event) => {
       coverImage: directusAssetUrl(item.cover_image),
       gallery: directusGallery(item.gallery),
       technologies: item.technologies ?? [],
+      featured: Boolean(item.featured),
+      badge: translation.badge,
+      problem: translation.problem,
+      solution: translation.solution,
+      role: translation.role,
+      outcome: translation.outcome,
       status: translation.status_label,
       statusKey: item.status_key,
       startDate: item.start_date,
