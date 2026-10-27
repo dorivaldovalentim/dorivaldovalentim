@@ -192,7 +192,7 @@ useSeoMeta({
 
       <!-- Resultados -->
       <div v-if="filteredProjects.length > 0" class="row g-4 g-xl-5">
-        <div v-for="project in filteredProjects" :key="project.id" class="col-12 col-md-6 col-lg-4">
+        <div v-for="project in filteredProjects" :key="project.id" class="col-12 col-md-6 col-lg-4" :class="{ 'featured-result': project.featured }">
           <article
             class="card project-card h-100 overflow-hidden border-0"
             role="button"
@@ -202,7 +202,8 @@ useSeoMeta({
             @keydown.space.prevent="openProject(project)"
           >
             <div class="position-relative">
-              <img :src="projectCover(project.coverImage)" class="card-img-top project-card-img" :alt="project.title" />
+              <img :src="projectCover(project.coverImage)" class="card-img-top project-card-img" :class="{ 'featured-cover': project.featured }" :alt="project.title" />
+              <span v-if="project.featured" class="featured-label">{{ project.badge || t('featuredProduct') }}</span>
               <span v-if="project.status" class="badge project-card-status" :class="project.statusKey ? `status-${project.statusKey.toLowerCase().replace(' ', '-')}` : ''">
                 {{ project.status }}
               </span>
@@ -213,7 +214,7 @@ useSeoMeta({
               <p class="card-text">{{ project.summary }}</p>
 
               <div class="d-flex flex-wrap gap-1 mt-auto pt-3">
-                <span v-for="(tech, idx) in project.technologies" :key="tech" class="badge rounded-pill project-badge">
+                <span v-for="tech in project.technologies.slice(0, 3)" :key="tech" class="badge rounded-pill project-badge">
                   {{ tech }}
                 </span>
                 <span v-if="project.technologies.length > 3" class="badge rounded-pill project-badge">
@@ -272,6 +273,9 @@ useSeoMeta({
   object-fit: cover;
   filter: brightness(0.74);
 }
+.featured-cover { object-fit: contain; padding: 3rem; background: radial-gradient(circle at 30% 20%, rgba(108, 70, 190, .42), transparent 42%), #101a17; filter: none; }
+.featured-label { position: absolute; top: 1rem; left: 1rem; max-width: calc(100% - 7rem); border: 1px solid rgba(255,255,255,.18); border-radius: 999px; padding: .42rem .7rem; background: rgba(8,17,15,.72); color: #dff56d; font-size: .65rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.featured-result { order: -1; }
 
 .project-card-status {
   position: absolute;

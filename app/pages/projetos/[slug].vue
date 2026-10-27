@@ -38,13 +38,25 @@ useSeoMeta({
         <NuxtLink to="/projetos" class="back-link">{{ t('backProjects') }}</NuxtLink>
         <header class="project-hero">
           <div>
-            <p class="page-kicker">{{ project.client || t('projects') }}</p>
+            <p class="page-kicker">{{ project.badge || project.client || t('projects') }}</p>
             <h1>{{ project.title }}</h1>
             <p class="project-summary">{{ project.summary }}</p>
             <ProjectShare :title="project.title" :summary="project.summary" :slug="project.slug" />
           </div>
-          <img :src="projectCover(project.coverImage)" :alt="project.title" />
+          <div class="project-hero-visual" :class="{ featured: project.featured }">
+            <img :src="projectCover(project.coverImage)" :alt="project.title" />
+          </div>
         </header>
+
+        <section v-if="project.problem || project.solution || project.role || project.outcome" class="case-study">
+          <p class="case-study-label">{{ t('productCaseStudy') }}</p>
+          <div class="case-study-grid">
+            <article v-if="project.problem"><span>01</span><h2>{{ t('problem') }}</h2><p>{{ project.problem }}</p></article>
+            <article v-if="project.solution"><span>02</span><h2>{{ t('solution') }}</h2><p>{{ project.solution }}</p></article>
+            <article v-if="project.role"><span>03</span><h2>{{ t('role') }}</h2><p>{{ project.role }}</p></article>
+            <article v-if="project.outcome"><span>04</span><h2>{{ t('outcome') }}</h2><p>{{ project.outcome }}</p></article>
+          </div>
+        </section>
 
         <div class="project-content">
           <article class="surface project-description">
@@ -79,8 +91,18 @@ useSeoMeta({
 .back-link { display: inline-block; margin-bottom: 2rem; color: var(--portfolio-accent); }
 .project-hero { display: grid; grid-template-columns: 1.05fr .95fr; align-items: center; gap: 4rem; min-height: 65vh; }
 .project-hero h1 { margin: .6rem 0 1.5rem; font-size: clamp(3.5rem, 10vw, 8rem); font-weight: 850; letter-spacing: -.07em; line-height: .85; }
-.project-hero img { width: 100%; aspect-ratio: 4/3; border-radius: var(--portfolio-radius); object-fit: cover; box-shadow: var(--portfolio-shadow); }
+.project-hero-visual { overflow: hidden; border-radius: var(--portfolio-radius); box-shadow: var(--portfolio-shadow); }
+.project-hero img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+.project-hero-visual.featured { display: grid; aspect-ratio: 4/3; place-items: center; background: radial-gradient(circle at 30% 20%, rgba(108, 70, 190, .46), transparent 42%), linear-gradient(145deg, #151027, #091713); }
+.project-hero-visual.featured img { width: 72%; height: auto; aspect-ratio: auto; object-fit: contain; filter: drop-shadow(0 1.5rem 3rem rgba(0,0,0,.35)); }
 .project-summary { max-width: 620px; font-size: clamp(1.1rem, 2vw, 1.4rem); }
+.case-study { margin-top: 6rem; }
+.case-study-label { margin-bottom: 1rem; color: var(--portfolio-accent); font-size: .72rem; font-weight: 850; letter-spacing: .16em; text-transform: uppercase; }
+.case-study-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.case-study article { min-height: 300px; overflow: hidden; border: 1px solid var(--portfolio-line); border-radius: 10px; padding: clamp(1.5rem, 4vw, 3rem); background: var(--portfolio-card); }
+.case-study article > span { display: block; margin-bottom: 3rem; color: var(--portfolio-accent); font-size: .7rem; font-weight: 850; letter-spacing: .14em; }
+.case-study h2 { margin-bottom: 1rem; color: var(--portfolio-ink); font-size: clamp(1.6rem, 3vw, 2.5rem); font-weight: 820; letter-spacing: -.035em; }
+.case-study article p { margin: 0; color: var(--portfolio-muted); line-height: 1.7; }
 .project-content { display: grid; grid-template-columns: 1.4fr .6fr; gap: 1.5rem; margin-top: 5rem; }
 .project-description, .project-meta { padding: clamp(1.5rem, 4vw, 3rem); }
 .project-rich-text { color: var(--portfolio-ink); font-size: 1.15rem; }
@@ -95,5 +117,5 @@ useSeoMeta({
 .project-gallery { margin-top: 6rem; }
 .project-gallery h2 { margin-bottom: 2rem; font-size: 2.5rem; }
 .empty-page { min-height: 70vh; padding-top: 8rem; }
-@media (max-width: 767.98px) { .project-hero, .project-content { grid-template-columns: 1fr; } .project-hero { gap: 2rem; } }
+@media (max-width: 767.98px) { .project-hero, .project-content, .case-study-grid { grid-template-columns: 1fr; } .project-hero { gap: 2rem; } }
 </style>

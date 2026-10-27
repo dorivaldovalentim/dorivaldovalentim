@@ -26,7 +26,7 @@ onBeforeUnmount(() => {
       <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content project-modal-content border-0">
           <div class="position-relative">
-            <img :src="projectCover(project.coverImage)" class="project-modal-img" :alt="project.title" />
+            <img :src="projectCover(project.coverImage)" class="project-modal-img" :class="{ featured: project.featured }" :alt="project.title" />
             <button type="button" class="btn-close btn-close-white project-modal-close" :aria-label="t('close')" @click="emit('closeProject')" />
           </div>
 
@@ -62,6 +62,7 @@ onBeforeUnmount(() => {
 .project-modal { z-index: 1060; }
 .project-modal-content { overflow: hidden; border: 1px solid var(--portfolio-line) !important; border-radius: var(--portfolio-radius); background: var(--portfolio-card); color: var(--portfolio-ink); box-shadow: var(--portfolio-shadow); }
 .project-modal-img { display: block; width: 100%; height: clamp(220px, 36vw, 360px); object-fit: cover; filter: brightness(.82); }
+.project-modal-img.featured { object-fit: contain; padding: clamp(3rem, 7vw, 5rem); background: radial-gradient(circle at 30% 20%, rgba(108, 70, 190, .42), transparent 42%), #101a17; filter: none; }
 .project-modal-close { position: absolute; top: 1.1rem; right: 1.1rem; z-index: 2; padding: .8rem; border-radius: 50%; background-color: rgba(8,17,15,.72); }
 .modal-title { color: var(--portfolio-ink); font-size: clamp(2rem, 5vw, 3.3rem); letter-spacing: -.045em; }
 .project-summary { max-width: 680px; margin: 0; font-size: 1.1rem; }

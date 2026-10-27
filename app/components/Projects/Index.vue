@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useProjects } from '~/composables/useProjects'
-import { ref, watch, onMounted } from 'vue'
+import { computed, ref, watch, onMounted } from 'vue'
 import { type Project } from '../../data/portfolio'
 import { projectCover } from '~/utils/projectCover'
 
@@ -8,6 +8,8 @@ const { projects, loading, error, fetchProjects } = useProjects()
 const { t } = useLocale()
 
 const selectedProject = ref<Project | null>(null)
+const featuredProject = computed(() => projects.value.find((project: Project) => project.featured))
+const supportingProjects = computed(() => projects.value.filter((project: Project) => !project.featured).slice(0, featuredProject.value ? 1 : 2))
 
 onMounted(async () => {
   await fetchProjects()
@@ -38,8 +40,26 @@ watch(selectedProject, (project) => {
       </NuxtLink>
     </div>
 
-    <div class="row g-4 g-xl-5">
-      <div v-for="project in projects.slice(0, 2)" :key="project.id" class="col-12 col-md-6">
+    <article v-if="featuredProject" class="featured-project" @click="openProject(featuredProject)">
+      <div class="featured-visual">
+        <span>{{ featuredProject.badge || t('featuredProduct') }}</span>
+        <img :src="projectCover(featuredProject.coverImage)" :alt="featuredProject.title" />
+      </div>
+      <div class="featured-copy">
+        <p class="featured-kicker">{{ t('productCaseStudy') }}</p>
+        <h3>{{ featuredProject.title }}</h3>
+        <p>{{ featuredProject.summary }}</p>
+        <div class="featured-tech">
+          <span v-for="tech in featuredProject.technologies.slice(0, 6)" :key="tech">{{ tech }}</span>
+        </div>
+        <NuxtLink :to="`/projetos/${featuredProject.slug}`" class="btn btn-brand align-self-start" @click.stop>
+          {{ t('viewCaseStudy') }} <span aria-hidden="true">→</span>
+        </NuxtLink>
+      </div>
+    </article>
+
+    <div v-if="supportingProjects.length" class="row g-4 g-xl-5 mt-2">
+      <div v-for="project in supportingProjects" :key="project.id" class="col-12">
         <article
           class="card project-card h-100 overflow-hidden border-0"
           role="button"
@@ -131,4 +151,16 @@ watch(selectedProject, (project) => {
   color: var(--portfolio-accent);
   font-weight: 500;
 }
+.featured-project { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); min-height: 470px; overflow: hidden; border: 1px solid var(--portfolio-line); border-radius: 12px; background: var(--portfolio-card); cursor: pointer; }
+.featured-visual { position: relative; display: grid; min-height: 100%; place-items: center; overflow: hidden; background: radial-gradient(circle at 30% 20%, rgba(108, 70, 190, .46), transparent 42%), linear-gradient(145deg, #151027, #091713); }
+.featured-visual::after { position: absolute; width: 340px; height: 340px; border: 1px solid rgba(158, 201, 74, .25); border-radius: 50%; box-shadow: 0 0 0 55px rgba(72, 42, 132, .08), 0 0 0 110px rgba(158, 201, 74, .04); content: ''; }
+.featured-visual > span { position: absolute; z-index: 2; top: 1.5rem; left: 1.5rem; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; padding: .5rem .8rem; background: rgba(8,17,15,.58); color: #dff56d; font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.featured-visual img { position: relative; z-index: 1; width: min(72%, 420px); height: auto; object-fit: contain; filter: drop-shadow(0 1.5rem 3rem rgba(0,0,0,.3)); }
+.featured-copy { display: flex; flex-direction: column; justify-content: center; padding: clamp(2rem, 5vw, 4rem); }
+.featured-kicker { margin: 0 0 .75rem; color: var(--portfolio-accent); font-size: .72rem; font-weight: 850; letter-spacing: .16em; text-transform: uppercase; }
+.featured-copy h3 { margin: 0 0 1.1rem; color: var(--portfolio-ink); font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 880; letter-spacing: -.06em; line-height: .9; }
+.featured-copy > p:not(.featured-kicker) { max-width: 650px; margin-bottom: 1.6rem; color: var(--portfolio-muted); font-size: 1.1rem; line-height: 1.7; }
+.featured-tech { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: 2rem; }
+.featured-tech span { border: 1px solid var(--portfolio-line); border-radius: 999px; padding: .38rem .65rem; color: var(--portfolio-accent); font-size: .72rem; font-weight: 750; }
+@media (max-width: 767.98px) { .featured-project { grid-template-columns: 1fr; } .featured-visual { min-height: 300px; } }
 </style>
