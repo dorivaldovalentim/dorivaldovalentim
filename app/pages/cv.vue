@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import type { Project } from '~/data/portfolio'
+
 const profile = useProfile()
 const experiences = useExperiences()
 const achievements = useAchievements()
 const skills = useSkills()
 const { locale, t } = useLocale()
+const { data: cvProjects } = useAsyncData<Project[]>('cv-featured-projects', () => $fetch('/api/projects', { query: { locale: locale.value } }), { default: () => [], watch: [locale] })
+const featuredProject = computed(() => cvProjects.value.find(project => project.featured))
 
 const groupedSkills = computed(() => {
   const groups = new Map<string, string[]>()
@@ -150,6 +154,27 @@ useSeoMeta({
                   </div>
                 </article>
               </section>
+
+              <section v-if="featuredProject" class="cv-featured-project">
+                <div class="cv-section-title">
+                  <span>04 /</span>
+                  <h2>{{ t('selectedProduct') }}</h2>
+                </div>
+                <article class="cv-product-card">
+                  <div class="cv-product-heading">
+                    <div>
+                      <p class="cv-product-label">{{ featuredProject.badge || t('featuredProduct') }}</p>
+                      <h3>{{ featuredProject.title }}</h3>
+                    </div>
+                    <time>{{ formatDate(featuredProject.startDate) }} — {{ formatDate(featuredProject.endDate) }}</time>
+                  </div>
+                  <p>{{ featuredProject.summary }}</p>
+                  <p v-if="featuredProject.role" class="cv-product-role"><strong>{{ t('role') }}:</strong> {{ featuredProject.role }}</p>
+                  <div class="cv-entry-tech">
+                    <span v-for="technology in featuredProject.technologies.slice(0, 8)" :key="technology">{{ technology }}</span>
+                  </div>
+                </article>
+              </section>
             </div>
           </div>
 
@@ -223,6 +248,13 @@ useSeoMeta({
 .cv-achievement { display: grid; grid-template-columns: 48px 1fr; gap: 1rem; padding: 1.1rem; border: 1px solid #d9e5dd; border-radius: 8px; background: #f4f8f3; break-inside: avoid; }
 .cv-achievement-rank { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 50%; background: var(--cv-forest); color: var(--cv-lime); font-size: .75rem; font-weight: 900; }
 .cv-achievement > div > p { margin: 0 0 .75rem; }
+.cv-product-card { padding: 1.3rem; border: 1px solid #d9e5dd; border-left: 4px solid #46bd88; border-radius: 4px; background: #f4f8f3; break-inside: avoid; }
+.cv-product-heading { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: .7rem; }
+.cv-product-heading h3 { margin: 0; color: var(--cv-ink); font-size: 1.15rem; font-weight: 850; }
+.cv-product-label { margin: 0 0 .2rem !important; color: #348061 !important; font-size: .58rem !important; font-weight: 850; letter-spacing: .1em; text-transform: uppercase; }
+.cv-product-heading time { color: #71827b; font-size: .65rem; font-weight: 700; white-space: nowrap; }
+.cv-product-card > p { margin-bottom: .7rem; }
+.cv-product-role { font-size: .8rem !important; }
 .cv-footer { display: flex; align-items: center; gap: 1rem; padding: 1.15rem 4.5rem; border-top: 1px solid #dfe7e1; color: #6d7d76; font-size: .68rem; }
 .cv-footer strong { display: grid; width: 28px; height: 28px; place-items: center; border-radius: 50%; background: var(--cv-forest); color: var(--cv-lime); font-size: .62rem; }
 .cv-footer span:last-child { margin-left: auto; }
