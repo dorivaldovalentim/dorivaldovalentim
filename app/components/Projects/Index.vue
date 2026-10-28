@@ -9,7 +9,7 @@ const { t } = useLocale()
 
 const selectedProject = ref<Project | null>(null)
 const featuredProject = computed(() => projects.value.find((project: Project) => project.featured))
-const supportingProjects = computed(() => projects.value.filter((project: Project) => !project.featured).slice(0, featuredProject.value ? 1 : 2))
+const supportingProjects = computed(() => projects.value.filter((project: Project) => !project.featured).slice(0, 2))
 
 onMounted(async () => {
   await fetchProjects()
@@ -59,7 +59,7 @@ watch(selectedProject, (project) => {
     </article>
 
     <div v-if="supportingProjects.length" class="row g-4 g-xl-5 mt-2">
-      <div v-for="project in supportingProjects" :key="project.id" class="col-12">
+      <div v-for="project in supportingProjects" :key="project.id" class="col-12 col-lg-6">
         <article
           class="card project-card h-100 overflow-hidden border-0"
           role="button"
